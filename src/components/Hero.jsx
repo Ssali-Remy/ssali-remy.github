@@ -1,79 +1,88 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import SmartImage from "./SmartImage";
+import { heroBackgrounds } from "../data/units";
 
 export default function Hero() {
+  const [active, setActive] = useState(0);
+
+  // Rotate the background photo every 6 seconds
+  useEffect(() => {
+    if (!heroBackgrounds?.length) return;
+    const t = setInterval(
+      () => setActive((i) => (i + 1) % heroBackgrounds.length),
+      6000,
+    );
+    return () => clearInterval(t);
+  }, []);
+
   return (
-    <section className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-beige via-brand-cream to-brand-sand/40" />
-      <div className="absolute -top-32 -right-32 h-80 w-80 rounded-full bg-brand-maroon/10 blur-3xl" />
-      <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-brand-sienna/10 blur-3xl" />
-      <div className="container-x relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-2">
-        <div className="animate-fadeUp">
-          <span className="pill">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-maroon" />
-            Now booking · Kampala
-          </span>
-          <h1 className="mt-4 font-display text-5xl leading-[1.05] sm:text-6xl lg:text-7xl">
-            A perfect bolthole.
-            <span className="block font-sketch text-brand-sienna text-5xl mt-2">
-              Simple Made Perfect.
-            </span>
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-brand-ink/75">
-            Boutique self-catering apartments in Kansanga and Munyonyo —
-            modern, secure and styled for both short escapes and long stays.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/booking" className="btn-primary">
-              Book your stay
-            </Link>
-            <Link to="/locations/kansanga" className="btn-ghost">
-              Explore properties
-            </Link>
-          </div>
-          <dl className="mt-10 grid grid-cols-3 gap-6 max-w-md">
-            <Stat n="5" l="Units" />
-            <Stat n="2" l="Locations" />
-            <Stat n="24/7" l="Security" />
-          </dl>
-        </div>
-        <div className="relative">
-          <div className="grid grid-cols-6 grid-rows-6 gap-3 h-[28rem] lg:h-[32rem]">
-            <div className="col-span-4 row-span-4 rounded-3xl overflow-hidden shadow-soft animate-fadeUp">
-              <SmartImage
-                src="/images/gallery/kansanga-1.jpg"
-                alt="Kansanga apartment"
-                fallbackLabel="Kansanga"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="col-span-2 row-span-3 rounded-3xl overflow-hidden shadow-soft animate-fadeUp [animation-delay:0.1s]">
-              <SmartImage
-                src="/images/gallery/kansanga-2.jpg"
-                alt="Sitting room"
-                fallbackLabel="Living Room"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="col-span-2 row-span-3 rounded-3xl overflow-hidden shadow-soft animate-fadeUp [animation-delay:0.2s]">
-              <SmartImage
-                src="/images/gallery/munyonyo-1.jpg"
-                alt="Munyonyo apartment"
-                fallbackLabel="Munyonyo"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="col-span-4 row-span-2 rounded-3xl overflow-hidden shadow-soft animate-fadeUp [animation-delay:0.3s]">
-              <SmartImage
-                src="/images/gallery/kansanga-3.jpg"
-                alt="Bedroom"
-                fallbackLabel="Bedroom"
-                className="h-full w-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
+    <section className="relative overflow-hidden min-h-[88vh] flex items-center">
+      {/* Background layer with crossfading photos */}
+      <div className="absolute inset-0">
+        {heroBackgrounds.map((src, i) => (
+          <div
+            key={i}
+            className="absolute inset-0 bg-cover bg-center transition-opacity duration-[2000ms]"
+            style={{
+              backgroundImage: `url("${src}")`,
+              opacity: i === active ? 1 : 0,
+            }}
+          />
+        ))}
+        {/* Warm tint + darken overlay for text readability */}
+        <div className="absolute inset-0 bg-brand-maroon/55 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-ink/30 via-brand-ink/40 to-brand-ink/60" />
       </div>
+
+      <div className="container-x relative animate-fadeUp">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-cream/15 backdrop-blur px-3 py-1 text-xs font-medium text-brand-cream ring-1 ring-brand-cream/20">
+          <span className="h-1.5 w-1.5 rounded-full bg-brand-beige" />
+          Now booking · Kansanga & Munyonyo, Kampala
+        </span>
+        <h1 className="mt-5 font-display text-5xl leading-[1.05] sm:text-6xl lg:text-7xl text-brand-cream max-w-4xl">
+          A perfect bolthole.
+          <span className="block font-sketch text-brand-beige text-5xl sm:text-6xl mt-3">
+            Simple Made Perfect.
+          </span>
+        </h1>
+        <p className="mt-6 max-w-xl text-lg text-brand-cream/90">
+          Boutique self-catering apartments in Kansanga and Munyonyo — modern,
+          secure and styled for both short escapes and long stays.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link to="/booking" className="btn-primary">
+            Book your stay
+          </Link>
+          <Link
+            to="/locations/kansanga"
+            className="inline-flex items-center justify-center rounded-full border border-brand-cream/30 bg-brand-cream/5 px-6 py-3 font-medium text-brand-cream backdrop-blur transition hover:bg-brand-cream hover:text-brand-maroon"
+          >
+            Explore properties
+          </Link>
+        </div>
+        <dl className="mt-10 grid grid-cols-3 gap-6 max-w-md text-brand-cream">
+          <Stat n="3" l="Units" />
+          <Stat n="2" l="Locations" />
+          <Stat n="24/7" l="Security" />
+        </dl>
+      </div>
+
+      {/* Bottom slide indicators */}
+      {heroBackgrounds?.length > 1 && (
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          {heroBackgrounds.map((_, i) => (
+            <button
+              key={i}
+              aria-label={`Show slide ${i + 1}`}
+              type="button"
+              onClick={() => setActive(i)}
+              className={`h-1.5 rounded-full transition-all ${
+                i === active ? "w-8 bg-brand-cream" : "w-1.5 bg-brand-cream/50"
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
@@ -81,8 +90,8 @@ export default function Hero() {
 function Stat({ n, l }) {
   return (
     <div>
-      <dt className="font-display text-3xl text-brand-maroon">{n}</dt>
-      <dd className="text-xs uppercase tracking-wider text-brand-ink/60">
+      <dt className="font-display text-3xl">{n}</dt>
+      <dd className="text-xs uppercase tracking-wider text-brand-cream/70">
         {l}
       </dd>
     </div>
