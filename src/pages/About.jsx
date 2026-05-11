@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
 import Section from "../components/Section";
 import SmartImage from "../components/SmartImage";
 import { site } from "../data/site";
-import { Link } from "react-router-dom";
+import { compound1 } from "../data/images-hero";
 
 export default function About() {
   return (
@@ -22,8 +23,8 @@ export default function About() {
         <div className="grid gap-10 lg:grid-cols-2 items-center">
           <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-soft">
             <SmartImage
-              src="/images/gallery/kansanga-2.jpg"
-              alt="Sitting area"
+              src={compound1}
+              alt="Elyon Nest garden"
               fallbackLabel="Our Story"
               className="h-full w-full object-cover"
             />
@@ -38,8 +39,8 @@ export default function About() {
             </p>
             <p className="mt-3 text-brand-ink/75">
               Every property is fully furnished, professionally maintained and
-              backed by 24-hour security. We don't book individual rooms —
-              when you stay with us, the entire apartment is yours.
+              backed by 24-hour security. We don't book individual rooms — when
+              you stay with us, the entire apartment is yours.
             </p>
           </div>
         </div>
@@ -52,11 +53,7 @@ export default function About() {
       >
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {site.values.map((v, i) => (
-            <div
-              key={v}
-              className="card p-6 flex flex-col gap-2"
-              style={{ animationDelay: `${i * 0.07}s` }}
-            >
+            <div key={v} className="card p-6 flex flex-col gap-2">
               <span className="font-display text-3xl text-brand-maroon">
                 0{i + 1}
               </span>
