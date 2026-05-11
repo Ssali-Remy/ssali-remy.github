@@ -27,8 +27,6 @@ export default function Hero() {
             }}
           />
         ))}
-        {/* Subtle dark gradient at the bottom only — keeps the photos vivid
-            while ensuring the bottom-anchored text & buttons stay readable. */}
         <div className="absolute inset-x-0 bottom-0 top-1/3 bg-gradient-to-t from-black/55 via-black/25 to-transparent" />
       </div>
 
@@ -40,9 +38,8 @@ export default function Hero() {
           <span className="h-1.5 w-1.5 rounded-full bg-brand-beige" />
           Now booking · Kansanga & Munyonyo, Kampala
         </span>
-        <h1 className="mt-5 font-display text-5xl leading-[1.05] sm:text-6xl lg:text-7xl text-white max-w-4xl">
-          A perfect bolthole.
-          <span className="block font-sketch text-brand-beige text-5xl sm:text-6xl mt-3">
+        <h1 className="mt-5 font-display leading-[1.05] text-white max-w-4xl">
+          <span className="block font-sketch text-brand-beige text-6xl sm:text-7xl lg:text-8xl">
             Simple Made Perfect.
           </span>
         </h1>
