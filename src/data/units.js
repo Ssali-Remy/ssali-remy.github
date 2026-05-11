@@ -1,7 +1,9 @@
-import { heroBackgrounds } from "./images-hero";
+import { compound1, compound2, compound3, compound4, heroBackgrounds } from "./images-hero";
 import { k1Cover, k1Img1, k1Img2, k1Img3, k1Img4 } from "./images-k1";
+import { k2Cover, k2Img1, k2Img2, k2Img3, k2Img4 } from "./images-k2";
+import { m3Cover, m3Img1, m3Img2, m3Img3, m3Img4 } from "./images-m3";
 
-export { heroBackgrounds };
+export { heroBackgrounds, compound1, compound2, compound3, compound4 };
 
 export const units = [
   {
@@ -35,8 +37,8 @@ export const units = [
     bathrooms: 2,
     sleeps: 4,
     pricing: { day: 80, week: 400, month: 1400 },
-    cover: "/images/units/kansanga-2-cover.jpg",
-    gallery: [],
+    cover: k2Cover,
+    gallery: [k2Img1, k2Img2, k2Img3, k2Img4],
     highlights: [
       "Modern styling and finishes",
       "Ensuite bedrooms with showers",
@@ -54,8 +56,8 @@ export const units = [
     bathrooms: 2,
     sleeps: 4,
     pricing: { day: 100, week: 480, month: 1700 },
-    cover: "/images/units/munyonyo-3-cover.jpg",
-    gallery: [],
+    cover: m3Cover,
+    gallery: [m3Img1, m3Img2, m3Img3, m3Img4],
     highlights: [
       "Quiet lakeside neighbourhood",
       "Modern open-plan living",
