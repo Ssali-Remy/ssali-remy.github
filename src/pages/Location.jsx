@@ -4,6 +4,13 @@ import UnitCard from "../components/UnitCard";
 import SmartImage from "../components/SmartImage";
 import { units, locationsById } from "../data/units";
 import { gallery } from "../data/gallery";
+import { compound1, compound3 } from "../data/images-hero";
+import { m3Cover } from "../data/images-m3";
+
+const HERO_BY_LOCATION = {
+  kansanga: compound3,
+  munyonyo: m3Cover,
+};
 
 export default function Location() {
   const { id } = useParams();
@@ -13,6 +20,7 @@ export default function Location() {
   const locUnits = units.filter((u) => u.locationId === id);
   const locGallery = gallery.filter((g) => g.location === id);
   const hasInfo = locUnits.length > 0;
+  const heroImg = HERO_BY_LOCATION[id] || compound1;
 
   return (
     <>
@@ -21,9 +29,7 @@ export default function Location() {
         <div className="container-x relative grid gap-10 py-16 lg:grid-cols-2 items-center">
           <div>
             <span className="pill">{loc.name}, Kampala</span>
-            <h1 className="mt-3 font-display text-5xl sm:text-6xl">
-              {loc.name}
-            </h1>
+            <h1 className="mt-3 font-display text-5xl sm:text-6xl">{loc.name}</h1>
             <p className="mt-5 text-lg text-brand-ink/75">{loc.blurb}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link to="/booking" className="btn-primary">
@@ -36,7 +42,7 @@ export default function Location() {
           </div>
           <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-soft">
             <SmartImage
-              src={`/images/gallery/${loc.id}-1.jpg`}
+              src={heroImg}
               alt={loc.name}
               fallbackLabel={loc.name}
               className="h-full w-full object-cover"
@@ -67,10 +73,7 @@ export default function Location() {
             <h2 className="font-display text-3xl">Features</h2>
             <ul className="mt-5 grid gap-2 sm:grid-cols-2">
               {loc.features.map((f) => (
-                <li
-                  key={f}
-                  className="flex gap-2 items-start text-brand-ink/80"
-                >
+                <li key={f} className="flex gap-2 items-start text-brand-ink/80">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-brand-maroon" />
                   <span>{f}</span>
                 </li>
@@ -81,14 +84,9 @@ export default function Location() {
             <h2 className="font-display text-3xl">Local amenities</h2>
             <ul className="mt-5 divide-y divide-brand-sand/60 rounded-2xl bg-white shadow-soft">
               {loc.amenities.map(([place, dist]) => (
-                <li
-                  key={place}
-                  className="flex items-center justify-between px-5 py-3"
-                >
+                <li key={place} className="flex items-center justify-between px-5 py-3">
                   <span className="text-brand-ink/85">{place}</span>
-                  <span className="text-sm text-brand-sienna font-medium">
-                    {dist}
-                  </span>
+                  <span className="text-sm text-brand-sienna font-medium">{dist}</span>
                 </li>
               ))}
             </ul>
@@ -99,11 +97,10 @@ export default function Location() {
       {locGallery.length > 0 && (
         <Section eyebrow="Gallery" title={`${loc.name} in pictures`}>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {locGallery.map((g, i) => (
+            {locGallery.map((g) => (
               <div
-                key={g.src}
+                key={g.src.slice(0, 80)}
                 className="aspect-[4/3] overflow-hidden rounded-2xl shadow-soft"
-                style={{ animationDelay: `${i * 0.05}s` }}
               >
                 <SmartImage
                   src={g.src}
