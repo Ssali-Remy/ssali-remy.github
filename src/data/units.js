@@ -1,3 +1,8 @@
+import { heroBackgrounds } from "./images-hero";
+import { k1Cover, k1Img1, k1Img2, k1Img3, k1Img4 } from "./images-k1";
+
+export { heroBackgrounds };
+
 export const units = [
   {
     id: "kansanga-1",
@@ -10,13 +15,8 @@ export const units = [
     bathrooms: 2,
     sleeps: 4,
     pricing: { day: 90, week: 425, month: 1500 },
-    cover: "/images/units/kansanga-1-cover.jpg",
-    gallery: [
-      "/images/units/kansanga-1-1.jpg",
-      "/images/units/kansanga-1-2.jpg",
-      "/images/units/kansanga-1-3.jpg",
-      "/images/units/kansanga-1-4.jpg",
-    ],
+    cover: k1Cover,
+    gallery: [k1Img1, k1Img2, k1Img3, k1Img4],
     highlights: [
       "Garden terrace with city views",
       "Smart TV, DStv, Wi-Fi",
@@ -36,12 +36,7 @@ export const units = [
     sleeps: 4,
     pricing: { day: 80, week: 400, month: 1400 },
     cover: "/images/units/kansanga-2-cover.jpg",
-    gallery: [
-      "/images/units/kansanga-2-1.jpg",
-      "/images/units/kansanga-2-2.jpg",
-      "/images/units/kansanga-2-3.jpg",
-      "/images/units/kansanga-2-4.jpg",
-    ],
+    gallery: [],
     highlights: [
       "Modern styling and finishes",
       "Ensuite bedrooms with showers",
@@ -60,12 +55,7 @@ export const units = [
     sleeps: 4,
     pricing: { day: 100, week: 480, month: 1700 },
     cover: "/images/units/munyonyo-3-cover.jpg",
-    gallery: [
-      "/images/units/munyonyo-3-1.jpg",
-      "/images/units/munyonyo-3-2.jpg",
-      "/images/units/munyonyo-3-3.jpg",
-      "/images/units/munyonyo-3-4.jpg",
-    ],
+    gallery: [],
     highlights: [
       "Quiet lakeside neighbourhood",
       "Modern open-plan living",
@@ -84,8 +74,7 @@ export const locations = [
     blurb:
       "A serene duplex on top of Kansanga hill at the end of Diplomate Church Road off Gaba — modern, secure and away from the busy town centre.",
     coords: { lat: 0.2861, lng: 32.6181 },
-    mapEmbed:
-      "https://www.google.com/maps?q=Kansanga,Kampala&output=embed",
+    mapEmbed: "https://www.google.com/maps?q=Kansanga,Kampala&output=embed",
     amenities: [
       ["Horse Power Gym", "1.2 km"],
       ["UK Mall", "600 m"],
@@ -117,8 +106,7 @@ export const locations = [
     blurb:
       "Tucked away in lakeside Munyonyo, minutes from Speke Resort and the Kampala Serena Marina — a calm setting for both leisure and business stays.",
     coords: { lat: 0.2475, lng: 32.6361 },
-    mapEmbed:
-      "https://www.google.com/maps?q=Munyonyo,Kampala&output=embed",
+    mapEmbed: "https://www.google.com/maps?q=Munyonyo,Kampala&output=embed",
     amenities: [
       ["Speke Resort Munyonyo", "1.0 km"],
       ["Munyonyo Commonwealth Resort", "1.2 km"],
