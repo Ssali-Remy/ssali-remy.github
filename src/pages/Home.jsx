@@ -5,6 +5,10 @@ import UnitCard from "../components/UnitCard";
 import SmartImage from "../components/SmartImage";
 import PaymentMethods from "../components/PaymentMethods";
 import { units, locations } from "../data/units";
+import { k1Cover, k1Img2 } from "../data/images-k1";
+import { k2Cover } from "../data/images-k2";
+import { m3Cover, m3Img1 } from "../data/images-m3";
+import { compound2 } from "../data/images-hero";
 import { reviews } from "../data/reviews";
 import { site } from "../data/site";
 
@@ -16,7 +20,7 @@ export default function Home() {
       <Section
         eyebrow="Our Apartments"
         title="Spaces that feel like home"
-        subtitle="Five fully furnished apartments across two of Kampala's most loved neighbourhoods. Choose your stay — from a quick weekend escape to long-term comfort."
+        subtitle="Three fully furnished apartments across two of Kampala's most loved neighbourhoods. Choose your stay — from a quick weekend escape to long-term comfort."
       >
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {units.map((u) => (
@@ -30,16 +34,16 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-3">
             <div className="aspect-[3/4] rounded-3xl overflow-hidden shadow-soft">
               <SmartImage
-                src="/images/gallery/kansanga-4.jpg"
-                alt="Kitchen"
-                fallbackLabel="Kitchen"
+                src={k1Img2}
+                alt="Kansanga interior"
+                fallbackLabel="Living"
                 className="h-full w-full object-cover"
               />
             </div>
             <div className="aspect-[3/4] rounded-3xl overflow-hidden shadow-soft mt-8">
               <SmartImage
-                src="/images/gallery/munyonyo-2.jpg"
-                alt="Bedroom"
+                src={m3Img1}
+                alt="Munyonyo bedroom"
                 fallbackLabel="Bedroom"
                 className="h-full w-full object-cover"
               />
@@ -52,9 +56,7 @@ export default function Home() {
             <h2 className="mt-3 font-display text-4xl sm:text-5xl leading-tight">
               Convenience and comfort, beyond expectations.
             </h2>
-            <p className="mt-5 text-lg text-brand-ink/75">
-              {site.mission}
-            </p>
+            <p className="mt-5 text-lg text-brand-ink/75">{site.mission}</p>
             <p className="mt-3 text-brand-ink/70">
               From the garden terrace overlooking Kampala's hills to the modern
               kitchens and 24-hour security, every detail is designed to feel
@@ -79,38 +81,44 @@ export default function Home() {
         subtitle="Quiet, secure neighbourhoods near everything you need."
       >
         <div className="grid gap-6 md:grid-cols-2">
-          {locations.map((loc) => (
-            <Link
-              key={loc.id}
-              to={`/locations/${loc.id}`}
-              className="group card overflow-hidden flex flex-col"
-            >
-              <div className="aspect-[16/10] overflow-hidden">
-                <SmartImage
-                  src={`/images/gallery/${loc.id}-1.jpg`}
-                  alt={loc.name}
-                  fallbackLabel={loc.name}
-                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-7">
-                <div className="flex items-baseline justify-between">
-                  <h3 className="font-display text-3xl">{loc.name}</h3>
-                  <span className="text-sm text-brand-sienna group-hover:underline">
-                    Explore →
-                  </span>
+          {locations.map((loc) => {
+            const cover = loc.id === "kansanga" ? compound2 : m3Cover;
+            return (
+              <Link
+                key={loc.id}
+                to={`/locations/${loc.id}`}
+                className="group card overflow-hidden flex flex-col"
+              >
+                <div className="aspect-[16/10] overflow-hidden">
+                  <SmartImage
+                    src={cover}
+                    alt={loc.name}
+                    fallbackLabel={loc.name}
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                  />
                 </div>
-                <p className="mt-3 text-brand-ink/70">{loc.blurb}</p>
-              </div>
-            </Link>
-          ))}
+                <div className="p-7">
+                  <div className="flex items-baseline justify-between">
+                    <h3 className="font-display text-3xl">{loc.name}</h3>
+                    <span className="text-sm text-brand-sienna group-hover:underline">
+                      Explore →
+                    </span>
+                  </div>
+                  <p className="mt-3 text-brand-ink/70">{loc.blurb}</p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </Section>
 
       <Section className="bg-brand-maroon text-brand-cream">
         <div className="grid gap-10 md:grid-cols-3">
           {reviews.map((r) => (
-            <figure key={r.name} className="rounded-3xl bg-brand-maroon/40 backdrop-blur-sm border border-brand-cream/10 p-7">
+            <figure
+              key={r.name}
+              className="rounded-3xl bg-brand-maroon/40 backdrop-blur-sm border border-brand-cream/10 p-7"
+            >
               <div className="flex gap-0.5 text-brand-beige">
                 {Array.from({ length: r.rating }).map((_, i) => (
                   <svg key={i} viewBox="0 0 24 24" className="h-4 w-4 fill-current">
@@ -133,15 +141,18 @@ export default function Home() {
         align="center"
         eyebrow="Easy Payment"
         title="Pay your way"
-        subtitle="We accept Flutterwave, Visa cards, Mastercard and MTN Mobile Money. Secure, fast and convenient."
+        subtitle="We accept Visa, Mastercard, MTN Mobile Money, Airtel Money and Flutterwave. Secure, fast, convenient."
       >
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <PaymentMethods />
           <Link to="/booking" className="btn-primary mt-8">
             Start booking
           </Link>
         </div>
       </Section>
+
+      {/* Hidden import marker — keeps tree-shaking aware of cover refs */}
+      <span className="hidden">{[k1Cover, k2Cover].length}</span>
     </>
   );
 }
