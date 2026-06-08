@@ -6,6 +6,7 @@ import { units, locationsById } from "../data/units";
 import { gallery } from "../data/gallery";
 import { compound1, compound3 } from "../data/images-hero";
 import { m3Cover } from "../data/images-m3";
+import { site } from "../data/site";
 
 const HERO_BY_LOCATION = {
   kansanga: compound3,
@@ -19,7 +20,6 @@ export default function Location() {
 
   const locUnits = units.filter((u) => u.locationId === id);
   const locGallery = gallery.filter((g) => g.location === id);
-  const hasInfo = locUnits.length > 0;
   const heroImg = HERO_BY_LOCATION[id] || compound1;
 
   return (
@@ -30,10 +30,11 @@ export default function Location() {
           <div>
             <span className="pill">{loc.name}, Kampala</span>
             <h1 className="mt-3 font-display text-5xl sm:text-6xl">{loc.name}</h1>
+            <p className="mt-2 text-sm text-brand-ink/55">{loc.address}</p>
             <p className="mt-5 text-lg text-brand-ink/75">{loc.blurb}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link to="/booking" className="btn-primary">
-                Book at {loc.name}
+                Check availability
               </Link>
               <a href="#units" className="btn-ghost">
                 View apartments
@@ -51,29 +52,21 @@ export default function Location() {
         </div>
       </section>
 
-      {hasInfo ? (
-        <Section id="units" eyebrow="Apartments" title={`Stays in ${loc.name}`}>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {locUnits.map((u) => (
-              <UnitCard key={u.id} unit={u} />
-            ))}
-          </div>
-        </Section>
-      ) : (
-        <Section
-          align="center"
-          title="More info coming soon"
-          subtitle="We're polishing details for this location. Reach out and we'll share what's available."
-        />
-      )}
+      <Section id="units" eyebrow="Apartments" title={`Stays in ${loc.name}`}>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {locUnits.map((u) => (
+            <UnitCard key={u.id} unit={u} />
+          ))}
+        </div>
+      </Section>
 
-      <Section className="bg-brand-beige/40">
+      <Section className="bg-brand-beige/40" eyebrow="What's inside" title="A house ready to live in">
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
-            <h2 className="font-display text-3xl">Features</h2>
-            <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+            <h3 className="font-display text-2xl text-brand-maroon">Features</h3>
+            <ul className="mt-4 grid gap-2 sm:grid-cols-2">
               {loc.features.map((f) => (
-                <li key={f} className="flex gap-2 items-start text-brand-ink/80">
+                <li key={f} className="flex gap-2 items-start text-brand-ink/80 text-sm">
                   <span className="mt-2 h-1.5 w-1.5 rounded-full bg-brand-maroon" />
                   <span>{f}</span>
                 </li>
@@ -81,21 +74,32 @@ export default function Location() {
             </ul>
           </div>
           <div>
-            <h2 className="font-display text-3xl">Local amenities</h2>
-            <ul className="mt-5 divide-y divide-brand-sand/60 rounded-2xl bg-white shadow-soft">
-              {loc.amenities.map(([place, dist]) => (
-                <li key={place} className="flex items-center justify-between px-5 py-3">
-                  <span className="text-brand-ink/85">{place}</span>
-                  <span className="text-sm text-brand-sienna font-medium">{dist}</span>
-                </li>
-              ))}
-            </ul>
+            <h3 className="font-display text-2xl text-brand-maroon">Quick facts</h3>
+            <dl className="mt-4 grid gap-3">
+              <Fact label="Check-in">{site.checkIn}</Fact>
+              <Fact label="Check-out">{site.checkOut}</Fact>
+              <Fact label="Parking">Free, on-site — no permit required</Fact>
+              <Fact label="Wi-Fi">Strongest in the living room and kitchen</Fact>
+              <Fact label="On-site contact">Caretaker · {site.contact.caretakerPhone}</Fact>
+              <Fact label="Booking">Phone or WhatsApp the host — no online card payments</Fact>
+            </dl>
           </div>
         </div>
       </Section>
 
+      <Section eyebrow="Nearby places" title="What's around you">
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {loc.nearby.map(([place, where]) => (
+            <li key={place} className="card p-4">
+              <p className="font-medium text-brand-ink">{place}</p>
+              <p className="mt-1 text-sm text-brand-ink/60">📍 {where}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
       {locGallery.length > 0 && (
-        <Section eyebrow="Gallery" title={`${loc.name} in pictures`}>
+        <Section eyebrow="Gallery" title={`${loc.name} in pictures`} className="bg-brand-beige/40">
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {locGallery.map((g) => (
               <div
@@ -126,5 +130,14 @@ export default function Location() {
         </div>
       </Section>
     </>
+  );
+}
+
+function Fact({ label, children }) {
+  return (
+    <div className="card px-5 py-3">
+      <dt className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">{label}</dt>
+      <dd className="mt-1 text-brand-ink">{children}</dd>
+    </div>
   );
 }
