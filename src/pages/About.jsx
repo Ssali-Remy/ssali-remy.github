@@ -2,15 +2,15 @@ import { Link } from "react-router-dom";
 import Section from "../components/Section";
 import SmartImage from "../components/SmartImage";
 import { site } from "../data/site";
-import { compound1 } from "../data/images-hero";
+import { compound1, compound4 } from "../data/images-hero";
 
 export default function About() {
   return (
     <>
       <Section
-        eyebrow="About"
-        title={site.name}
-        subtitle={site.mission}
+        eyebrow="About Us"
+        title="Welcome to Elyon Nest"
+        subtitle="It is a pleasure and privilege to host you."
         align="center"
         className="bg-gradient-to-b from-brand-beige/60 to-brand-cream"
       >
@@ -30,43 +30,80 @@ export default function About() {
             />
           </div>
           <div>
-            <h2 className="font-display text-4xl">Our story</h2>
-            <p className="mt-5 text-brand-ink/75">
-              Elyon Nest was born from a simple idea: travel and short stays
-              should feel as comfortable as home. We started with one
-              hand-styled duplex on Kansanga hill and have grown into a small
-              collection of carefully curated apartments across Kampala.
+            <h2 className="font-display text-4xl">Hi there, and welcome!</h2>
+            <p className="mt-5 text-brand-ink/80 text-lg">
+              {site.welcome}
             </p>
-            <p className="mt-3 text-brand-ink/75">
-              Every property is fully furnished, professionally maintained and
-              backed by 24-hour security. We don't book individual rooms — when
-              you stay with us, the entire apartment is yours.
+            <p className="mt-3 text-brand-ink/70">
+              {site.welcomeFollowUp} We're happy to share local tips, restaurant
+              recommendations, or help with anything else you might need.
+            </p>
+            <p className="mt-6 font-sketch text-2xl text-brand-sienna">
+              — {site.contact.host}, your host
             </p>
           </div>
         </div>
       </Section>
 
-      <Section
-        className="bg-brand-beige/40"
-        eyebrow="What we believe"
-        title="Our values"
-      >
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-          {site.values.map((v, i) => (
-            <div key={v} className="card p-6 flex flex-col gap-2">
-              <span className="font-display text-3xl text-brand-maroon">
-                0{i + 1}
-              </span>
-              <p className="font-medium">{v}</p>
-            </div>
-          ))}
+      <Section className="bg-brand-beige/40" eyebrow="What you can expect" title="A house built around you">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <Feature title="Settle in quickly">
+            Keyless entry on the front door with a code shared at check-in.
+            You'll always find a caretaker to guide you.
+          </Feature>
+          <Feature title="Stay connected">
+            Strong Wi-Fi, Smart TV with Netflix and DStv, work-from-anywhere
+            comfort.
+          </Feature>
+          <Feature title="Feel at home in the kitchen">
+            Fully equipped — cutlery, cookware, blender, microwave, fridge —
+            cook for yourself or just brew good coffee.
+          </Feature>
+          <Feature title="Sleep cool">
+            Air conditioning in every room. Power back-up so it stays on.
+          </Feature>
+          <Feature title="Safe & cared for">
+            24-hr security personnel armed at night, outdoor CCTV, smoke and
+            CO detectors, first aid kit and emergency siren.
+          </Feature>
+          <Feature title="Looked after daily">
+            Housekeeping six days a week. Laundry service Mon · Wed · Fri.
+          </Feature>
+        </div>
+      </Section>
+
+      <Section eyebrow="House rules" title="Simple, so everyone's comfortable">
+        <div className="grid gap-10 lg:grid-cols-2 items-center">
+          <ul className="grid gap-3">
+            {[
+              ["No smoking indoors", "You're welcome to smoke outside."],
+              ["No parties or events", "Small, quiet gatherings are fine — just let us know in advance."],
+              ["Quiet hours 11 PM – 8 AM", "Out of respect for our neighbours."],
+              ["No pets, please", "Pets aren't allowed in the home."],
+              ["Check-out by 11:00 AM", "Leave the keys in the door(s) and lock up behind you."],
+              ["Respect the space", "Treat the home with care and let us know straight away if anything needs fixing."],
+            ].map(([h, d]) => (
+              <li key={h} className="card p-5">
+                <h3 className="font-display text-xl text-brand-maroon">{h}</h3>
+                <p className="text-sm text-brand-ink/70 mt-1">{d}</p>
+              </li>
+            ))}
+          </ul>
+          <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-soft">
+            <SmartImage
+              src={compound4}
+              alt="Elyon Nest exterior"
+              fallbackLabel="House"
+              className="h-full w-full object-cover"
+            />
+          </div>
         </div>
       </Section>
 
       <Section align="center" title="Ready to stay?">
         <div className="flex flex-wrap justify-center gap-3">
           <Link to="/booking" className="btn-primary">
-            Book your stay
+            Check availability
           </Link>
           <Link to="/contact" className="btn-ghost">
             Talk to us
@@ -74,5 +111,14 @@ export default function About() {
         </div>
       </Section>
     </>
+  );
+}
+
+function Feature({ title, children }) {
+  return (
+    <div className="card p-6">
+      <h3 className="font-display text-xl text-brand-maroon">{title}</h3>
+      <p className="text-sm text-brand-ink/75 mt-2 leading-relaxed">{children}</p>
+    </div>
   );
 }
