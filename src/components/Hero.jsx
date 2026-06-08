@@ -36,7 +36,7 @@ export default function Hero() {
       >
         <span className="inline-flex items-center gap-1.5 rounded-full bg-black/30 backdrop-blur px-3 py-1 text-xs font-medium text-white ring-1 ring-white/20">
           <span className="h-1.5 w-1.5 rounded-full bg-brand-beige" />
-          Now booking · Kansanga & Munyonyo, Kampala
+          Kansanga · Munyonyo · Kampala
         </span>
         <h1 className="mt-5 font-display leading-[1.05] text-white max-w-4xl">
           <span className="block font-sketch text-brand-beige text-6xl sm:text-7xl lg:text-8xl">
@@ -44,12 +44,13 @@ export default function Hero() {
           </span>
         </h1>
         <p className="mt-6 max-w-xl text-lg text-white/95">
-          Boutique self-catering apartments in Kansanga and Munyonyo — modern,
-          secure and styled for both short escapes and long stays.
+          We've poured a lot of love into our homes to make them as convenient,
+          comfortable and welcoming as possible — whether you're here to relax,
+          explore, or work remotely.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link to="/booking" className="btn-primary">
-            Book your stay
+            Check availability
           </Link>
           <Link
             to="/locations/kansanga"
