@@ -14,9 +14,6 @@ export default function UnitCard({ unit, ctaTo = "/booking" }) {
         <div className="absolute top-3 left-3 flex gap-2">
           <span className="pill bg-brand-cream/90">{unit.location}</span>
         </div>
-        <div className="absolute bottom-3 right-3 rounded-full bg-brand-maroon px-3 py-1 text-xs font-semibold text-brand-cream shadow-soft">
-          From ${unit.pricing.day}/night
-        </div>
       </div>
       <div className="flex flex-col gap-3 p-6 flex-1">
         <div>
@@ -36,19 +33,12 @@ export default function UnitCard({ unit, ctaTo = "/booking" }) {
             </li>
           ))}
         </ul>
-        <div className="mt-auto flex items-end justify-between pt-4">
-          <div>
-            <p className="text-xs text-brand-ink/60">From</p>
-            <p className="font-display text-2xl text-brand-maroon">
-              ${unit.pricing.day}
-              <span className="text-sm font-sans text-brand-ink/60"> /night</span>
-            </p>
-          </div>
+        <div className="mt-auto pt-4">
           <Link
             to={`${ctaTo}?unit=${unit.id}`}
-            className="btn-primary text-sm py-2 px-5"
+            className="btn-primary w-full text-sm py-2.5"
           >
-            Book
+            Check Availability
           </Link>
         </div>
       </div>
