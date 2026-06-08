@@ -3,13 +3,11 @@ import Hero from "../components/Hero";
 import Section from "../components/Section";
 import UnitCard from "../components/UnitCard";
 import SmartImage from "../components/SmartImage";
-import PaymentMethods from "../components/PaymentMethods";
 import { units, locations } from "../data/units";
-import { k1Cover, k1Img2 } from "../data/images-k1";
-import { k2Cover } from "../data/images-k2";
-import { m3Cover, m3Img1 } from "../data/images-m3";
-import { compound2 } from "../data/images-hero";
-import { reviews } from "../data/reviews";
+import { k1Img2 } from "../data/images-k1";
+import { m3Img1 } from "../data/images-m3";
+import { compound2, compound3 } from "../data/images-hero";
+import { m3Cover } from "../data/images-m3";
 import { site } from "../data/site";
 
 export default function Home() {
@@ -19,8 +17,8 @@ export default function Home() {
 
       <Section
         eyebrow="Our Apartments"
-        title="Spaces that feel like home"
-        subtitle="Three fully furnished apartments across two of Kampala's most loved neighbourhoods. Choose your stay — from a quick weekend escape to long-term comfort."
+        title="Make yourself at home"
+        subtitle="A small, hand-styled collection of self-catering apartments — fully furnished and built around you. Pick a wing of the Kansanga duplex or the lakeside retreat in Munyonyo."
       >
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {units.map((u) => (
@@ -35,7 +33,7 @@ export default function Home() {
             <div className="aspect-[3/4] rounded-3xl overflow-hidden shadow-soft">
               <SmartImage
                 src={k1Img2}
-                alt="Kansanga interior"
+                alt="Living room at Elyon Nest Kansanga"
                 fallbackLabel="Living"
                 className="h-full w-full object-cover"
               />
@@ -43,7 +41,7 @@ export default function Home() {
             <div className="aspect-[3/4] rounded-3xl overflow-hidden shadow-soft mt-8">
               <SmartImage
                 src={m3Img1}
-                alt="Munyonyo bedroom"
+                alt="Bedroom at Elyon Nest Munyonyo"
                 fallbackLabel="Bedroom"
                 className="h-full w-full object-cover"
               />
@@ -51,24 +49,26 @@ export default function Home() {
           </div>
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-brand-sienna font-semibold">
-              About Elyon Nest
+              Meet your host
             </p>
             <h2 className="mt-3 font-display text-4xl sm:text-5xl leading-tight">
-              Convenience and comfort, beyond expectations.
+              We've poured a lot of love into this home.
             </h2>
-            <p className="mt-5 text-lg text-brand-ink/75">{site.mission}</p>
+            <p className="mt-5 text-lg text-brand-ink/75">{site.welcome}</p>
             <p className="mt-3 text-brand-ink/70">
-              From the garden terrace overlooking Kampala's hills to the modern
-              kitchens and 24-hour security, every detail is designed to feel
-              effortless. Whether you stay a night, a week, or a month — the
-              keys are yours.
+              {site.welcomeFollowUp} We're happy to share local tips, restaurant
+              recommendations, or help with anything else you might need during
+              your stay.
+            </p>
+            <p className="mt-3 text-brand-ink/70">
+              — {site.contact.host}, your host at Elyon Nest
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/about" className="btn-ghost">
                 More about us
               </Link>
               <Link to="/booking" className="btn-primary">
-                Book now
+                Check availability
               </Link>
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function Home() {
       <Section
         eyebrow="Two Locations"
         title="Find your perfect base"
-        subtitle="Quiet, secure neighbourhoods near everything you need."
+        subtitle="Two quiet, secure neighbourhoods minutes from everything you need."
       >
         <div className="grid gap-6 md:grid-cols-2">
           {locations.map((loc) => {
@@ -104,6 +104,7 @@ export default function Home() {
                       Explore →
                     </span>
                   </div>
+                  <p className="mt-2 text-xs text-brand-ink/55">{loc.address}</p>
                   <p className="mt-3 text-brand-ink/70">{loc.blurb}</p>
                 </div>
               </Link>
@@ -112,47 +113,23 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section className="bg-brand-maroon text-brand-cream">
-        <div className="grid gap-10 md:grid-cols-3">
-          {reviews.map((r) => (
-            <figure
-              key={r.name}
-              className="rounded-3xl bg-brand-maroon/40 backdrop-blur-sm border border-brand-cream/10 p-7"
-            >
-              <div className="flex gap-0.5 text-brand-beige">
-                {Array.from({ length: r.rating }).map((_, i) => (
-                  <svg key={i} viewBox="0 0 24 24" className="h-4 w-4 fill-current">
-                    <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z" />
-                  </svg>
-                ))}
-              </div>
-              <blockquote className="mt-4 font-display text-lg leading-relaxed">
-                "{r.text}"
-              </blockquote>
-              <figcaption className="mt-4 text-sm text-brand-cream/70">
-                — {r.name}, {r.location}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </Section>
-
       <Section
+        className="bg-brand-maroon text-brand-cream"
         align="center"
-        eyebrow="Easy Payment"
-        title="Pay your way"
-        subtitle="We accept Visa, Mastercard, MTN Mobile Money, Airtel Money and Flutterwave. Secure, fast, convenient."
+        eyebrow="How to book"
+        title="A real conversation, not a checkout"
+        subtitle="We don't take card payments online. Pick your dates on the unit page, then call or WhatsApp the host directly — Suubi will confirm everything and share your access code."
       >
-        <div className="max-w-3xl mx-auto">
-          <PaymentMethods />
-          <Link to="/booking" className="btn-primary mt-8">
-            Start booking
-          </Link>
-        </div>
+        <Link
+          to="/booking"
+          className="inline-flex items-center justify-center rounded-full bg-brand-cream text-brand-maroon px-6 py-3 font-medium hover:bg-brand-beige transition"
+        >
+          Check availability
+        </Link>
       </Section>
 
-      {/* Hidden import marker — keeps tree-shaking aware of cover refs */}
-      <span className="hidden">{[k1Cover, k2Cover].length}</span>
+      {/* Suppress unused-import warning while keeping compound3 reachable for future use */}
+      <span className="hidden">{[compound3].length}</span>
     </>
   );
 }
