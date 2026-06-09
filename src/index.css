@@ -2,6 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Emil-style animation foundation ─────────────────────────── */
+:root {
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@keyframes navbarSlideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes dropdownIn {
+  from { opacity: 0; transform: translateX(-50%) scale(0.95) translateY(-6px); }
+  to   { opacity: 1; transform: translateX(-50%) scale(1)    translateY(0); }
+}
+
+/* Scroll-reveal: fade + rise */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 560ms var(--ease-out), transform 560ms var(--ease-out);
+}
+.reveal-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays – apply alongside reveal-up on siblings */
+.stagger-1 { transition-delay:   0ms; }
+.stagger-2 { transition-delay:  70ms; }
+.stagger-3 { transition-delay: 140ms; }
+.stagger-4 { transition-delay: 210ms; }
+.stagger-5 { transition-delay: 280ms; }
+.stagger-6 { transition-delay: 350ms; }
+
+/* Navbar slide-in on page load */
+.navbar-enter {
+  animation: navbarSlideIn 500ms var(--ease-out) both;
+}
+
+/* Dropdown scale-from-origin entrance */
+.dropdown-enter {
+  animation: dropdownIn 180ms var(--ease-out) both;
+}
+
+/* Partner card hover lift – hardware-accelerated, hover-device only */
+.partner-card {
+  transition: transform 220ms var(--ease-out), box-shadow 220ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .partner-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -12px rgba(91, 26, 26, 0.18);
+  }
+}
+
+/* Amenity icon scale on hover */
+.amenity-icon {
+  transition: transform 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .amenity-item:hover .amenity-icon {
+    transform: scale(1.12);
+  }
+}
+
+/* ─── Respect reduced motion ───────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .partner-card,
+  .amenity-icon {
+    transition: none;
+  }
+  .navbar-enter,
+  .dropdown-enter {
+    animation: none;
+  }
+}
+
+/* ─── Base layer ───────────────────────────────────────────────── */
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -12,17 +95,34 @@
   h1,
   h2,
   h3 {
-    @apply font-display text-brand-maroon;
+    @apply font-display text-brand-ink;
   }
 }
 
+/* ─── Component layer ──────────────────────────────────────────── */
 @layer components {
+  /* Primary button — specific transitions, press feedback */
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-brand-maroon px-6 py-3 font-medium text-brand-cream shadow-soft transition hover:bg-brand-burgundy hover:scale-[1.02] active:scale-100;
+    @apply inline-flex items-center justify-center rounded-full bg-brand-burgundy px-6 py-3 font-medium text-white shadow-soft;
+    transition: transform 160ms var(--ease-out), background-color 150ms ease, box-shadow 150ms ease;
   }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover { @apply bg-brand-maroon; }
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  /* Ghost button */
   .btn-ghost {
-    @apply inline-flex items-center justify-center rounded-full border border-brand-maroon/30 px-6 py-3 font-medium text-brand-maroon transition hover:bg-brand-maroon hover:text-brand-cream;
+    @apply inline-flex items-center justify-center rounded-full border border-brand-maroon/40 px-6 py-3 font-medium text-brand-maroon;
+    transition: transform 160ms var(--ease-out), background-color 150ms ease, color 150ms ease, border-color 150ms ease;
   }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-ghost:hover {
+      @apply bg-brand-burgundy text-white border-brand-burgundy;
+    }
+  }
+  .btn-ghost:active { transform: scale(0.97); }
+
   .container-x {
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
   }
@@ -40,15 +140,37 @@
   }
 }
 
-/* react-datepicker overrides */
+/* ─── react-datepicker overrides ───────────────────────────────── */
 .react-datepicker-wrapper {
   width: 100%;
 }
+
+/* Full-width inline calendar */
+.calendar-full-width .react-datepicker {
+  width: 100% !important;
+  display: flex !important;
+}
+.calendar-full-width .react-datepicker__month-container {
+  flex: 1 !important;
+  width: auto !important;
+  float: none !important;
+}
+.calendar-full-width .react-datepicker__day-names,
+.calendar-full-width .react-datepicker__week {
+  display: flex !important;
+  justify-content: space-around !important;
+}
+.calendar-full-width .react-datepicker__day-name,
+.calendar-full-width .react-datepicker__day {
+  flex: 1 !important;
+  max-width: none !important;
+  text-align: center !important;
+}
 .react-datepicker {
-  font-family: "Inter", system-ui, sans-serif !important;
-  border: 1px solid #d4c5b0 !important;
+  font-family: "Roboto", system-ui, sans-serif !important;
+  border: 1px solid #e2d9c9 !important;
   border-radius: 1rem !important;
-  box-shadow: 0 10px 30px -12px rgba(91, 26, 26, 0.18);
+  box-shadow: 0 10px 30px -12px rgba(91, 26, 26, 0.12);
 }
 .react-datepicker__header {
   background: #5b1a1a !important;
@@ -57,36 +179,25 @@
 }
 .react-datepicker__current-month,
 .react-datepicker__day-name {
-  color: #faf7f2 !important;
+  color: #fff3f0 !important;
 }
 .react-datepicker__day--selected,
 .react-datepicker__day--in-selecting-range,
 .react-datepicker__day--in-range {
-  background: #5b1a1a !important;
-  color: #faf7f2 !important;
+  background: #ed6560 !important;
+  color: #fff !important;
   border-radius: 999px !important;
 }
 .react-datepicker__day--keyboard-selected {
-  background: #8b5a3c !important;
+  background: #5b1a1a !important;
   color: #fff !important;
   border-radius: 999px !important;
 }
 .react-datepicker__day:hover {
   border-radius: 999px !important;
-  background: #e8ddd0 !important;
+  background: #f3eed9 !important;
 }
 .react-datepicker__day--disabled {
   color: #c8bfb4 !important;
   text-decoration: line-through;
-}
-
-/* subtle scroll reveal */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.7s ease;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
 }

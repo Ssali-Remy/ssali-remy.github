@@ -6,22 +6,22 @@ export default {
       colors: {
         brand: {
           maroon: "#5B1A1A",
-          burgundy: "#7A2424",
+          burgundy: "#ed6560",
           sienna: "#8B5A3C",
-          beige: "#E8DDD0",
-          sand: "#D4C5B0",
-          cream: "#FAF7F2",
+          beige: "#f3eed9",
+          sand: "#e2d9c9",
+          cream: "#fff3f0",
           ink: "#2A1A14",
         },
       },
       fontFamily: {
-        display: ["'Playfair Display'", "Georgia", "serif"],
-        sans: ["'Inter'", "system-ui", "sans-serif"],
-        sketch: ["'Caveat'", "cursive"],
+        display: ["'Roboto'", "system-ui", "sans-serif"],
+        sans: ["'Roboto'", "system-ui", "sans-serif"],
+        sketch: ["'Roboto'", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        soft: "0 10px 30px -12px rgba(91,26,26,0.18)",
-        ring: "0 0 0 6px rgba(91,26,26,0.08)",
+        soft: "0 10px 30px -12px rgba(91,26,26,0.12)",
+        ring: "0 0 0 6px rgba(237,101,96,0.12)",
       },
       keyframes: {
         fadeUp: {
