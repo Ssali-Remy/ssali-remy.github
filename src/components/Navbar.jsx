@@ -9,7 +9,6 @@ const LOCATIONS = [
 
 const TOP_LINKS = [
   { to: "/", label: "Home", end: true },
-  { to: "/about", label: "About Us" },
 ];
 
 const TAIL_LINKS = [{ to: "/contact", label: "Contact" }];
@@ -61,7 +60,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-40 transition-all ${
+      className={`navbar-enter sticky top-0 z-40 transition-all ${
         scrolled
           ? "bg-brand-cream/90 backdrop-blur-md shadow-sm"
           : "bg-brand-cream/60 backdrop-blur"
@@ -115,7 +114,7 @@ export default function Navbar() {
             {locOpen && (
               <div
                 role="menu"
-                className="absolute left-1/2 -translate-x-1/2 top-full pt-2"
+                className="dropdown-enter absolute left-1/2 -translate-x-1/2 top-full pt-2"
               >
                 <div className="min-w-[10rem] rounded-2xl border border-brand-beige bg-brand-cream shadow-soft p-2">
                   {LOCATIONS.map((l) => (

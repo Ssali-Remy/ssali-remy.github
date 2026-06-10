@@ -36,16 +36,18 @@ export default function AvailabilityCalendar({ unitId }) {
           Available
         </span>
       </div>
-      <DatePicker
-        inline
-        monthsShown={2}
-        minDate={new Date()}
-        maxDate={todayPlusYear}
-        excludeDates={booked}
-        readOnly
-        onChange={() => {}}
-        renderDayContents={(day) => <span>{day}</span>}
-      />
+      <div className="calendar-full-width">
+        <DatePicker
+          inline
+          monthsShown={1}
+          minDate={new Date()}
+          maxDate={todayPlusYear}
+          excludeDates={booked}
+          readOnly
+          onChange={() => {}}
+          renderDayContents={(day) => <span>{day}</span>}
+        />
+      </div>
       <p className="mt-4 text-xs text-brand-ink/55 text-center">
         Booked dates are shown in maroon. The calendar refreshes regularly —
         please confirm availability with the host before travelling.

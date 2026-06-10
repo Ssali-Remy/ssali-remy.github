@@ -4,49 +4,47 @@ import Logo from "./Logo";
 
 export default function Footer() {
   return (
-    <footer className="mt-24 bg-brand-maroon text-brand-cream">
+    <footer style={{ backgroundColor: "#2A1A14", color: "#fff3f0" }}>
       <div className="container-x grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-1">
           <div className="bg-brand-cream rounded-2xl p-4 inline-flex">
             <Logo />
           </div>
-          <p className="mt-4 font-sketch text-2xl text-brand-beige">{site.slogan}</p>
-          <p className="mt-2 text-sm text-brand-cream/70">
-            Boutique self-catering apartments in Kampala — Kansanga & Munyonyo.
+          <p className="mt-4 text-xl font-light italic" style={{ color: "#f3eed9" }}>{site.slogan}</p>
+          <p className="mt-2 text-sm" style={{ color: "rgba(255,243,240,0.65)" }}>
+            Boutique self-catering apartments in Kampala — Kansanga &amp; Munyonyo.
           </p>
         </div>
         <div>
-          <h4 className="font-display text-lg text-brand-cream">Visit</h4>
-          <ul className="mt-3 space-y-2 text-sm text-brand-cream/80">
-            <li><Link to="/" className="hover:text-brand-beige">Home</Link></li>
-            <li><Link to="/about" className="hover:text-brand-beige">About Us</Link></li>
-            <li><Link to="/locations/kansanga" className="hover:text-brand-beige">Kansanga</Link></li>
-            <li><Link to="/locations/munyonyo" className="hover:text-brand-beige">Munyonyo</Link></li>
-            <li><Link to="/gallery" className="hover:text-brand-beige">Gallery</Link></li>
-            <li><Link to="/booking" className="hover:text-brand-beige">Check availability</Link></li>
-            <li><Link to="/contact" className="hover:text-brand-beige">Contact</Link></li>
+          <h4 className="text-base font-semibold" style={{ color: "#fff3f0" }}>Visit</h4>
+          <ul className="mt-3 space-y-2 text-sm" style={{ color: "rgba(255,243,240,0.75)" }}>
+            <li><Link to="/" className="hover:text-brand-burgundy transition-colors">Home</Link></li>
+            <li><Link to="/locations/kansanga" className="hover:text-brand-burgundy transition-colors">Kansanga</Link></li>
+            <li><Link to="/locations/munyonyo" className="hover:text-brand-burgundy transition-colors">Munyonyo</Link></li>
+            <li><Link to="/gallery" className="hover:text-brand-burgundy transition-colors">Gallery</Link></li>
+            <li><Link to="/booking" className="hover:text-brand-burgundy transition-colors">Check availability</Link></li>
+            <li><Link to="/contact" className="hover:text-brand-burgundy transition-colors">Contact</Link></li>
           </ul>
         </div>
         <div>
-          <h4 className="font-display text-lg text-brand-cream">Contact</h4>
-          <ul className="mt-3 space-y-2 text-sm text-brand-cream/80">
-            <li>Host: {site.contact.host}</li>
+          <h4 className="text-base font-semibold" style={{ color: "#fff3f0" }}>Contact</h4>
+          <ul className="mt-3 space-y-2 text-sm" style={{ color: "rgba(255,243,240,0.75)" }}>
             <li>
-              <a href={`tel:${site.contact.phoneE164}`} className="hover:text-brand-beige">
+              <a href={`tel:${site.contact.phoneE164}`} className="hover:text-brand-burgundy transition-colors">
                 {site.contact.phone}
               </a>
             </li>
             <li>Caretaker: {site.contact.caretakerPhone}</li>
             <li>
-              <a href={`mailto:${site.contact.email}`} className="hover:text-brand-beige">
+              <a href={`mailto:${site.contact.email}`} className="hover:text-brand-burgundy transition-colors">
                 {site.contact.email}
               </a>
             </li>
           </ul>
         </div>
         <div>
-          <h4 className="font-display text-lg text-brand-cream">Locations</h4>
-          <ul className="mt-3 space-y-3 text-sm text-brand-cream/80">
+          <h4 className="text-base font-semibold" style={{ color: "#fff3f0" }}>Locations</h4>
+          <ul className="mt-3 space-y-3 text-sm" style={{ color: "rgba(255,243,240,0.75)" }}>
             <li>📍 {site.addresses.kansanga}</li>
             <li>📍 {site.addresses.munyonyo}</li>
           </ul>
@@ -60,8 +58,8 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="border-t border-brand-cream/10">
-        <div className="container-x flex flex-col md:flex-row items-center justify-between gap-3 py-5 text-xs text-brand-cream/60">
+      <div style={{ borderTop: "1px solid rgba(255,243,240,0.1)" }}>
+        <div className="container-x flex flex-col md:flex-row items-center justify-between gap-3 py-5 text-xs" style={{ color: "rgba(255,243,240,0.45)" }}>
           <p>© {new Date().getFullYear()} Elyon Nest. All rights reserved.</p>
           <p>Built with care in Kampala, Uganda.</p>
         </div>
@@ -77,7 +75,10 @@ function Social({ href, label, children }) {
       target="_blank"
       rel="noreferrer"
       aria-label={label}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-cream/10 transition hover:bg-brand-beige hover:text-brand-maroon"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-full transition"
+      style={{ background: "rgba(255,243,240,0.08)", color: "rgba(255,243,240,0.75)" }}
+      onMouseEnter={(e) => { e.currentTarget.style.background = "#ed6560"; e.currentTarget.style.color = "#fff"; }}
+      onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,243,240,0.08)"; e.currentTarget.style.color = "rgba(255,243,240,0.75)"; }}
     >
       <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
         {children}
