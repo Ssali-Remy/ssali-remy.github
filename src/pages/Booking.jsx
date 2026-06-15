@@ -43,8 +43,7 @@ export default function Booking() {
         <div className="grid gap-8 lg:grid-cols-5">
           <aside className="lg:col-span-2 space-y-6">
             <article className="card overflow-hidden">
-              {/* Doubled-height hero photo for this unit */}
-              <div className="aspect-[4/6] overflow-hidden">
+              <div className="aspect-[4/3] overflow-hidden">
                 <SmartImage
                   src={unit.cover}
                   alt={unit.name}
