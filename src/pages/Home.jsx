@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { heroBackgrounds } from "../data/units";
-import { k1Cover, k1Img1, k1Img2 } from "../data/images-k1";
-import { k2Cover, k2Img1 } from "../data/images-k2";
-import { m3Cover, m3Img1, m3Img2 } from "../data/images-m3";
+import { k1Cover, k1Img1, k1Img2, k1Img3, k1Img4 } from "../data/images-k1";
+import { k2Cover, k2Img1, k2Img2, k2Img3, k2Img4 } from "../data/images-k2";
+import { m3Cover, m3Img1, m3Img2, m3Img3, m3Img4 } from "../data/images-m3";
 import { site } from "../data/site";
 
 /* ── Intersection Observer hook (fires once, with sync visible-check fallback) ── */
@@ -163,116 +163,43 @@ const PARTNERS = [
 
 const INTERIOR_IMAGES = [k1Img1, k1Img2, k2Img1, m3Img1, m3Img2];
 
-const IMG_INTERVAL = 3500;
-const TXT_INTERVAL = IMG_INTERVAL * 2; // 7000ms
+const KANSANGA_REEL = [
+  k1Cover, k1Img1, k1Img2, k1Img3, k1Img4,
+  k2Cover, k2Img1, k2Img2, k2Img3, k2Img4,
+];
+const MUNYONYO_REEL = [
+  m3Cover, m3Img1, m3Img2, m3Img3, m3Img4,
+  m3Img1, m3Img3, m3Cover, m3Img2, m3Img4,
+];
 
-function ImageCell({ images, className = "" }) {
-  const [cur, setCur] = useState(0);
-  const [prev, setPrev] = useState(null);
-  const [fading, setFading] = useState(false);
-
-  useEffect(() => {
-    const t = setInterval(() => {
-      setCur((i) => { setPrev(i); setFading(false); return (i + 1) % images.length; });
-    }, IMG_INTERVAL);
-    return () => clearInterval(t);
-  }, [images.length]);
-
-  // One paint after prev appears at opacity 1, trigger the fade-out
-  useEffect(() => {
-    if (prev === null) return;
-    const raf = requestAnimationFrame(() => setFading(true));
-    return () => cancelAnimationFrame(raf);
-  }, [prev, cur]);
-
+function ImageMarquee({ images, direction = "left", duration = 38 }) {
+  // Duplicate so the track is exactly 2× wide and the loop is seamless.
+  const reel = [...images, ...images];
+  const dirClass = direction === "left" ? "marquee-left" : "marquee-right";
   return (
-    <div className={`relative overflow-hidden rounded-2xl min-h-[210px] ${className}`}>
-      <img src={images[cur]} alt="" className="absolute inset-0 w-full h-full object-cover" />
-      {prev !== null && (
-        <img
-          src={images[prev]}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-          style={{ opacity: fading ? 0 : 1 }}
-        />
-      )}
-    </div>
-  );
-}
-
-function TextCell({ slides, className = "", style }) {
-  const [active, setActive] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setActive((i) => (i + 1) % slides.length), TXT_INTERVAL);
-    return () => clearInterval(t);
-  }, [slides.length]);
-
-  return (
-    <div
-      className={`relative overflow-hidden rounded-2xl min-h-[210px] ${className}`}
-      style={style}
-    >
-      {slides.map((slide, i) => (
-        <div
-          key={i}
-          className="absolute inset-0 p-6 flex flex-col justify-center transition-opacity duration-[1400ms]"
-          style={{ opacity: i === active ? 1 : 0 }}
-        >
-          <h3 className="text-xl font-bold text-brand-ink">{slide.title}</h3>
-          <p className="mt-2 text-sm text-brand-ink/70 leading-relaxed">{slide.body}</p>
-          <Link
-            to={slide.linkTo}
-            className="mt-4 text-sm font-semibold text-brand-maroon hover:text-brand-burgundy transition-colors"
+    <div className={`marquee ${dirClass}`}>
+      <div
+        className="marquee-track"
+        style={{ animationDuration: `${duration}s` }}
+      >
+        {reel.map((src, i) => (
+          <div
+            key={i}
+            className="shrink-0 rounded-2xl overflow-hidden shadow-soft w-64 h-44 sm:w-72 sm:h-48 md:w-80 md:h-56"
           >
-            {slide.link} →
-          </Link>
-        </div>
-      ))}
+            <img
+              src={src}
+              alt=""
+              className="w-full h-full object-cover"
+              loading="lazy"
+              draggable="false"
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
-
-const KANSANGA_SLIDES = [
-  {
-    title: "Kansanga Duplex",
-    body: "Two spacious wings on a quiet hill — fully air-conditioned, Smart TV with Netflix & DStv, and a kitchen stocked for real cooking.",
-    link: "Explore Kansanga",
-    linkTo: "/locations/kansanga",
-  },
-  {
-    title: "Unit One — E1 Wing",
-    body: "2 bedrooms · 2 bathrooms · sleeps 4. Air conditioning in every room plus power back-up so you never lose Wi-Fi or AC.",
-    link: "View unit",
-    linkTo: "/locations/kansanga",
-  },
-  {
-    title: "Unit Two — E2 Wing",
-    body: "Modern, spacious wing with a private feel. Enjoy the garden, housekeeping six days a week, and free parking.",
-    link: "View unit",
-    linkTo: "/locations/kansanga",
-  },
-];
-
-const MUNYONYO_SLIDES = [
-  {
-    title: "Munyonyo Retreat",
-    body: "Tucked on Baguma Rise, minutes from Speke Resort and Lake Victoria. Calm, secure, and beautifully appointed.",
-    link: "Explore Munyonyo",
-    linkTo: "/locations/munyonyo",
-  },
-  {
-    title: "Lakeside Proximity",
-    body: "Minutes from the Lake Victoria shoreline and Munyonyo Commonwealth Resort — a perfect base for leisure and business alike.",
-    link: "Explore Munyonyo",
-    linkTo: "/locations/munyonyo",
-  },
-  {
-    title: "Peace & Privacy",
-    body: "24/7 security, power back-up, strong Wi-Fi, and housekeeping included — every comfort taken care of.",
-    link: "Check availability",
-    linkTo: "/booking",
-  },
-];
 
 function SectionFade({ from, to }) {
   return (
@@ -326,58 +253,53 @@ export default function Home() {
         <SlimCarousel images={INTERIOR_IMAGES} interval={4500} />
       </div>
 
-      {/* Check Availability — moved here, just before the mosaic */}
-      <div style={{ backgroundColor: "#fff3f0" }} className="pb-16 text-center">
-        <Link to="/booking" className="btn-primary">
-          Check availability
-        </Link>
-      </div>
-
       <SectionFade from="#fff3f0" to="#f3eed9" />
 
-      {/* Mosaic — picture + text teasers */}
+      {/* Proximity teasers — KANSANGA reel scrolls right, MUNYONYO reel scrolls left */}
       <section style={{ backgroundColor: "#f3eed9" }} className="py-16">
         <div ref={mosaicRef} className="container-x">
-          <p className={`text-xs uppercase tracking-[0.2em] font-semibold text-brand-maroon reveal-up stagger-1${mosaicInView ? " in-view" : ""}`}>
-            A glimpse inside
-          </p>
-          <h2 className={`mt-2 text-3xl sm:text-4xl font-bold text-brand-ink reveal-up stagger-2${mosaicInView ? " in-view" : ""}`}>
-            Life at Elyon Nest
+          <h2 className={`text-3xl sm:text-4xl font-bold text-brand-ink leading-tight text-center max-w-3xl mx-auto reveal-up stagger-1${mosaicInView ? " in-view" : ""}`}>
+            Our apartments are in close and convenient proximity to everything
           </h2>
-          <p className={`mt-3 text-brand-ink/65 reveal-up stagger-3${mosaicInView ? " in-view" : ""}`}>
-            Every corner crafted with care — here is a taste of what awaits.
-          </p>
+        </div>
 
-          <div
-            className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-3"
-            style={{ gridTemplateRows: "repeat(3, 210px)" }}
-          >
-            <ImageCell
-              images={[k1Cover, k2Cover, m3Cover, k1Img1]}
-              className={`md:col-span-2 md:row-span-2 reveal-up stagger-1${mosaicInView ? " in-view" : ""}`}
-            />
-            <TextCell
-              slides={KANSANGA_SLIDES}
-              className={`bg-white reveal-up stagger-2${mosaicInView ? " in-view" : ""}`}
-            />
-            <ImageCell
-              images={[m3Img1, k1Img2, k2Img1]}
-              className={`reveal-up stagger-3${mosaicInView ? " in-view" : ""}`}
-            />
-            <TextCell
-              slides={MUNYONYO_SLIDES}
-              className={`reveal-up stagger-4${mosaicInView ? " in-view" : ""}`}
-              style={{ background: "rgba(91,26,26,0.05)", border: "1px solid rgba(91,26,26,0.12)" }}
-            />
-            <ImageCell
-              images={[k2Cover, m3Img2, k1Img1]}
-              className={`reveal-up stagger-5${mosaicInView ? " in-view" : ""}`}
-            />
-            <ImageCell
-              images={[m3Cover, k2Img1, k1Img2]}
-              className={`reveal-up stagger-6${mosaicInView ? " in-view" : ""}`}
-            />
+        <div className="mt-12">
+          <div className="container-x">
+            <h3 className={`text-2xl font-bold text-brand-maroon tracking-[0.3em] reveal-up stagger-2${mosaicInView ? " in-view" : ""}`}>
+              KANSANGA
+            </h3>
           </div>
+          <div className={`mt-5 reveal-up stagger-3${mosaicInView ? " in-view" : ""}`}>
+            <ImageMarquee images={KANSANGA_REEL} direction="right" />
+          </div>
+        </div>
+
+        <div className="mt-12">
+          <div className="container-x">
+            <h3 className={`text-2xl font-bold text-brand-maroon tracking-[0.3em] reveal-up stagger-4${mosaicInView ? " in-view" : ""}`}>
+              MUNYONYO
+            </h3>
+          </div>
+          <div className={`mt-5 reveal-up stagger-5${mosaicInView ? " in-view" : ""}`}>
+            <ImageMarquee images={MUNYONYO_REEL} direction="left" />
+          </div>
+        </div>
+
+        <div className={`container-x mt-12 flex justify-center gap-4 flex-wrap reveal-up stagger-6${mosaicInView ? " in-view" : ""}`}>
+          <Link to="/booking" className="btn-primary">
+            Check availability
+          </Link>
+          <a
+            href={`https://wa.me/${site.contact.whatsappE164}`}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-ghost inline-flex items-center gap-2"
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.97L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.78 14.06c-.24.68-1.4 1.3-1.97 1.38-.5.07-1.13.1-1.83-.12-.42-.13-.96-.31-1.66-.61-2.92-1.26-4.83-4.2-4.97-4.4-.15-.2-1.19-1.59-1.19-3.03 0-1.43.75-2.13 1.02-2.43.27-.3.6-.37.8-.37.2 0 .4 0 .58.01.19.01.44-.07.69.52.24.6.83 2.07.9 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.18-.32.4-.45.53-.15.15-.31.31-.13.61.18.3.8 1.31 1.72 2.13 1.18 1.05 2.18 1.38 2.48 1.53.3.15.48.13.66-.08.18-.2.76-.89.97-1.2.2-.3.4-.25.68-.15.27.1 1.74.82 2.03.97.3.15.5.22.58.35.07.13.07.77-.17 1.45z" />
+            </svg>
+            WhatsApp us
+          </a>
         </div>
       </section>
 
