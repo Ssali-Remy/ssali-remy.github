@@ -9,6 +9,7 @@ import { reviews } from "../data/reviews";
 import { site } from "../data/site";
 import { k1Cover, k1Img1, k1Img2, k1Img3, k1Img4 } from "../data/images-k1";
 import { k2Cover, k2Img1, k2Img2, k2Img3, k2Img4 } from "../data/images-k2";
+import { m3Cover, m3Img1, m3Img2, m3Img3, m3Img4 } from "../data/images-m3";
 
 /* ─────────────────────────────────────────────────────────────
  *  Shared helpers (used by both layouts)
