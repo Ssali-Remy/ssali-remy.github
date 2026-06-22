@@ -295,40 +295,42 @@ export default function Home() {
       {/* Carousel 1 — exterior / compound shots */}
       <SlimCarousel images={heroBackgrounds} />
 
-      {/* Welcome statement */}
+      {/* Welcome statement — Meet your host */}
       <section style={{ backgroundColor: "#fff3f0" }} className="py-20">
         <div ref={welcomeRef} className="container-x max-w-3xl mx-auto text-center">
-          <p className={`text-xs uppercase tracking-[0.2em] font-semibold text-brand-maroon reveal-up stagger-1${welcomeInView ? " in-view" : ""}`}>
-            Kansanga · Munyonyo · Kampala
-          </p>
-          <h1 className={`mt-4 text-4xl sm:text-5xl font-bold text-brand-ink leading-tight reveal-up stagger-2${welcomeInView ? " in-view" : ""}`}>
-            Simple Made Perfect
+          <h1 className={`text-4xl sm:text-5xl font-bold text-brand-ink leading-tight reveal-up stagger-1${welcomeInView ? " in-view" : ""}`}>
+            Meet your host
           </h1>
-          <p className={`mt-6 text-lg text-brand-ink/75 leading-relaxed reveal-up stagger-3${welcomeInView ? " in-view" : ""}`}>
-            {site.welcome}
+          <p className={`mt-8 text-lg text-brand-ink/85 leading-relaxed reveal-up stagger-2${welcomeInView ? " in-view" : ""}`}>
+            Hi there and welcome to Elyon Nest!
           </p>
-          <p className={`mt-3 text-brand-ink/65 reveal-up stagger-4${welcomeInView ? " in-view" : ""}`}>
-            {site.welcomeFollowUp}
+          <p className={`mt-4 text-brand-ink/75 leading-relaxed reveal-up stagger-3${welcomeInView ? " in-view" : ""}`}>
+            It is a pleasure and privilege to be your host, at Elyon Nest, we
+            have poured a lot of love into this home to make it as convenient,
+            comfortable and welcoming as possible for you.
           </p>
-          <div className={`mt-10 flex justify-center gap-4 flex-wrap reveal-up stagger-5${welcomeInView ? " in-view" : ""}`}>
-            <Link to="/booking" className="btn-primary">
-              Check availability
-            </Link>
-            <a
-              href={`https://wa.me/${site.contact.whatsappE164}`}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-ghost"
-            >
-              WhatsApp us
-            </a>
-          </div>
+          <p className={`mt-4 text-brand-ink/75 leading-relaxed reveal-up stagger-4${welcomeInView ? " in-view" : ""}`}>
+            Whether you're here to relax, explore, or work remotely, we are
+            just a message away if you need anything during your stay. We are
+            happy to share local tips, restaurant recommendations, or help
+            with anything else you might need.
+          </p>
+          <p className={`mt-4 text-brand-ink/85 leading-relaxed reveal-up stagger-5${welcomeInView ? " in-view" : ""}`}>
+            Enjoy your time here — and make yourself at home! <span aria-hidden="true">💛</span>
+          </p>
         </div>
       </section>
 
       {/* Carousel 2 — interior shots (sits on #fff3f0 between the two sections) */}
       <div style={{ backgroundColor: "#fff3f0" }} className="pb-10">
         <SlimCarousel images={INTERIOR_IMAGES} interval={4500} />
+      </div>
+
+      {/* Check Availability — moved here, just before the mosaic */}
+      <div style={{ backgroundColor: "#fff3f0" }} className="pb-16 text-center">
+        <Link to="/booking" className="btn-primary">
+          Check availability
+        </Link>
       </div>
 
       <SectionFade from="#fff3f0" to="#f3eed9" />
