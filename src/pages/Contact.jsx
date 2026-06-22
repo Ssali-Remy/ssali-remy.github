@@ -2,6 +2,14 @@ import { Link } from "react-router-dom";
 import Section from "../components/Section";
 import { site } from "../data/site";
 
+function CallIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2a15.07 15.07 0 01-6.59-6.58l2.2-2.21c.27-.27.35-.66.24-1.02A11.36 11.36 0 018.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z" />
+    </svg>
+  );
+}
+
 function WhatsAppIcon(props) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -27,17 +35,26 @@ export default function Contact() {
       subtitle="WhatsApp us anytime — we usually reply within a few hours."
     >
       <div className="grid gap-8 lg:grid-cols-2">
-        {/* Left column — WhatsApp + email + emergency + socials */}
+        {/* Left column — Call, WhatsApp + email + emergency + socials */}
         <div className="space-y-5">
-          <a
-            href={waHref}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center gap-3 rounded-2xl bg-[#25D366] text-white px-6 py-5 font-semibold text-lg w-full transition hover:bg-[#1ebd5d] shadow-soft"
-          >
-            <WhatsAppIcon className="h-6 w-6" />
-            WhatsApp us
-          </a>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <a
+              href={`tel:${site.contact.phoneE164}`}
+              className="inline-flex items-center justify-center gap-3 rounded-2xl bg-brand-maroon text-brand-cream px-6 py-5 font-semibold text-lg transition hover:bg-brand-burgundy shadow-soft"
+            >
+              <CallIcon className="h-6 w-6" />
+              Call us
+            </a>
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-3 rounded-2xl bg-[#25D366] text-white px-6 py-5 font-semibold text-lg transition hover:bg-[#1ebd5d] shadow-soft"
+            >
+              <WhatsAppIcon className="h-6 w-6" />
+              WhatsApp us
+            </a>
+          </div>
 
           <a
             href={`mailto:${site.contact.email}`}
