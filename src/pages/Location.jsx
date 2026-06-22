@@ -360,45 +360,79 @@ function KansangaPage() {
 }
 
 /* ─────────────────────────────────────────────────────────────
- *  MUNYONYO layout — kept compact (existing Airbnb-style trimmed)
+ *  MUNYONYO layout — mirrors Kansanga with M1 / M2 / M3 reels
  * ───────────────────────────────────────────────────────────── */
 
+const M1_REEL = [m3Cover, m3Img2, m3Img4, m3Img1];
+const M2_REEL = [m3Img1, m3Img3, m3Cover, m3Img2];
+const M3_REEL = [m3Img4, m3Img2, m3Img3, m3Cover, m3Img1];
+
+const MUNYONYO_UNITS = [
+  { id: "munyonyo-1", label: "Unit M1", desc: "One-bedroom apartment", reel: M1_REEL, dir: "right" },
+  { id: "munyonyo-2", label: "Unit M2", desc: "Two-bedroom apartment", reel: M2_REEL, dir: "left"  },
+  { id: "munyonyo-3", label: "Unit M3", desc: "Two-bedroom apartment", reel: M3_REEL, dir: "right" },
+];
+
 function MunyonyoPage({ loc }) {
-  const locUnits = units.filter((u) => u.locationId === "munyonyo");
-  const locGallery = gallery.filter((g) => g.location === "munyonyo");
-  const mosaicImages = locGallery.map((g) => g.src);
-  const avgRating = (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1);
+  // Independent toggles for each unit. Default: M3 selected (kept the original primary).
+  const [picks, setPicks] = useState({
+    "munyonyo-1": false,
+    "munyonyo-2": false,
+    "munyonyo-3": true,
+  });
+  const togglePick = (id) =>
+    setPicks((p) => ({ ...p, [id]: !p[id] }));
+  const selectedIds = Object.entries(picks)
+    .filter(([, v]) => v)
+    .map(([k]) => k);
+  const selectedLabel =
+    selectedIds.length === 0
+      ? "no unit"
+      : selectedIds.length === 3
+        ? "all three units (M1, M2, M3)"
+        : selectedIds
+            .map((id) => MUNYONYO_UNITS.find((u) => u.id === id).label)
+            .join(" + ");
 
   return (
     <div className="container-x py-8 space-y-14">
+
+      {/* Title */}
       <header>
         <span className="pill">Munyonyo, Kampala</span>
         <h1 className="mt-3 text-4xl sm:text-5xl font-bold text-brand-ink">Munyonyo</h1>
-        <p className="mt-2 text-sm text-brand-ink/60">{loc.address}</p>
       </header>
 
-      <div className="grid gap-3 sm:grid-cols-3">
-        {mosaicImages.slice(0, 6).map((src, i) => (
-          <div
-            key={i}
-            className={`aspect-[4/3] overflow-hidden rounded-2xl shadow-soft ${
-              i === 0 ? "sm:col-span-2 sm:row-span-2 aspect-[16/10]" : ""
-            }`}
-          >
-            <SmartImage src={src} alt="" fallbackLabel="Munyonyo" className="h-full w-full object-cover" />
-          </div>
-        ))}
-      </div>
-
+      {/* Narrative — same as Kansanga */}
       <section className="max-w-3xl">
-        <p className="text-lg leading-relaxed text-brand-ink/85">{loc.blurb}</p>
+        <p className="text-lg leading-relaxed text-brand-ink/85">
+          {KANSANGA_NARRATIVE_1}
+        </p>
+        <p className="mt-4 text-lg leading-relaxed text-brand-ink/85">
+          {KANSANGA_NARRATIVE_2}
+        </p>
       </section>
 
+      {/* M1, M2, M3 reels — alternating directions */}
+      {MUNYONYO_UNITS.map((u) => (
+        <section key={u.id}>
+          <h2 className="text-3xl font-bold text-brand-maroon tracking-[0.3em]">
+            {u.label.replace("Unit ", "")}
+          </h2>
+          <p className="mt-1 text-sm text-brand-ink/60">{u.desc}</p>
+          <div className="mt-5">
+            <ImageMarquee images={u.reel} direction={u.dir} duration={36} />
+          </div>
+        </section>
+      ))}
+
+      {/* Amenities */}
       <section>
         <H2>Amenities</H2>
         <AmenityGrid />
       </section>
 
+      {/* Nearby places — Munyonyo-specific */}
       <section>
         <H2>Nearby places</H2>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -414,29 +448,127 @@ function MunyonyoPage({ loc }) {
         </ul>
       </section>
 
+      {/* House Guide — same as Kansanga */}
       <section>
-        <H2>Availability</H2>
-        {locUnits.map((u) => (
-          <div key={u.id} className="mb-6">
-            <p className="text-sm font-medium text-brand-maroon mb-2">{u.name}</p>
-            <AvailabilityCalendar unitId={u.id} />
-          </div>
-        ))}
-        <div className="mt-8">
-          <ContactCtaRow unitLabel="Unit Three (Munyonyo)" />
+        <H2>House guide</H2>
+        <p className="text-brand-ink/70 mb-6">
+          To help you settle in quickly, here's a quick overview of how things
+          work in the house:
+        </p>
+        <div className="grid gap-5 md:grid-cols-2">
+          {HOUSE_GUIDE.map((group) => (
+            <div key={group.title} className="card p-5">
+              <h3 className="font-semibold text-brand-maroon">{group.title}</h3>
+              <ul className="mt-3 space-y-2 text-sm text-brand-ink/80">
+                {group.items.map((it) => (
+                  <li key={it} className="flex gap-2">
+                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-brand-sienna shrink-0" />
+                    {it}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </section>
 
+      {/* House Rules — same as Kansanga */}
       <section>
-        <H2>Where you'll be</H2>
-        <div className="overflow-hidden rounded-3xl border border-brand-beige shadow-soft">
-          <iframe
-            title="Map of Munyonyo"
-            src={loc.mapEmbed}
-            className="h-[380px] w-full"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+        <H2>House rules</H2>
+        <p className="text-brand-ink/70 mb-6">
+          We're so happy to host you! To ensure a comfortable stay for everyone,
+          please follow these simple house rules:
+        </p>
+        <ol className="grid gap-4 sm:grid-cols-2 list-none counter-reset:rule">
+          {HOUSE_RULES.map(([title, desc], i) => (
+            <li key={title} className="card p-5 flex gap-4">
+              <span className="font-display text-3xl text-brand-maroon shrink-0 leading-none">
+                {i + 1}
+              </span>
+              <div>
+                <p className="font-semibold text-brand-ink">{title}</p>
+                <p className="mt-1 text-sm text-brand-ink/65 leading-relaxed">{desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-6 text-sm text-brand-ink/65 text-center italic">
+          Thank you for understanding and helping us keep the space comfortable for all our guests!
+        </p>
+      </section>
+
+      {/* Check-in & arrival — same as Kansanga */}
+      <section>
+        <H2>Check-in &amp; arrival</H2>
+        <div className="grid gap-5 md:grid-cols-2">
+          <div className="card p-5">
+            <h3 className="font-semibold text-brand-maroon">Check-in / Check-out</h3>
+            <ul className="mt-3 space-y-2 text-sm text-brand-ink/80">
+              <li>Check-in: After <span className="font-medium text-brand-ink">1:30 PM</span></li>
+              <li>Check-out: Till <span className="font-medium text-brand-ink">11:00 AM</span></li>
+              <li className="text-brand-ink/65">Feel free to arrive any time after this — the home will be ready for you.</li>
+            </ul>
+          </div>
+          <div className="card p-5">
+            <h3 className="font-semibold text-brand-maroon">Parking</h3>
+            <p className="mt-3 text-sm text-brand-ink/80">
+              Free parking is available — no permit required.
+            </p>
+          </div>
+          <div className="card p-5">
+            <h3 className="font-semibold text-brand-maroon">Entry</h3>
+            <p className="mt-3 text-sm text-brand-ink/80">
+              You'll always find a caretaker to guide you with the access code(s) to your house.
+            </p>
+            <p className="mt-2 text-sm text-brand-ink/80">
+              The front doors use keyless entry — the access code is shared at check-in.
+            </p>
+          </div>
+          <div className="card p-5">
+            <h3 className="font-semibold text-brand-maroon">Keys</h3>
+            <p className="mt-3 text-sm text-brand-ink/80">
+              Please don't move with your house keys — always leave them behind when you check out.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Availability — multi-select toggles */}
+      <section>
+        <H2>Availability</H2>
+        <p className="text-sm text-brand-ink/60 mb-5">
+          Pick one unit, two, or all three — the calendar shows dates when every
+          selected unit is free.
+        </p>
+        <div className="flex flex-wrap gap-2 mb-5">
+          {MUNYONYO_UNITS.map((u) => {
+            const on = picks[u.id];
+            return (
+              <button
+                key={u.id}
+                type="button"
+                onClick={() => togglePick(u.id)}
+                aria-pressed={on}
+                className={`rounded-full px-5 py-2 text-sm font-medium transition ${
+                  on
+                    ? "bg-brand-maroon text-brand-cream"
+                    : "border border-brand-sand bg-white text-brand-ink hover:border-brand-maroon/50"
+                }`}
+              >
+                {u.label}
+              </button>
+            );
+          })}
+        </div>
+        {selectedIds.length > 0 ? (
+          <AvailabilityCalendar unitIds={selectedIds} />
+        ) : (
+          <div className="card p-8 text-center text-sm text-brand-ink/60">
+            Select at least one unit above to see availability.
+          </div>
+        )}
+        <div className="mt-8">
+          <ContactCtaRow unitLabel={selectedLabel} />
         </div>
       </section>
     </div>
