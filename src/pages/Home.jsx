@@ -115,7 +115,7 @@ const AMENITIES = [
   },
   {
     title: "Air Conditioning",
-    desc: "Every room individually climate-controlled",
+    desc: "In all rooms",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-7 h-7">
         <rect x="2" y="7" width="20" height="9" rx="3" />
@@ -143,12 +143,32 @@ const AMENITIES = [
   },
   {
     title: "Housekeeping",
-    desc: "Six days a week, included in every stay",
+    desc: "Upto six days",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-7 h-7">
         <path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" />
         <path d="M12 12h.01M8 12h.01M16 12h.01" strokeLinecap="round" />
         <path d="M6 7V5a2 2 0 012-2h8a2 2 0 012 2v2" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    title: "Power Back-up",
+    desc: "Covers every power outage",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-7 h-7">
+        <path d="M13 2L4 14h7l-2 8 9-12h-7l2-8z" strokeLinejoin="round" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    title: "DStv & Netflix",
+    desc: "Smart TV with DStv, Netflix",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-7 h-7">
+        <rect x="2" y="4" width="20" height="13" rx="2" />
+        <path d="M8 21h8M12 17v4" strokeLinecap="round" />
+        <path d="M10 8.5l5 3-5 3v-6z" fill="currentColor" stroke="none" />
       </svg>
     ),
   },
@@ -215,7 +235,6 @@ export default function Home() {
   const [mosaicRef,  mosaicInView]  = useInView();
   const [amenRef,    amenInView]    = useInView();
   const [partRef,    partInView]    = useInView();
-  const [ctaRef,     ctaInView]     = useInView();
 
   return (
     <>
@@ -309,14 +328,11 @@ export default function Home() {
       <section style={{ backgroundColor: "#fff3f0" }} className="py-20">
         <div ref={amenRef} className="container-x">
           <div className="text-center mb-14">
-            <p className={`text-xs uppercase tracking-[0.2em] font-semibold text-brand-maroon reveal-up stagger-1${amenInView ? " in-view" : ""}`}>
-              What's included
-            </p>
-            <h2 className={`mt-2 text-3xl sm:text-4xl font-bold text-brand-ink reveal-up stagger-2${amenInView ? " in-view" : ""}`}>
-              Everything you need
+            <h2 className={`text-3xl sm:text-4xl font-bold text-brand-ink reveal-up stagger-1${amenInView ? " in-view" : ""}`}>
+              Amenities
             </h2>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
             {AMENITIES.map((a, i) => (
               <div
                 key={a.title}
@@ -345,54 +361,26 @@ export default function Home() {
             <p className={`text-xs uppercase tracking-[0.2em] font-semibold text-brand-maroon reveal-up stagger-1${partInView ? " in-view" : ""}`}>
               Our partners
             </p>
-            <h2 className={`mt-2 text-3xl font-bold text-brand-ink reveal-up stagger-2${partInView ? " in-view" : ""}`}>
-              Trusted by great companies
-            </h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-            {PARTNERS.map((p, i) => (
-              <div
-                key={p.name}
-                className={`partner-card flex flex-col items-center justify-center bg-white rounded-2xl p-6 shadow-soft min-h-[100px] text-center reveal-up stagger-${i + 1}${partInView ? " in-view" : ""}`}
-              >
-                <span className="font-bold text-brand-ink text-sm">{p.name}</span>
-                <span className="text-xs text-brand-ink/45 mt-1">{p.sub}</span>
-              </div>
-            ))}
+        </div>
+        <div className={`reveal-up stagger-2${partInView ? " in-view" : ""}`}>
+          <div className="marquee marquee-left">
+            <div className="marquee-track" style={{ animationDuration: "30s" }}>
+              {[...PARTNERS, ...PARTNERS].map((p, i) => (
+                <div
+                  key={i}
+                  className="partner-card shrink-0 w-56 sm:w-64 flex flex-col items-center justify-center bg-white rounded-2xl p-6 shadow-soft min-h-[100px] text-center"
+                >
+                  <span className="font-bold text-brand-ink text-sm">{p.name}</span>
+                  <span className="text-xs text-brand-ink/45 mt-1">{p.sub}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <SectionFade from="#f3eed9" to="#fff3f0" />
 
-      {/* CTA — background option 1 */}
-      <section style={{ backgroundColor: "#fff3f0" }} className="py-20">
-        <div ref={ctaRef} className="container-x text-center">
-          <p className={`text-xs uppercase tracking-[0.2em] font-semibold text-brand-maroon reveal-up stagger-1${ctaInView ? " in-view" : ""}`}>
-            Ready to stay?
-          </p>
-          <h2 className={`mt-3 text-3xl sm:text-4xl font-bold text-brand-ink reveal-up stagger-2${ctaInView ? " in-view" : ""}`}>
-            A real conversation, not a checkout
-          </h2>
-          <p className={`mt-4 max-w-lg mx-auto text-brand-ink/65 reveal-up stagger-3${ctaInView ? " in-view" : ""}`}>
-            Pick your dates, then call or WhatsApp directly — we'll confirm everything and share
-            your access code.
-          </p>
-          <div className={`mt-10 flex justify-center gap-4 flex-wrap reveal-up stagger-4${ctaInView ? " in-view" : ""}`}>
-            <Link to="/booking" className="btn-primary">
-              Check availability
-            </Link>
-            <a
-              href={`https://wa.me/${site.contact.whatsappE164}`}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-ghost"
-            >
-              WhatsApp us
-            </a>
-          </div>
-        </div>
-      </section>
     </>
   );
 }
