@@ -201,3 +201,33 @@
   color: #c8bfb4 !important;
   text-decoration: line-through;
 }
+
+/* ─── Image marquees (KANSANGA / MUNYONYO reels) ───────────────── */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  will-change: transform;
+}
+@keyframes marqueeLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marqueeRight {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.marquee-left  .marquee-track { animation: marqueeLeft  38s linear infinite; }
+.marquee-right .marquee-track { animation: marqueeRight 38s linear infinite; }
+@media (hover: hover) and (pointer: fine) {
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-left  .marquee-track,
+  .marquee-right .marquee-track { animation: none; }
+}
