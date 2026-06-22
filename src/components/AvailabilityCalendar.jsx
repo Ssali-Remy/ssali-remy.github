@@ -12,6 +12,8 @@ function addDays(n) {
 const BOOKED = {
   "kansanga-1": [addDays(7), addDays(8), addDays(20), addDays(21)],
   "kansanga-2": [addDays(3), addDays(4), addDays(5)],
+  "munyonyo-1": [addDays(2), addDays(18), addDays(19)],
+  "munyonyo-2": [addDays(6), addDays(7), addDays(25)],
   "munyonyo-3": [addDays(10), addDays(11), addDays(12), addDays(13)],
 };
 
