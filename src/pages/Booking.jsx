@@ -1,10 +1,26 @@
-import { useMemo } from "react";
-import { useSearchParams, Link } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import Section from "../components/Section";
-import SmartImage from "../components/SmartImage";
+import ImageMarquee from "../components/ImageMarquee";
 import AvailabilityCalendar from "../components/AvailabilityCalendar";
-import { units, unitsById } from "../data/units";
 import { site } from "../data/site";
+import { k1Cover, k1Img1, k1Img2, k1Img3, k1Img4 } from "../data/images-k1";
+import { k2Cover, k2Img1, k2Img2, k2Img3, k2Img4 } from "../data/images-k2";
+import { m3Cover, m3Img1, m3Img2, m3Img3, m3Img4 } from "../data/images-m3";
+
+const E1_REEL = [k1Cover, k1Img1, k1Img2, k1Img3, k1Img4];
+const E2_REEL = [k2Cover, k2Img1, k2Img2, k2Img3, k2Img4];
+const M1_REEL = [m3Cover, m3Img2, m3Img4, m3Img1];
+const M2_REEL = [m3Img1, m3Img3, m3Cover, m3Img2];
+const M3_REEL = [m3Img4, m3Img2, m3Img3, m3Cover, m3Img1];
+
+const UNIT_REELS = [
+  { id: "kansanga-1", label: "E1", subtitle: "Kansanga · Two-bedroom",      reel: E1_REEL, dir: "right" },
+  { id: "kansanga-2", label: "E2", subtitle: "Kansanga · Two-bedroom",      reel: E2_REEL, dir: "left"  },
+  { id: "munyonyo-1", label: "M1", subtitle: "Munyonyo · One-bedroom",      reel: M1_REEL, dir: "right" },
+  { id: "munyonyo-2", label: "M2", subtitle: "Munyonyo · Two-bedroom",      reel: M2_REEL, dir: "left"  },
+  { id: "munyonyo-3", label: "M3", subtitle: "Munyonyo · Two-bedroom",      reel: M3_REEL, dir: "right" },
+];
 
 function CallIcon(props) {
   return (
@@ -13,7 +29,6 @@ function CallIcon(props) {
     </svg>
   );
 }
-
 function WhatsAppIcon(props) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -23,136 +38,120 @@ function WhatsAppIcon(props) {
 }
 
 export default function Booking() {
-  const [params, setParams] = useSearchParams();
-  const initialUnitId = params.get("unit") || units[0].id;
-  const unit = unitsById[initialUnitId] || units[0];
+  // Default: every unit selected
+  const [picks, setPicks] = useState(
+    Object.fromEntries(UNIT_REELS.map((u) => [u.id, true])),
+  );
+  const togglePick = (id) =>
+    setPicks((p) => ({ ...p, [id]: !p[id] }));
+  const selectedIds = Object.entries(picks)
+    .filter(([, v]) => v)
+    .map(([k]) => k);
 
-  const phoneHref = `tel:${site.contact.phoneE164}`;
-  const waMsg = useMemo(() => {
-    const text = `Hi Suubi, I'd like to enquire about availability at ${unit.name} (${unit.location}) — Elyon Nest.`;
-    return `https://wa.me/${site.contact.whatsappE164}?text=${encodeURIComponent(text)}`;
-  }, [unit.name, unit.location]);
+  const selectedLabel =
+    selectedIds.length === 0
+      ? "no unit"
+      : selectedIds.length === UNIT_REELS.length
+        ? "any of our 5 units"
+        : selectedIds
+            .map((id) => UNIT_REELS.find((u) => u.id === id).label)
+            .join(" + ");
+
+  const waText = `Hi Suubi, I'd like to book at Elyon Nest — interested in ${selectedLabel}.`;
+  const waHref = `https://wa.me/${site.contact.whatsappE164}?text=${encodeURIComponent(waText)}`;
 
   return (
     <>
       <Section
-        eyebrow={`${unit.location} · ${unit.name}`}
-        title="Check availability"
-        subtitle="Pick your dates below to see what's free. To confirm a booking, message the host directly — we keep things personal."
-      >
-        <div className="grid gap-8 lg:grid-cols-5">
-          <aside className="lg:col-span-2 space-y-6">
-            <article className="card overflow-hidden">
-              <div className="aspect-[4/3] overflow-hidden">
-                <SmartImage
-                  src={unit.cover}
-                  alt={unit.name}
-                  fallbackLabel={unit.name}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="font-display text-2xl">{unit.name}</h3>
-                <p className="text-sm text-brand-ink/65 mt-1">{unit.tagline}</p>
-                <ul className="mt-4 space-y-1.5 text-sm text-brand-ink/80">
-                  {unit.highlights.map((h) => (
-                    <li key={h} className="flex gap-2">
-                      <span className="mt-2 h-1 w-1 rounded-full bg-brand-sienna" />
-                      {h}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
+        eyebrow="Book your stay"
+        title="All five units, one calendar"
+        subtitle="Browse every apartment across Kansanga and Munyonyo, then check availability across whichever combination you're considering."
+      />
 
-            <div className="card p-6">
-              <h4 className="font-display text-xl">Switch unit</h4>
-              <div className="mt-3 grid gap-2">
-                {units.map((u) => {
-                  const active = u.id === unit.id;
-                  return (
-                    <button
-                      key={u.id}
-                      type="button"
-                      onClick={() => setParams({ unit: u.id })}
-                      className={`rounded-xl border px-4 py-3 text-left transition ${
-                        active
-                          ? "border-brand-maroon bg-brand-maroon text-brand-cream"
-                          : "border-brand-sand bg-white hover:border-brand-maroon/50"
-                      }`}
-                    >
-                      <div className="font-medium">{u.name}</div>
-                      <div className={`text-xs ${active ? "text-brand-cream/80" : "text-brand-ink/60"}`}>
-                        {u.location}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
+      {/* Five image reels — alternating directions */}
+      <div className="space-y-12 pb-12">
+        {UNIT_REELS.map((u) => (
+          <section key={u.id}>
+            <div className="container-x flex items-baseline gap-3">
+              <h2 className="text-3xl font-bold text-brand-maroon tracking-[0.3em]">
+                {u.label}
+              </h2>
+              <p className="text-sm text-brand-ink/60">{u.subtitle}</p>
             </div>
-          </aside>
-
-          <div className="lg:col-span-3 space-y-6">
-            <AvailabilityCalendar unitId={unit.id} />
-
-            <div className="card p-6 sm:p-8 bg-brand-maroon text-brand-cream">
-              <h3 className="font-display text-2xl">Ready to book?</h3>
-              <p className="mt-2 text-brand-cream/85">
-                We don't take card payments online — we'd rather have a quick
-                chat to confirm your dates and answer any questions. Reach out
-                directly:
-              </p>
-
-              <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                <a
-                  href={phoneHref}
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-cream text-brand-maroon px-5 py-3 font-medium transition hover:bg-brand-beige"
-                >
-                  <CallIcon className="h-5 w-5" />
-                  Call {site.contact.phone}
-                </a>
-                <a
-                  href={waMsg}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] text-white px-5 py-3 font-medium transition hover:bg-[#1ebd5d]"
-                >
-                  <WhatsAppIcon className="h-5 w-5" />
-                  WhatsApp the host
-                </a>
-              </div>
-
-              <div className="mt-6 grid gap-2 text-sm text-brand-cream/85">
-                <p>Host: <span className="font-medium text-brand-cream">{site.contact.host}</span></p>
-                <p>Caretaker (on site): {site.contact.caretakerPhone}</p>
-                <p>Email: <a href={`mailto:${site.contact.email}`} className="underline">{site.contact.email}</a></p>
-              </div>
+            <div className="mt-4">
+              <ImageMarquee images={u.reel} direction={u.dir} duration={36} />
             </div>
+          </section>
+        ))}
+      </div>
 
-            <div className="card p-6 grid gap-3 sm:grid-cols-2 text-sm">
-              <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">Check-in</p>
-                <p className="font-display text-xl text-brand-maroon mt-1">{site.checkIn}</p>
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">Check-out</p>
-                <p className="font-display text-xl text-brand-maroon mt-1">{site.checkOut}</p>
-              </div>
-              <p className="sm:col-span-2 text-brand-ink/65 leading-relaxed">
-                You'll always find a caretaker on site to share the keyless
-                door code. The whole apartment is yours — we don't book by the
-                room.
-              </p>
-            </div>
-          </div>
+      {/* Single calendar covering all units */}
+      <Section eyebrow="Availability" title="All units, one calendar">
+        <p className="text-sm text-brand-ink/65 mb-5">
+          Toggle the units you're interested in — the calendar shows dates when
+          every selected unit is free.
+        </p>
+        <div className="flex flex-wrap gap-2 mb-6">
+          {UNIT_REELS.map((u) => {
+            const on = picks[u.id];
+            return (
+              <button
+                key={u.id}
+                type="button"
+                onClick={() => togglePick(u.id)}
+                aria-pressed={on}
+                className={`rounded-full px-5 py-2 text-sm font-medium transition ${
+                  on
+                    ? "bg-brand-maroon text-brand-cream"
+                    : "border border-brand-sand bg-white text-brand-ink hover:border-brand-maroon/50"
+                }`}
+              >
+                {u.label}
+              </button>
+            );
+          })}
         </div>
+        {selectedIds.length > 0 ? (
+          <AvailabilityCalendar unitIds={selectedIds} />
+        ) : (
+          <div className="card p-8 text-center text-sm text-brand-ink/60">
+            Select at least one unit above to see availability.
+          </div>
+        )}
+
+        {/* Call + WhatsApp CTAs */}
+        <div className="mt-10 grid sm:grid-cols-2 gap-3 max-w-xl mx-auto">
+          <a
+            href={`tel:${site.contact.phoneE164}`}
+            className="inline-flex items-center justify-center gap-3 rounded-2xl bg-brand-maroon text-brand-cream px-6 py-4 font-semibold text-base transition hover:bg-brand-burgundy shadow-soft"
+          >
+            <CallIcon className="h-5 w-5" />
+            Call us
+          </a>
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center gap-3 rounded-2xl bg-[#25D366] text-white px-6 py-4 font-semibold text-base transition hover:bg-[#1ebd5d] shadow-soft"
+          >
+            <WhatsAppIcon className="h-5 w-5" />
+            WhatsApp us
+          </a>
+        </div>
+        <p className="mt-4 text-center text-xs text-brand-ink/55">
+          We don't take card payments online — confirm your dates with a quick chat.
+        </p>
       </Section>
 
       <Section align="center" className="bg-brand-beige/40">
         <p className="text-brand-ink/75">
-          Looking at a different unit?{" "}
-          <Link to="/" className="text-brand-maroon font-medium underline">
-            See all stays
+          Curious about a specific location?{" "}
+          <Link to="/locations/kansanga" className="text-brand-maroon font-medium underline">
+            Kansanga
+          </Link>
+          {" · "}
+          <Link to="/locations/munyonyo" className="text-brand-maroon font-medium underline">
+            Munyonyo
           </Link>
         </p>
       </Section>
