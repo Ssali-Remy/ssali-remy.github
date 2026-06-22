@@ -2,13 +2,6 @@ import { Link } from "react-router-dom";
 import Section from "../components/Section";
 import { site } from "../data/site";
 
-function CallIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-      <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2a15.07 15.07 0 01-6.59-6.58l2.2-2.21c.27-.27.35-.66.24-1.02A11.36 11.36 0 018.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z" />
-    </svg>
-  );
-}
 function WhatsAppIcon(props) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -17,59 +10,46 @@ function WhatsAppIcon(props) {
   );
 }
 
+// Map that shows both Kansanga and Munyonyo with a zoom that fits both.
+// Centered roughly between Kansanga (0.286, 32.618) and Munyonyo (0.247, 32.636).
+const MAP_EMBED =
+  "https://www.google.com/maps?q=Kansanga+Munyonyo+Kampala&z=13&output=embed";
+
 export default function Contact() {
-  const wa = `https://wa.me/${site.contact.whatsappE164}?text=${encodeURIComponent("Hi Suubi, I'd like to enquire about Elyon Nest.")}`;
+  const waHref = `https://wa.me/${site.contact.whatsappE164}?text=${encodeURIComponent(
+    "Hi Suubi, I'd like to enquire about Elyon Nest.",
+  )}`;
 
   return (
     <Section
       eyebrow="Contact & Inquiries"
       title="We're just a message away"
-      subtitle="Phone call or WhatsApp is the fastest way to reach us. We endeavour that there's always someone to assist you."
+      subtitle="WhatsApp us anytime — we usually reply within a few hours."
     >
       <div className="grid gap-8 lg:grid-cols-2">
-        <div className="space-y-4">
-          <div className="card p-6">
-            <p className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">Host</p>
-            <p className="mt-1 font-display text-3xl text-brand-maroon">{site.contact.host}</p>
-            <p className="text-sm text-brand-ink/65 mt-1">Phone call or messaging — preferred for fastest response.</p>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <a
-              href={`tel:${site.contact.phoneE164}`}
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-maroon text-brand-cream px-4 py-3 font-medium hover:bg-brand-burgundy transition"
-            >
-              <CallIcon className="h-5 w-5" />
-              Call
-            </a>
-            <a
-              href={wa}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#25D366] text-white px-4 py-3 font-medium hover:bg-[#1ebd5d] transition"
-            >
-              <WhatsAppIcon className="h-5 w-5" />
-              WhatsApp
-            </a>
-          </div>
-          <ContactRow label="Host phone" value={site.contact.phone} href={`tel:${site.contact.phoneE164}`} />
-          <ContactRow label="Caretaker (on site)" value={site.contact.caretakerPhone} href={`tel:${site.contact.caretakerPhoneE164}`} />
-          <ContactRow label="Email" value={site.contact.email} href={`mailto:${site.contact.email}`} />
-        </div>
+        {/* Left column — WhatsApp + email + emergency + socials */}
+        <div className="space-y-5">
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center gap-3 rounded-2xl bg-[#25D366] text-white px-6 py-5 font-semibold text-lg w-full transition hover:bg-[#1ebd5d] shadow-soft"
+          >
+            <WhatsAppIcon className="h-6 w-6" />
+            WhatsApp us
+          </a>
 
-        <div className="space-y-4">
-          <div className="card p-6">
-            <p className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">Locations</p>
-            <ul className="mt-3 space-y-3">
-              <li>
-                <p className="font-display text-xl text-brand-maroon">Kansanga</p>
-                <p className="text-sm text-brand-ink/70">📍 {site.addresses.kansanga}</p>
-              </li>
-              <li>
-                <p className="font-display text-xl text-brand-maroon">Munyonyo</p>
-                <p className="text-sm text-brand-ink/70">📍 {site.addresses.munyonyo}</p>
-              </li>
-            </ul>
-          </div>
+          <a
+            href={`mailto:${site.contact.email}`}
+            className="card p-5 block transition hover:ring-2 hover:ring-brand-maroon/20"
+          >
+            <span className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">
+              Email
+            </span>
+            <p className="mt-1 font-display text-xl text-brand-maroon">
+              {site.contact.email}
+            </p>
+          </a>
 
           <div className="card p-6 bg-brand-maroon text-brand-cream">
             <p className="font-display text-xl">In case of emergency</p>
@@ -82,27 +62,52 @@ export default function Contact() {
           </div>
 
           <div className="card p-6">
-            <p className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">Follow</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">
+              Follow
+            </p>
             <div className="mt-3 flex flex-wrap gap-2 text-sm">
-              <a href={site.contact.instagram} target="_blank" rel="noreferrer" className="rounded-full bg-brand-beige px-4 py-2 text-brand-maroon">Instagram @elyonnest_ug</a>
-              <a href={site.contact.facebook} target="_blank" rel="noreferrer" className="rounded-full bg-brand-beige px-4 py-2 text-brand-maroon">Facebook</a>
+              <a
+                href={site.contact.instagram}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full bg-brand-beige px-4 py-2 text-brand-maroon"
+              >
+                Instagram @elyonnest_ug
+              </a>
+              <a
+                href={site.contact.facebook}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full bg-brand-beige px-4 py-2 text-brand-maroon"
+              >
+                Facebook
+              </a>
             </div>
           </div>
 
-          <div className="text-center pt-2">
-            <Link to="/booking" className="btn-primary">Check availability</Link>
+          <div>
+            <Link to="/booking" className="btn-primary">
+              Check availability
+            </Link>
+          </div>
+        </div>
+
+        {/* Right column — map */}
+        <div className="space-y-3">
+          <p className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">
+            Find us in Kampala
+          </p>
+          <div className="overflow-hidden rounded-3xl border border-brand-beige shadow-soft">
+            <iframe
+              title="Elyon Nest — Kansanga & Munyonyo"
+              src={MAP_EMBED}
+              className="h-[480px] lg:h-[600px] w-full"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         </div>
       </div>
     </Section>
-  );
-}
-
-function ContactRow({ label, value, href }) {
-  return (
-    <a href={href} className="card p-5 block transition hover:ring-2 hover:ring-brand-maroon/20">
-      <span className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">{label}</span>
-      <p className="mt-1 font-display text-xl text-brand-maroon">{value}</p>
-    </a>
   );
 }
