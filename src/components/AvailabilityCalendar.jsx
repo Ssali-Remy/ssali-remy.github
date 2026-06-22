@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-// Mock blocked dates per unit. Replace with a live calendar feed later.
 function addDays(n) {
   const d = new Date();
   d.setHours(0, 0, 0, 0);
@@ -16,8 +15,26 @@ const BOOKED = {
   "munyonyo-3": [addDays(10), addDays(11), addDays(12), addDays(13)],
 };
 
-export default function AvailabilityCalendar({ unitId }) {
-  const booked = BOOKED[unitId] || [];
+// Accepts either `unitId: string` or `unitIds: string[]`.
+// When multiple, the calendar excludes dates booked by ANY of them
+// (so it shows only days when ALL selected units are free).
+export default function AvailabilityCalendar({ unitId, unitIds }) {
+  const ids = unitIds || (unitId ? [unitId] : []);
+  const booked = useMemo(() => {
+    const seen = new Set();
+    const out = [];
+    for (const id of ids) {
+      for (const d of BOOKED[id] || []) {
+        const key = d.getTime();
+        if (!seen.has(key)) {
+          seen.add(key);
+          out.push(d);
+        }
+      }
+    }
+    return out;
+  }, [ids.join("|")]);
+
   const todayPlusYear = useMemo(() => {
     const d = new Date();
     d.setFullYear(d.getFullYear() + 1);
