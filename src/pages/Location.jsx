@@ -399,8 +399,7 @@ function MunyonyoPage({ loc }) {
 
       {/* Title */}
       <header>
-        <span className="pill">Munyonyo, Kampala</span>
-        <h1 className="mt-3 text-4xl sm:text-5xl font-bold text-brand-ink">Munyonyo</h1>
+        <h1 className="text-4xl sm:text-5xl font-bold text-brand-ink">Munyonyo</h1>
       </header>
 
       {/* Narrative — same as Kansanga */}
