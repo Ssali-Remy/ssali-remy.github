@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { heroBackgrounds } from "../data/units";
+import ImageMarquee from "../components/ImageMarquee";
 import { k1Cover, k1Img1, k1Img2, k1Img3, k1Img4 } from "../data/images-k1";
 import { k2Cover, k2Img1, k2Img2, k2Img3, k2Img4 } from "../data/images-k2";
 import { m3Cover, m3Img1, m3Img2, m3Img3, m3Img4 } from "../data/images-m3";
@@ -191,35 +192,6 @@ const MUNYONYO_REEL = [
   m3Cover, m3Img1, m3Img2, m3Img3, m3Img4,
   m3Img1, m3Img3, m3Cover, m3Img2, m3Img4,
 ];
-
-function ImageMarquee({ images, direction = "left", duration = 38 }) {
-  // Duplicate so the track is exactly 2× wide and the loop is seamless.
-  const reel = [...images, ...images];
-  const dirClass = direction === "left" ? "marquee-left" : "marquee-right";
-  return (
-    <div className={`marquee ${dirClass}`}>
-      <div
-        className="marquee-track"
-        style={{ animationDuration: `${duration}s` }}
-      >
-        {reel.map((src, i) => (
-          <div
-            key={i}
-            className="shrink-0 rounded-2xl overflow-hidden shadow-soft w-64 h-44 sm:w-72 sm:h-48 md:w-80 md:h-56"
-          >
-            <img
-              src={src}
-              alt=""
-              className="w-full h-full object-cover"
-              loading="lazy"
-              draggable="false"
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function SectionFade({ from, to }) {
   return (
