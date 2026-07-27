@@ -86,22 +86,25 @@ function WegaLogo(props) {
   );
 }
 
+// Rendered heights are the original sizes (96px / 64px) halved.
+// `max-w-full` only ever letterboxes an over-wide mark inside its card —
+// SVG preserveAspectRatio keeps the artwork from distorting.
 const PARTNERS = [
-  { name: "Allure Aesthetics", Logo: AllureLogo },
-  { name: "Business Advantage", Logo: BusinessAdvantageLogo },
-  { name: "Wega Pharmacy", Logo: WegaLogo },
+  { name: "Allure Aesthetics",  Logo: AllureLogo,             size: "h-12 w-auto max-w-full" },
+  { name: "Business Advantage", Logo: BusinessAdvantageLogo,  size: "h-8 w-auto max-w-full" },
+  { name: "Wega Pharmacy",      Logo: WegaLogo,               size: "h-8 w-auto max-w-full" },
 ];
 
 export default function Partners() {
   return (
     <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
-      {PARTNERS.map(({ name, Logo }) => (
+      {PARTNERS.map(({ name, Logo, size }) => (
         <div
           key={name}
           title={name}
-          className="h-28 w-28 sm:h-32 sm:w-32 shrink-0 rounded-3xl bg-white shadow-soft flex items-center justify-center p-4 sm:p-5"
+          className="h-32 w-32 sm:h-36 sm:w-36 shrink-0 rounded-3xl bg-white shadow-soft flex items-center justify-center p-4 sm:p-5"
         >
-          <Logo className="h-full w-full" />
+          <Logo className={size} />
         </div>
       ))}
     </div>
