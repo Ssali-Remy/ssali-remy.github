@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Partners from "../components/Partners";
-import { units } from "../data/units";
+import { units, heroBackgrounds } from "../data/units";
+import { HOUSE_RULES } from "../data/houseRules";
 import { site } from "../data/site";
 
 /* ── Intersection Observer hook (fires once, with sync visible-check fallback) ── */
@@ -37,50 +38,108 @@ function useInView(options = {}) {
   return [ref, inView];
 }
 
+/* ── Compact auto-rotating carousel for the hero images ── */
+function SlimCarousel({ images, interval = 5000 }) {
+  const [active, setActive] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setActive((i) => (i + 1) % images.length), interval);
+    return () => clearInterval(t);
+  }, [images.length, interval]);
 
+  return (
+    <div className="relative overflow-hidden mx-auto rounded-2xl" style={{ height: "40vh", minHeight: "220px", width: "90%" }}>
+      {images.map((src, i) => (
+        <div
+          key={i}
+          className="absolute inset-0 bg-cover bg-center transition-opacity duration-[1500ms]"
+          style={{ backgroundImage: `url("${src}")`, opacity: i === active ? 1 : 0 }}
+        />
+      ))}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            aria-label={`Slide ${i + 1}`}
+            onClick={() => setActive(i)}
+            className={`h-1.5 rounded-full transition-all ${
+              i === active ? "w-6 bg-white" : "w-1.5 bg-white/50"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── Amenities — Airbnb-style icon + label rows, with a "show all" expander ── */
 const AMENITIES = [
   {
-    title: "High-Speed Wi-Fi",
-    desc: "Reliable fibre connection throughout every unit",
+    label: "Wifi",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-7 h-7">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
         <path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
   {
-    title: "Air Conditioning",
-    desc: "In all rooms",
+    label: "Air conditioning in every room",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-7 h-7">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
         <rect x="2" y="7" width="20" height="9" rx="3" />
         <path d="M8 16v3M12 16v3M16 16v3M8 7V4M12 7V4M16 7V4" strokeLinecap="round" />
       </svg>
     ),
   },
   {
-    title: "24/7 Security",
-    desc: "Armed guards and outdoor CCTV around the clock",
+    label: "Smart TV with Netflix & DStv",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-7 h-7">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" strokeLinecap="round" strokeLinejoin="round" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <rect x="2" y="4" width="20" height="13" rx="2" />
+        <path d="M8 21h8M12 17v4" strokeLinecap="round" />
+        <path d="M10 8.5l5 3-5 3v-6z" fill="currentColor" stroke="none" />
       </svg>
     ),
   },
   {
-    title: "Full Kitchen",
-    desc: "Blender, microwave, fridge, and complete cookware",
+    label: "Kitchen",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-7 h-7">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
         <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
   {
-    title: "Housekeeping",
-    desc: "Upto six days",
+    label: "Free parking on premises",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-7 h-7">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <path d="M5 11l1.5-4.5A2 2 0 018.4 5h7.2a2 2 0 011.9 1.5L19 11" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="3" y="11" width="18" height="6" rx="2" />
+        <circle cx="7.5" cy="17" r="1.5" />
+        <circle cx="16.5" cy="17" r="1.5" />
+      </svg>
+    ),
+  },
+  {
+    label: "Power back-up",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <path d="M13 2L4 14h7l-2 8 9-12h-7l2-8z" strokeLinejoin="round" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    label: "24-hour security & CCTV",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    label: "Housekeeping up to six days",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
         <path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" />
         <path d="M12 12h.01M8 12h.01M16 12h.01" strokeLinecap="round" />
         <path d="M6 7V5a2 2 0 012-2h8a2 2 0 012 2v2" strokeLinecap="round" />
@@ -88,26 +147,64 @@ const AMENITIES = [
     ),
   },
   {
-    title: "Power Back-up",
-    desc: "Covers every power outage",
+    label: "Garden you're free to enjoy",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-7 h-7">
-        <path d="M13 2L4 14h7l-2 8 9-12h-7l2-8z" strokeLinejoin="round" strokeLinecap="round" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M9 22V12h6v10" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
   {
-    title: "DStv & Netflix",
-    desc: "Smart TV with DStv, Netflix",
+    label: "Laundry service",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-7 h-7">
-        <rect x="2" y="4" width="20" height="13" rx="2" />
-        <path d="M8 21h8M12 17v4" strokeLinecap="round" />
-        <path d="M10 8.5l5 3-5 3v-6z" fill="currentColor" stroke="none" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <circle cx="12" cy="13" r="5" />
+        <path d="M8 6h.01" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    label: "Keyless entry",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <circle cx="8" cy="15" r="4" />
+        <path d="M11 12l9-9M17 6l3 3M14 9l2 2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    label: "Smoke & carbon monoxide detectors",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    label: "First aid kit on site",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <rect x="3" y="7" width="18" height="13" rx="2" />
+        <path d="M12 11v6M9 14h6" strokeLinecap="round" />
+        <path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    label: "Emergency panic siren",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <path d="M12 3a7 7 0 00-7 7v4l-2 3h18l-2-3v-4a7 7 0 00-7-7z" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M10 20a2 2 0 004 0" strokeLinecap="round" />
       </svg>
     ),
   },
 ];
+
+const AMENITIES_PREVIEW_COUNT = 8;
 
 function bedroomLabel(u) {
   return `${u.bedrooms} Bedroom${u.bedrooms > 1 ? "s" : ""}`;
@@ -126,13 +223,24 @@ export default function Home() {
   const [welcomeRef, welcomeInView] = useInView();
   const [mosaicRef,  mosaicInView]  = useInView();
   const [amenRef,    amenInView]    = useInView();
+  const [rulesRef,   rulesInView]   = useInView();
   const [partRef,    partInView]    = useInView();
+  const [showAllAmenities, setShowAllAmenities] = useState(false);
+
+  const visibleAmenities = showAllAmenities
+    ? AMENITIES
+    : AMENITIES.slice(0, AMENITIES_PREVIEW_COUNT);
 
   return (
     <>
+      {/* Hero — rotating exterior / compound shots */}
+      <div style={{ backgroundColor: "#fff3f0" }} className="pt-10">
+        <SlimCarousel images={heroBackgrounds} />
+      </div>
+
       {/* Welcome statement — Meet your host */}
       <section style={{ backgroundColor: "#fff3f0" }} className="py-20">
-        <div ref={welcomeRef} className="container-x max-w-3xl mx-auto text-center">
+        <div ref={welcomeRef} className="container-x max-w-3xl mx-auto text-right">
           <h1 className={`text-4xl sm:text-5xl font-bold text-brand-ink leading-tight reveal-up stagger-1${welcomeInView ? " in-view" : ""}`}>
             Meet your host
           </h1>
@@ -158,7 +266,7 @@ export default function Home() {
 
       <SectionFade from="#fff3f0" to="#f3eed9" />
 
-      {/* Proximity teasers — KANSANGA reel scrolls right, MUNYONYO reel scrolls left */}
+      {/* Apartments list */}
       <section style={{ backgroundColor: "#f3eed9" }} className="py-16">
         <div ref={mosaicRef} className="container-x">
           <h2 className={`text-3xl sm:text-4xl font-bold text-brand-ink leading-tight text-center max-w-3xl mx-auto reveal-up stagger-1${mosaicInView ? " in-view" : ""}`}>
@@ -220,44 +328,93 @@ export default function Home() {
 
       <SectionFade from="#f3eed9" to="#fff3f0" />
 
-      {/* Amenities */}
+      {/* Amenities — Airbnb-style */}
       <section style={{ backgroundColor: "#fff3f0" }} className="py-20">
-        <div ref={amenRef} className="container-x">
-          <div className="text-center mb-14">
-            <h2 className={`text-3xl sm:text-4xl font-bold text-brand-ink reveal-up stagger-1${amenInView ? " in-view" : ""}`}>
-              Amenities
-            </h2>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
-            {AMENITIES.map((a, i) => (
+        <div ref={amenRef} className="container-x max-w-3xl">
+          <h2 className={`text-2xl sm:text-3xl font-bold text-brand-ink mb-8 reveal-up stagger-1${amenInView ? " in-view" : ""}`}>
+            What this place offers
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
+            {visibleAmenities.map((a, i) => (
               <div
-                key={a.title}
-                className={`amenity-item flex flex-col items-center text-center gap-3 reveal-up stagger-${i + 1}${amenInView ? " in-view" : ""}`}
+                key={a.label}
+                className={`flex items-center gap-4 reveal-up stagger-${Math.min(i + 1, 6)}${amenInView ? " in-view" : ""}`}
               >
-                <div
-                  className="amenity-icon w-14 h-14 flex items-center justify-center rounded-2xl text-brand-maroon"
-                  style={{ background: "rgba(91,26,26,0.07)" }}
-                >
-                  {a.icon}
-                </div>
-                <h3 className="font-semibold text-brand-ink text-sm leading-snug">{a.title}</h3>
+                <span className="text-brand-ink/80 shrink-0">{a.icon}</span>
+                <span className="text-brand-ink/90">{a.label}</span>
               </div>
             ))}
           </div>
+          {!showAllAmenities && AMENITIES.length > AMENITIES_PREVIEW_COUNT && (
+            <button
+              type="button"
+              onClick={() => setShowAllAmenities(true)}
+              className="mt-8 rounded-xl bg-brand-beige px-5 py-3 text-sm font-semibold text-brand-ink transition hover:bg-brand-sand"
+            >
+              Show all {AMENITIES.length} amenities
+            </button>
+          )}
         </div>
       </section>
 
       <SectionFade from="#fff3f0" to="#f3eed9" />
 
-      {/* Partners */}
+      {/* House rules + check-in */}
       <section style={{ backgroundColor: "#f3eed9" }} className="py-16">
+        <div ref={rulesRef} className="container-x">
+          <h2 className={`text-2xl sm:text-3xl font-bold text-brand-ink mb-4 reveal-up stagger-1${rulesInView ? " in-view" : ""}`}>
+            House rules
+          </h2>
+          <p className={`text-brand-ink/70 mb-6 max-w-2xl reveal-up stagger-2${rulesInView ? " in-view" : ""}`}>
+            We're so happy to host you! To ensure a comfortable stay for
+            everyone, please follow these simple house rules:
+          </p>
+          <ol className="grid gap-4 sm:grid-cols-2 list-none">
+            {HOUSE_RULES.map(([title, desc], i) => (
+              <li
+                key={title}
+                className={`card p-5 flex gap-4 reveal-up stagger-${Math.min(i + 1, 6)}${rulesInView ? " in-view" : ""}`}
+              >
+                <span className="font-display text-3xl text-brand-maroon shrink-0 leading-none">
+                  {i + 1}
+                </span>
+                <div>
+                  <p className="font-semibold text-brand-ink">{title}</p>
+                  <p className="mt-1 text-sm text-brand-ink/65 leading-relaxed">{desc}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <h2 className={`mt-14 text-2xl sm:text-3xl font-bold text-brand-ink mb-4 reveal-up stagger-6${rulesInView ? " in-view" : ""}`}>
+            Check-in
+          </h2>
+          <div className={`grid gap-5 sm:grid-cols-2 max-w-xl reveal-up stagger-6${rulesInView ? " in-view" : ""}`}>
+            <div className="card p-5">
+              <p className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">
+                Check-in
+              </p>
+              <p className="mt-1 font-display text-xl text-brand-maroon">{site.checkIn}</p>
+            </div>
+            <div className="card p-5">
+              <p className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">
+                Check-out
+              </p>
+              <p className="mt-1 font-display text-xl text-brand-maroon">{site.checkOut}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <SectionFade from="#f3eed9" to="#fff3f0" />
+
+      {/* Partners */}
+      <section style={{ backgroundColor: "#fff3f0" }} className="py-16">
         <div ref={partRef} />
         <div className={`container-x reveal-up stagger-2${partInView ? " in-view" : ""}`}>
           <Partners />
         </div>
       </section>
-
-
     </>
   );
 }
