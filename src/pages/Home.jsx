@@ -283,13 +283,7 @@ export default function Home() {
 
       {/* Partners */}
       <section style={{ backgroundColor: "#f3eed9" }} className="py-16">
-        <div ref={partRef} className="container-x">
-          <div className="text-center mb-10">
-            <p className={`text-xs uppercase tracking-[0.2em] font-semibold text-brand-maroon reveal-up stagger-1${partInView ? " in-view" : ""}`}>
-              Our partners
-            </p>
-          </div>
-        </div>
+        <div ref={partRef} />
         <div className={`container-x reveal-up stagger-2${partInView ? " in-view" : ""}`}>
           <Partners />
         </div>
