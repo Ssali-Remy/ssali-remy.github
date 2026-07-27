@@ -32,42 +32,12 @@ function useInView(options = {}) {
     // Safety net: headless / sandboxed environments where IO never fires
     const fallback = setTimeout(trigger, 400);
     return () => { obs.disconnect(); clearTimeout(fallback); };
+    // `options` is only ever passed as a fresh object literal (or omitted) by
+    // every call site, and this observer is meant to attach once on mount —
+    // re-running it on every options identity change would defeat that.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return [ref, inView];
-}
-
-/* ── Count-up hook for stat numbers ── */
-function useCountUp(target, active, duration = 900) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!active || target === 0) return;
-    let current = 0;
-    const frames = Math.round(duration / 16);
-    const inc = target / frames;
-    const timer = setInterval(() => {
-      current += inc;
-      if (current >= target) { setCount(target); clearInterval(timer); }
-      else setCount(Math.floor(current));
-    }, 16);
-    return () => clearInterval(timer);
-  }, [active, target, duration]);
-  return count;
-}
-
-function AnimatedStat({ n, l, inView, delay = 0 }) {
-  const isNumeric = /^\d+$/.test(String(n));
-  const count = useCountUp(isNumeric ? parseInt(n) : 0, inView);
-  return (
-    <div
-      className={`text-center reveal-up${inView ? " in-view" : ""}`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      <dt className="text-3xl font-bold text-brand-maroon">
-        {isNumeric ? count : n}
-      </dt>
-      <dd className="text-xs uppercase tracking-wider text-brand-ink/60 mt-1">{l}</dd>
-    </div>
-  );
 }
 
 function SlimCarousel({ images, interval = 5000 }) {
