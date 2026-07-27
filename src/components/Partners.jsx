@@ -84,13 +84,13 @@ function WegaLogo(props) {
   );
 }
 
-// Rendered heights: half the original (48px / 32px), then up by a third.
+// Rendered heights, doubled from the previous 64px / 42px.
 // `max-w-full` only ever letterboxes an over-wide mark — SVG
 // preserveAspectRatio keeps the artwork from distorting.
 const PARTNERS = [
-  { name: "Allure Aesthetics",  Logo: AllureLogo,             size: "h-16 w-auto max-w-full" },
-  { name: "Business Advantage", Logo: BusinessAdvantageLogo,  size: "h-[42px] w-auto max-w-full" },
-  { name: "Wega Pharmacy",      Logo: WegaLogo,               size: "h-[42px] w-auto max-w-full" },
+  { name: "Allure Aesthetics",  Logo: AllureLogo,             size: "h-32 w-auto max-w-full" },
+  { name: "Business Advantage", Logo: BusinessAdvantageLogo,  size: "h-[84px] w-auto max-w-full" },
+  { name: "Wega Pharmacy",      Logo: WegaLogo,               size: "h-[84px] w-auto max-w-full" },
 ];
 
 export default function Partners() {
