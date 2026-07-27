@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Section from "../components/Section";
-import ImageMarquee from "../components/ImageMarquee";
+import ClickSlider from "../components/ClickSlider";
 import AvailabilityCalendar from "../components/AvailabilityCalendar";
 import { site } from "../data/site";
 import { k1Cover, k1Img1, k1Img2, k1Img3, k1Img4 } from "../data/images-k1";
 import { k2Cover, k2Img1, k2Img2, k2Img3, k2Img4 } from "../data/images-k2";
 import { m3Cover, m3Img1, m3Img2, m3Img3, m3Img4 } from "../data/images-m3";
 
-const E1_REEL = [k1Cover, k1Img1, k1Img2, k1Img3, k1Img4];
-const E2_REEL = [k2Cover, k2Img1, k2Img2, k2Img3, k2Img4];
-const M1_REEL = [m3Cover, m3Img2, m3Img4, m3Img1];
-const M2_REEL = [m3Img1, m3Img3, m3Cover, m3Img2];
-const M3_REEL = [m3Img4, m3Img2, m3Img3, m3Cover, m3Img1];
+// Common rooms first; bedrooms last.
+const E1_REEL = [k1Cover, k1Img1, k1Img2, k1Img4, k1Img3];
+const E2_REEL = [k2Cover, k2Img1, k2Img2, k2Img4, k2Img3];
+const M1_REEL = [m3Cover, m3Img2, m3Img3, m3Img1];
+const M2_REEL = [m3Cover, m3Img3, m3Img2, m3Img4];
+const M3_REEL = [m3Cover, m3Img2, m3Img3, m3Img1, m3Img4];
 
 const UNIT_REELS = [
   { id: "kansanga-1", label: "E1", subtitle: "Kansanga · Two-bedroom",      reel: E1_REEL, dir: "right" },
@@ -78,8 +79,8 @@ export default function Booking() {
               </h2>
               <p className="text-sm text-brand-ink/60">{u.subtitle}</p>
             </div>
-            <div className="mt-4">
-              <ImageMarquee images={u.reel} direction={u.dir} duration={36} />
+            <div className="container-x mt-4">
+              <ClickSlider images={u.reel} />
             </div>
           </section>
         ))}
