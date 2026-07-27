@@ -44,8 +44,13 @@ export default function Navbar() {
     };
   }, [locOpen]);
 
-  // Close mobile menu when route changes
+  // Close mobile menu when route changes. This is a legitimate use of an
+  // effect (syncing local UI state to the router's external pathname) —
+  // the alternative "adjust state during render via a ref" pattern is
+  // itself disallowed by this plugin's react-hooks/refs rule, so the two
+  // rules are mutually exclusive here. Keeping the effect.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
     setMobileLocOpen(false);
     setLocOpen(false);
