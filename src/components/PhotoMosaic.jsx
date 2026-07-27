@@ -16,7 +16,7 @@ function GridIcon(props) {
   );
 }
 
-function AllPhotosOverlay({ images, label, onClose }) {
+function AllPhotosOverlay({ images, categories, label, onClose }) {
   // Close on Escape, and stop the page behind from scrolling.
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose();
@@ -49,16 +49,40 @@ function AllPhotosOverlay({ images, label, onClose }) {
           </svg>
         </button>
       </div>
-      <div className="mx-auto max-w-4xl px-4 sm:px-8 pb-16 grid gap-4">
-        {images.map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            alt={`${label} photo ${i + 1}`}
-            className="w-full rounded-2xl object-cover"
-            loading="lazy"
-          />
-        ))}
+
+      <div className="mx-auto max-w-4xl px-4 sm:px-8 pb-16">
+        {categories && categories.length > 0 ? (
+          categories.map(({ category, images: catImages }) => (
+            <div key={category} className="mb-10 last:mb-0">
+              <h3 className="text-lg font-semibold text-brand-ink mb-4">
+                {category}
+              </h3>
+              <div className="grid gap-4">
+                {catImages.map((src, i) => (
+                  <img
+                    key={i}
+                    src={src}
+                    alt={`${label} — ${category} ${i + 1}`}
+                    className="w-full rounded-2xl object-cover"
+                    loading="lazy"
+                  />
+                ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="grid gap-4">
+            {images.map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt={`${label} photo ${i + 1}`}
+                className="w-full rounded-2xl object-cover"
+                loading="lazy"
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -68,8 +92,13 @@ function AllPhotosOverlay({ images, label, onClose }) {
  * Airbnb-style photo grid: one large image on the left, a 2x2 grid of
  * four on the right, and a "Show all photos" button over the corner.
  * Stacks to a single column on small screens.
+ *
+ * Pass `categories` (an array of { category, images }) to have the
+ * "show all photos" overlay group images under room/area headings
+ * (e.g. "Living Room", "Kitchen"). Without it, the overlay falls back
+ * to a plain flat list.
  */
-export default function PhotoMosaic({ images, label = "Photos" }) {
+export default function PhotoMosaic({ images, categories, label = "Photos" }) {
   const [showAll, setShowAll] = useState(false);
   const [main, ...rest] = images;
   const four = rest.slice(0, 4);
@@ -122,6 +151,7 @@ export default function PhotoMosaic({ images, label = "Photos" }) {
       {showAll && (
         <AllPhotosOverlay
           images={images}
+          categories={categories}
           label={label}
           onClose={() => setShowAll(false)}
         />
