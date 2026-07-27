@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Section from "../components/Section";
 import ClickSlider from "../components/ClickSlider";
@@ -38,21 +38,38 @@ function WhatsAppIcon(props) {
   );
 }
 
+// Combination units book their component apartments together, so the
+// calendar needs the union of the components' availability.
+const COMBO_UNITS = {
+  "kansanga-3": ["kansanga-1", "kansanga-2"],
+  "munyonyo-4": ["munyonyo-1", "munyonyo-2", "munyonyo-3"],
+};
+
+function picksForRequest(requestedUnit) {
+  const requestedIds = COMBO_UNITS[requestedUnit] || [requestedUnit];
+  const hasRequestedUnit = UNIT_REELS.some((u) => requestedIds.includes(u.id));
+  return Object.fromEntries(
+    UNIT_REELS.map((u) => [
+      u.id,
+      hasRequestedUnit ? requestedIds.includes(u.id) : true,
+    ]),
+  );
+}
+
 export default function Booking() {
   const [params] = useSearchParams();
   const requestedUnit = params.get("unit");
-  const hasRequestedUnit = UNIT_REELS.some((u) => u.id === requestedUnit);
 
-  // If arriving with ?unit=<id> from an apartment page, pre-select just
-  // that one; otherwise default to every unit selected.
-  const [picks, setPicks] = useState(
-    Object.fromEntries(
-      UNIT_REELS.map((u) => [
-        u.id,
-        hasRequestedUnit ? u.id === requestedUnit : true,
-      ]),
-    ),
-  );
+  // Pre-select the requested unit (or a combination unit's components);
+  // with no valid ?unit= param, default to every unit selected.
+  const [picks, setPicks] = useState(() => picksForRequest(requestedUnit));
+
+  // Client-side navigation between apartment pages doesn't remount this
+  // component, so re-sync when the URL's unit param changes.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setPicks(picksForRequest(requestedUnit));
+  }, [requestedUnit]);
   const togglePick = (id) =>
     setPicks((p) => ({ ...p, [id]: !p[id] }));
   const selectedIds = Object.entries(picks)
