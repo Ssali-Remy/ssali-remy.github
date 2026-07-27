@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { heroBackgrounds } from "../data/units";
-import ClickSlider from "../components/ClickSlider";
+import PhotoMosaic from "../components/PhotoMosaic";
 import Partners from "../components/Partners";
 import { k1Cover, k1Img1, k1Img2, k1Img3, k1Img4 } from "../data/images-k1";
 import { k2Cover, k2Img1, k2Img2, k2Img3, k2Img4 } from "../data/images-k2";
@@ -39,39 +38,6 @@ function useInView(options = {}) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return [ref, inView];
-}
-
-function SlimCarousel({ images, interval = 5000 }) {
-  const [active, setActive] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setActive((i) => (i + 1) % images.length), interval);
-    return () => clearInterval(t);
-  }, [images.length, interval]);
-
-  return (
-    <div className="relative overflow-hidden mx-auto rounded-2xl" style={{ height: "40vh", minHeight: "220px", width: "90%" }}>
-      {images.map((src, i) => (
-        <div
-          key={i}
-          className="absolute inset-0 bg-cover bg-center transition-opacity duration-[1500ms]"
-          style={{ backgroundImage: `url("${src}")`, opacity: i === active ? 1 : 0 }}
-        />
-      ))}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-        {images.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            aria-label={`Slide ${i + 1}`}
-            onClick={() => setActive(i)}
-            className={`h-1.5 rounded-full transition-all ${
-              i === active ? "w-6 bg-white" : "w-1.5 bg-white/50"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
-  );
 }
 
 
@@ -171,9 +137,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Carousel 1 — exterior / compound shots */}
-      <SlimCarousel images={heroBackgrounds} />
-
       {/* Welcome statement — Meet your host */}
       <section style={{ backgroundColor: "#fff3f0" }} className="py-20">
         <div ref={welcomeRef} className="container-x max-w-3xl mx-auto text-center">
@@ -217,7 +180,7 @@ export default function Home() {
             </h3>
           </div>
           <div className={`container-x mt-5 reveal-up stagger-3${mosaicInView ? " in-view" : ""}`}>
-            <ClickSlider images={KANSANGA_REEL} />
+            <PhotoMosaic images={KANSANGA_REEL} label="Kansanga" />
           </div>
         </div>
 
@@ -228,7 +191,7 @@ export default function Home() {
             </h3>
           </div>
           <div className={`container-x mt-5 reveal-up stagger-5${mosaicInView ? " in-view" : ""}`}>
-            <ClickSlider images={MUNYONYO_REEL} />
+            <PhotoMosaic images={MUNYONYO_REEL} label="Munyonyo" />
           </div>
         </div>
 
