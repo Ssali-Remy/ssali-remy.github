@@ -1,13 +1,11 @@
-/* Static partner logos, presented as a row of uniform rounded cards.
+/* Static partner logos, sitting directly on the section background.
  *
- * Each logo is an SVG whose viewBox matches the real mark's aspect ratio.
- * The card gives it a fixed square well with padding; the SVG fills that
- * well with the default preserveAspectRatio ("xMidYMid meet"), so every
- * logo scales to FIT — never stretched, never cropped — and wide marks
- * simply sit shorter than tall ones, exactly as on a real partner wall.
+ * Each logo is an SVG whose viewBox matches the real mark's aspect ratio,
+ * so a fixed height renders the correct intrinsic width — never stretched.
+ * Wide marks simply sit shorter than tall ones.
  *
  * To swap in original image files: drop them in public/images/partners/
- * and replace each component with <img className="max-h-full max-w-full" />. */
+ * and replace each component with <img className={size} />. */
 
 function AllureLogo(props) {
   // Near-square mark: broken circle around a stacked wordmark.
@@ -86,23 +84,23 @@ function WegaLogo(props) {
   );
 }
 
-// Rendered heights are the original sizes (96px / 64px) halved.
-// `max-w-full` only ever letterboxes an over-wide mark inside its card —
-// SVG preserveAspectRatio keeps the artwork from distorting.
+// Rendered heights: half the original (48px / 32px), then up by a third.
+// `max-w-full` only ever letterboxes an over-wide mark — SVG
+// preserveAspectRatio keeps the artwork from distorting.
 const PARTNERS = [
-  { name: "Allure Aesthetics",  Logo: AllureLogo,             size: "h-12 w-auto max-w-full" },
-  { name: "Business Advantage", Logo: BusinessAdvantageLogo,  size: "h-8 w-auto max-w-full" },
-  { name: "Wega Pharmacy",      Logo: WegaLogo,               size: "h-8 w-auto max-w-full" },
+  { name: "Allure Aesthetics",  Logo: AllureLogo,             size: "h-16 w-auto max-w-full" },
+  { name: "Business Advantage", Logo: BusinessAdvantageLogo,  size: "h-[42px] w-auto max-w-full" },
+  { name: "Wega Pharmacy",      Logo: WegaLogo,               size: "h-[42px] w-auto max-w-full" },
 ];
 
 export default function Partners() {
   return (
-    <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
+    <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 sm:gap-x-14">
       {PARTNERS.map(({ name, Logo, size }) => (
         <div
           key={name}
           title={name}
-          className="h-32 w-32 sm:h-36 sm:w-36 shrink-0 rounded-3xl bg-white shadow-soft flex items-center justify-center p-4 sm:p-5"
+          className="flex items-center justify-center px-4 py-2"
         >
           <Logo className={size} />
         </div>
