@@ -4,7 +4,7 @@
 
 function AllureLogo() {
   return (
-    <svg viewBox="0 0 260 150" className="h-24 w-auto" role="img" aria-label="Allure Aesthetics">
+    <svg viewBox="0 0 260 150" className="h-12 w-auto" role="img" aria-label="Allure Aesthetics">
       <path d="M60 18 A92 66 0 0 1 228 42" fill="none" stroke="#1F1F1F" strokeWidth="1.6" strokeLinecap="round" />
       <path d="M204 132 A92 66 0 0 1 34 106" fill="none" stroke="#1F1F1F" strokeWidth="1.6" strokeLinecap="round" />
       <text x="130" y="78" textAnchor="middle" fontFamily="'Comic Sans MS','Trebuchet MS',cursive" fontSize="36" fontWeight="800" fill="#161616" letterSpacing="6">
@@ -22,7 +22,7 @@ function AllureLogo() {
 
 function BusinessAdvantageLogo() {
   return (
-    <svg viewBox="0 0 250 72" className="h-16 w-auto" role="img" aria-label="Business Advantage">
+    <svg viewBox="0 0 250 72" className="h-8 w-auto" role="img" aria-label="Business Advantage">
       <g transform="translate(6,8)">
         <path d="M14 0h12l8 8-8 8h-12l-8-8z" fill="#E62E2E" />
         <path d="M34 14h12l8 8-8 8H34l-8-8z" fill="#2C6E8F" />
@@ -42,7 +42,7 @@ function BusinessAdvantageLogo() {
 
 function WegaLogo() {
   return (
-    <svg viewBox="0 0 300 84" className="h-16 w-auto" role="img" aria-label="Wega Pharmacy">
+    <svg viewBox="0 0 300 84" className="h-8 w-auto" role="img" aria-label="Wega Pharmacy">
       <g fill="none" stroke="#111" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
         <path d="M22 14h20v10" />
         <path d="M14 24h38q4 0 4 5v6q0 5-4 5H14q-4 0-4-5v-6q0-5 4-5z" />
@@ -75,7 +75,7 @@ export default function Partners() {
         <div
           key={name}
           title={name}
-          className="flex items-center justify-center bg-white rounded-2xl p-8 shadow-soft min-h-[140px]"
+          className="flex items-center justify-center bg-white rounded-2xl p-5 shadow-soft min-h-[80px]"
         >
           <Logo />
         </div>
