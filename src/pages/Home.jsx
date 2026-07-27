@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { heroBackgrounds } from "../data/units";
-import ImageMarquee from "../components/ImageMarquee";
+import ClickSlider from "../components/ClickSlider";
+import Partners from "../components/Partners";
 import { k1Cover, k1Img1, k1Img2, k1Img3, k1Img4 } from "../data/images-k1";
 import { k2Cover, k2Img1, k2Img2, k2Img3, k2Img4 } from "../data/images-k2";
 import { m3Cover, m3Img1, m3Img2, m3Img3, m3Img4 } from "../data/images-m3";
@@ -145,23 +146,13 @@ const AMENITIES = [
   },
 ];
 
-const PARTNERS = [
-  { name: "Speke Resort", sub: "Neighbouring resort & leisure" },
-  { name: "Airbnb", sub: "Listed partner" },
-  { name: "Booking.com", sub: "Distribution partner" },
-  { name: "Uganda Tourism Board", sub: "Official tourism body" },
-];
-
-const INTERIOR_IMAGES = [k1Img1, k1Img2, k2Img1, m3Img1, m3Img2];
-
+// Ordered with shared/common areas (living, bar, kitchen) first,
+// bedrooms and private rooms last.
 const KANSANGA_REEL = [
-  k1Cover, k1Img1, k1Img2, k1Img3, k1Img4,
-  k2Cover, k2Img1, k2Img2, k2Img3, k2Img4,
+  k1Cover, k1Img1, k1Img2, k2Cover, k2Img1, k2Img2,
+  k1Img3, k1Img4, k2Img3, k2Img4,
 ];
-const MUNYONYO_REEL = [
-  m3Cover, m3Img1, m3Img2, m3Img3, m3Img4,
-  m3Img1, m3Img3, m3Cover, m3Img2, m3Img4,
-];
+const MUNYONYO_REEL = [m3Cover, m3Img2, m3Img3, m3Img1, m3Img4];
 
 function SectionFade({ from, to }) {
   return (
@@ -209,11 +200,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Carousel 2 — interior shots (sits on #fff3f0 between the two sections) */}
-      <div style={{ backgroundColor: "#fff3f0" }} className="pb-10">
-        <SlimCarousel images={INTERIOR_IMAGES} interval={4500} />
-      </div>
-
       <SectionFade from="#fff3f0" to="#f3eed9" />
 
       {/* Proximity teasers — KANSANGA reel scrolls right, MUNYONYO reel scrolls left */}
@@ -230,8 +216,8 @@ export default function Home() {
               KANSANGA
             </h3>
           </div>
-          <div className={`mt-5 reveal-up stagger-3${mosaicInView ? " in-view" : ""}`}>
-            <ImageMarquee images={KANSANGA_REEL} direction="right" />
+          <div className={`container-x mt-5 reveal-up stagger-3${mosaicInView ? " in-view" : ""}`}>
+            <ClickSlider images={KANSANGA_REEL} />
           </div>
         </div>
 
@@ -241,8 +227,8 @@ export default function Home() {
               MUNYONYO
             </h3>
           </div>
-          <div className={`mt-5 reveal-up stagger-5${mosaicInView ? " in-view" : ""}`}>
-            <ImageMarquee images={MUNYONYO_REEL} direction="left" />
+          <div className={`container-x mt-5 reveal-up stagger-5${mosaicInView ? " in-view" : ""}`}>
+            <ClickSlider images={MUNYONYO_REEL} />
           </div>
         </div>
 
@@ -287,7 +273,6 @@ export default function Home() {
                   {a.icon}
                 </div>
                 <h3 className="font-semibold text-brand-ink text-sm leading-snug">{a.title}</h3>
-                <p className="text-xs text-brand-ink/60 leading-relaxed">{a.desc}</p>
               </div>
             ))}
           </div>
@@ -305,20 +290,8 @@ export default function Home() {
             </p>
           </div>
         </div>
-        <div className={`reveal-up stagger-2${partInView ? " in-view" : ""}`}>
-          <div className="marquee marquee-left">
-            <div className="marquee-track" style={{ animationDuration: "30s" }}>
-              {[...PARTNERS, ...PARTNERS].map((p, i) => (
-                <div
-                  key={i}
-                  className="partner-card shrink-0 w-56 sm:w-64 flex flex-col items-center justify-center bg-white rounded-2xl p-6 shadow-soft min-h-[100px] text-center"
-                >
-                  <span className="font-bold text-brand-ink text-sm">{p.name}</span>
-                  <span className="text-xs text-brand-ink/45 mt-1">{p.sub}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className={`container-x reveal-up stagger-2${partInView ? " in-view" : ""}`}>
+          <Partners />
         </div>
       </section>
 
