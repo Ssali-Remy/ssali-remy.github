@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import AvailabilityCalendar from "../components/AvailabilityCalendar";
-import ImageMarquee from "../components/ImageMarquee";
+import ClickSlider from "../components/ClickSlider";
 import { locationsById } from "../data/units";
 import { site } from "../data/site";
 import { k1Cover, k1Img1, k1Img2, k1Img3, k1Img4 } from "../data/images-k1";
@@ -13,15 +13,15 @@ import { m3Cover, m3Img1, m3Img2, m3Img3, m3Img4 } from "../data/images-m3";
  * ───────────────────────────────────────────────────────────── */
 
 const AMENITIES = [
-  { label: "Strong Wi-Fi",            desc: "Fastest in the living room & kitchen" },
-  { label: "Air conditioning",        desc: "Installed in every room" },
-  { label: "Smart TV",                desc: "Netflix & DStv included" },
-  { label: "Power back-up",           desc: "Generator — never lose Wi-Fi or AC" },
-  { label: "Fully equipped kitchen",  desc: "Cookware, blender, microwave & fridge" },
-  { label: "Housekeeping",            desc: "Up to six days a week" },
-  { label: "Free parking",            desc: "On-site — no permit required" },
-  { label: "24-hour security",        desc: "Armed at night + CCTV cameras" },
-  { label: "Garden & outdoor space",  desc: "Free to enjoy during your stay" },
+  { label: "Strong Wi-Fi" },
+  { label: "Air conditioning" },
+  { label: "Smart TV" },
+  { label: "Power back-up" },
+  { label: "Fully equipped kitchen" },
+  { label: "Housekeeping" },
+  { label: "Free parking" },
+  { label: "24-hour security" },
+  { label: "Garden & outdoor space" },
 ];
 
 function AmenityGrid() {
@@ -30,7 +30,6 @@ function AmenityGrid() {
       {AMENITIES.map((a) => (
         <div key={a.label} className="card p-5">
           <p className="text-sm font-semibold text-brand-ink">{a.label}</p>
-          <p className="text-xs text-brand-ink/60 mt-1">{a.desc}</p>
         </div>
       ))}
     </div>
@@ -91,8 +90,9 @@ const KANSANGA_NARRATIVE_1 =
 const KANSANGA_NARRATIVE_2 =
   "With modern styling, great facilities and service, the apartment is well-positioned to enjoy a holiday or get away in a popular area but set away from the busy town center.";
 
-const E1_REEL = [k1Cover, k1Img1, k1Img2, k1Img3, k1Img4];
-const E2_REEL = [k2Cover, k2Img1, k2Img2, k2Img3, k2Img4];
+// Common rooms (living, bar, kitchen) first; bedrooms last.
+const E1_REEL = [k1Cover, k1Img1, k1Img2, k1Img4, k1Img3];
+const E2_REEL = [k2Cover, k2Img1, k2Img2, k2Img4, k2Img3];
 
 const KANSANGA_NEARBY = [
   ["Arena Mall", "Shopping · Nsambya"],
@@ -202,7 +202,7 @@ function KansangaPage() {
         <h2 className="text-3xl font-bold text-brand-maroon tracking-[0.3em]">E1</h2>
         <p className="mt-1 text-sm text-brand-ink/60">Wing One of the duplex</p>
         <div className="mt-5">
-          <ImageMarquee images={E1_REEL} direction="right" duration={36} />
+          <ClickSlider images={E1_REEL} />
         </div>
       </section>
 
@@ -211,7 +211,7 @@ function KansangaPage() {
         <h2 className="text-3xl font-bold text-brand-maroon tracking-[0.3em]">E2</h2>
         <p className="mt-1 text-sm text-brand-ink/60">Wing Two of the duplex</p>
         <div className="mt-5">
-          <ImageMarquee images={E2_REEL} direction="left" duration={36} />
+          <ClickSlider images={E2_REEL} />
         </div>
       </section>
 
@@ -361,9 +361,10 @@ function KansangaPage() {
  *  MUNYONYO layout — mirrors Kansanga with M1 / M2 / M3 reels
  * ───────────────────────────────────────────────────────────── */
 
-const M1_REEL = [m3Cover, m3Img2, m3Img4, m3Img1];
-const M2_REEL = [m3Img1, m3Img3, m3Cover, m3Img2];
-const M3_REEL = [m3Img4, m3Img2, m3Img3, m3Cover, m3Img1];
+// Common rooms first; bedrooms last.
+const M1_REEL = [m3Cover, m3Img2, m3Img3, m3Img1];
+const M2_REEL = [m3Cover, m3Img3, m3Img2, m3Img4];
+const M3_REEL = [m3Cover, m3Img2, m3Img3, m3Img1, m3Img4];
 
 const MUNYONYO_UNITS = [
   { id: "munyonyo-1", label: "Unit M1", desc: "One-bedroom apartment", reel: M1_REEL, dir: "right" },
@@ -418,7 +419,7 @@ function MunyonyoPage({ loc }) {
           </h2>
           <p className="mt-1 text-sm text-brand-ink/60">{u.desc}</p>
           <div className="mt-5">
-            <ImageMarquee images={u.reel} direction={u.dir} duration={36} />
+            <ClickSlider images={u.reel} />
           </div>
         </section>
       ))}
