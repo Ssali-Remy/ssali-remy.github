@@ -1,0 +1,10 @@
+// Shared "House Rules" list from the welcome booklet — used on every
+// location page and every individual apartment page.
+export const HOUSE_RULES = [
+  ["No Smoking Indoors", "Please do not smoke inside the home. You may smoke outside."],
+  ["No Parties or Events", "We love celebrations, but please keep gatherings small and quiet and always inform us in advance."],
+  ["Quiet Hours: 11:00 PM – 8:00 AM", "Please be mindful of our neighbours during these hours."],
+  ["No Pets", "Pets are not allowed."],
+  ["Check-Out by 11:00 AM", "Please leave the keys in the door(s) and ensure the door(s) are locked behind you."],
+  ["Respect the Space", "Treat the home with care, and kindly report any damages or issues right away."],
+];
