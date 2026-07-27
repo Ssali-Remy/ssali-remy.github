@@ -21,8 +21,11 @@ const BOOKED = {
 // When multiple, the calendar excludes dates booked by ANY of them
 // (so it shows only days when ALL selected units are free).
 export default function AvailabilityCalendar({ unitId, unitIds }) {
-  const ids = unitIds || (unitId ? [unitId] : []);
+  // Join to a stable string first so useMemo can depend on a simple
+  // expression instead of a freshly-allocated array every render.
+  const idsKey = (unitIds || (unitId ? [unitId] : [])).join("|");
   const booked = useMemo(() => {
+    const ids = idsKey ? idsKey.split("|") : [];
     const seen = new Set();
     const out = [];
     for (const id of ids) {
@@ -35,7 +38,7 @@ export default function AvailabilityCalendar({ unitId, unitIds }) {
       }
     }
     return out;
-  }, [ids.join("|")]);
+  }, [idsKey]);
 
   const todayPlusYear = useMemo(() => {
     const d = new Date();
