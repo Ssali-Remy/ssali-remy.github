@@ -27,7 +27,7 @@ export default function Apartment() {
       </header>
 
       {/* Images */}
-      <PhotoMosaic images={images} label={unit.name} />
+      <PhotoMosaic images={images} categories={unit.photoCategories} label={unit.name} />
 
       {/* Book now */}
       <section className="text-center">
