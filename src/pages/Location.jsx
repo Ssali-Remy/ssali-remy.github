@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { useParams, Navigate, Link } from "react-router-dom";
-import SmartImage from "../components/SmartImage";
+import { useParams, Navigate } from "react-router-dom";
 import AvailabilityCalendar from "../components/AvailabilityCalendar";
 import ImageMarquee from "../components/ImageMarquee";
-import { units, locationsById } from "../data/units";
-import { gallery } from "../data/gallery";
-import { reviews } from "../data/reviews";
+import { locationsById } from "../data/units";
 import { site } from "../data/site";
 import { k1Cover, k1Img1, k1Img2, k1Img3, k1Img4 } from "../data/images-k1";
 import { k2Cover, k2Img1, k2Img2, k2Img3, k2Img4 } from "../data/images-k2";
