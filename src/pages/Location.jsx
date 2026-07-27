@@ -165,8 +165,8 @@ function KansangaPage() {
     both: ["kansanga-1", "kansanga-2"],
   };
   const labelByMode = {
-    e1: "Unit One (E1)",
-    e2: "Unit Two (E2)",
+    e1: "Modern Spacious Family Apartment (E1) (E1)",
+    e2: "Spacious Comfortable Home (E2) (E2)",
     both: "Units One & Two together",
   };
 
@@ -318,12 +318,12 @@ function KansangaPage() {
       <section>
         <H2>Availability</H2>
         <p className="text-sm text-brand-ink/60 mb-5">
-          Book Unit One on its own, Unit Two on its own, or both wings together.
+          Book Modern Spacious Family Apartment (E1) on its own, Spacious Comfortable Home (E2) on its own, or both wings together.
         </p>
         <div className="flex flex-wrap gap-2 mb-5">
           {[
-            ["e1",   "Unit One (E1)"],
-            ["e2",   "Unit Two (E2)"],
+            ["e1",   "Modern Spacious Family Apartment (E1) (E1)"],
+            ["e2",   "Spacious Comfortable Home (E2) (E2)"],
             ["both", "Both E1 + E2"],
           ].map(([mode, label]) => (
             <button
@@ -359,9 +359,9 @@ const M2_REEL = [m3Cover, m3Img3, m3Img2, m3Img4];
 const M3_REEL = [m3Cover, m3Img2, m3Img3, m3Img1, m3Img4];
 
 const MUNYONYO_UNITS = [
-  { id: "munyonyo-1", label: "Unit M1", desc: "One-bedroom apartment", reel: M1_REEL, dir: "right" },
-  { id: "munyonyo-2", label: "Unit M2", desc: "Two-bedroom apartment", reel: M2_REEL, dir: "left"  },
-  { id: "munyonyo-3", label: "Unit M3", desc: "Two-bedroom apartment", reel: M3_REEL, dir: "right" },
+  { id: "munyonyo-1", label: "Green Apartment (M1)", desc: "One-bedroom apartment", reel: M1_REEL, dir: "right" },
+  { id: "munyonyo-2", label: "Bright One Bedroom Apartment (M2)", desc: "Two-bedroom apartment", reel: M2_REEL, dir: "left"  },
+  { id: "munyonyo-3", label: "Modern Haven (M3)", desc: "Two-bedroom apartment", reel: M3_REEL, dir: "right" },
 ];
 
 function MunyonyoPage({ loc }) {

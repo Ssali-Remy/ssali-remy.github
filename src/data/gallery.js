@@ -9,22 +9,22 @@ export const gallery = [
   { src: compound2, alt: "Garden view", location: "kansanga" },
   { src: compound3, alt: "Outdoor patio", location: "kansanga" },
   { src: compound4, alt: "Garden corner", location: "kansanga" },
-  // Kansanga Unit One
-  { src: k1Cover, alt: "Unit One — sitting room", location: "kansanga" },
-  { src: k1Img1, alt: "Unit One — interior", location: "kansanga" },
-  { src: k1Img2, alt: "Unit One — interior", location: "kansanga" },
-  { src: k1Img3, alt: "Unit One — interior", location: "kansanga" },
-  { src: k1Img4, alt: "Unit One — interior", location: "kansanga" },
-  // Kansanga Unit Two
-  { src: k2Cover, alt: "Unit Two — feature shot", location: "kansanga" },
-  { src: k2Img1, alt: "Unit Two — interior", location: "kansanga" },
-  { src: k2Img2, alt: "Unit Two — interior", location: "kansanga" },
-  { src: k2Img3, alt: "Unit Two — interior", location: "kansanga" },
-  { src: k2Img4, alt: "Unit Two — interior", location: "kansanga" },
-  // Munyonyo Unit Three
-  { src: m3Cover, alt: "Unit Three — Munyonyo", location: "munyonyo" },
-  { src: m3Img1, alt: "Unit Three — interior", location: "munyonyo" },
-  { src: m3Img2, alt: "Unit Three — interior", location: "munyonyo" },
-  { src: m3Img3, alt: "Unit Three — interior", location: "munyonyo" },
-  { src: m3Img4, alt: "Unit Three — interior", location: "munyonyo" },
+  // Kansanga Modern Spacious Family Apartment (E1)
+  { src: k1Cover, alt: "Modern Spacious Family Apartment (E1) — sitting room", location: "kansanga" },
+  { src: k1Img1, alt: "Modern Spacious Family Apartment (E1) — interior", location: "kansanga" },
+  { src: k1Img2, alt: "Modern Spacious Family Apartment (E1) — interior", location: "kansanga" },
+  { src: k1Img3, alt: "Modern Spacious Family Apartment (E1) — interior", location: "kansanga" },
+  { src: k1Img4, alt: "Modern Spacious Family Apartment (E1) — interior", location: "kansanga" },
+  // Kansanga Spacious Comfortable Home (E2)
+  { src: k2Cover, alt: "Spacious Comfortable Home (E2) — feature shot", location: "kansanga" },
+  { src: k2Img1, alt: "Spacious Comfortable Home (E2) — interior", location: "kansanga" },
+  { src: k2Img2, alt: "Spacious Comfortable Home (E2) — interior", location: "kansanga" },
+  { src: k2Img3, alt: "Spacious Comfortable Home (E2) — interior", location: "kansanga" },
+  { src: k2Img4, alt: "Spacious Comfortable Home (E2) — interior", location: "kansanga" },
+  // Munyonyo Private Home (E3)
+  { src: m3Cover, alt: "Private Home (E3) — Munyonyo", location: "munyonyo" },
+  { src: m3Img1, alt: "Private Home (E3) — interior", location: "munyonyo" },
+  { src: m3Img2, alt: "Private Home (E3) — interior", location: "munyonyo" },
+  { src: m3Img3, alt: "Private Home (E3) — interior", location: "munyonyo" },
+  { src: m3Img4, alt: "Private Home (E3) — interior", location: "munyonyo" },
 ];

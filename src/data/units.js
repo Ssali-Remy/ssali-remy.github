@@ -9,7 +9,7 @@ export { heroBackgrounds, compound1, compound2, compound3, compound4 };
 export const units = [
   {
     id: "kansanga-1",
-    name: "Unit One",
+    name: "Modern Spacious Family Apartment (E1)",
     altName: "E1 Wing",
     location: "Kansanga",
     locationId: "kansanga",
@@ -36,7 +36,7 @@ export const units = [
   },
   {
     id: "kansanga-2",
-    name: "Unit Two",
+    name: "Spacious Comfortable Home (E2)",
     altName: "E2 Wing",
     location: "Kansanga",
     locationId: "kansanga",
@@ -62,7 +62,7 @@ export const units = [
   },
   {
     id: "kansanga-3",
-    name: "Unit Three",
+    name: "Private Home (E3)",
     altName: "E1 + E2",
     location: "Kansanga",
     locationId: "kansanga",
@@ -91,7 +91,7 @@ export const units = [
   },
   {
     id: "munyonyo-1",
-    name: "Unit M1",
+    name: "Green Apartment (M1)",
     altName: "M1",
     location: "Munyonyo",
     locationId: "munyonyo",
@@ -116,7 +116,7 @@ export const units = [
   },
   {
     id: "munyonyo-2",
-    name: "Unit M2",
+    name: "Bright One Bedroom Apartment (M2)",
     altName: "M2",
     location: "Munyonyo",
     locationId: "munyonyo",
@@ -139,7 +139,7 @@ export const units = [
   },
   {
     id: "munyonyo-3",
-    name: "Unit M3",
+    name: "Modern Haven (M3)",
     altName: "M3",
     location: "Munyonyo",
     locationId: "munyonyo",
@@ -162,7 +162,7 @@ export const units = [
   },
   {
     id: "munyonyo-4",
-    name: "Unit M4",
+    name: "Private Haven With a Huge Garden",
     altName: "M1 + M2 + M3",
     location: "Munyonyo",
     locationId: "munyonyo",
