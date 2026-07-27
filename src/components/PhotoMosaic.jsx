@@ -50,20 +50,32 @@ function AllPhotosOverlay({ images, categories, label, onClose }) {
         </button>
       </div>
 
-      <div className="mx-auto max-w-4xl px-4 sm:px-8 pb-16">
+      <div className="mx-auto max-w-5xl px-4 sm:px-8 pb-16">
         {categories && categories.length > 0 ? (
           categories.map(({ category, images: catImages }) => (
-            <div key={category} className="mb-10 last:mb-0">
-              <h3 className="text-lg font-semibold text-brand-ink mb-4">
-                {category}
-              </h3>
-              <div className="grid gap-4">
+            <div key={category} className="mb-12 last:mb-0">
+              <div className="flex items-center gap-4 mb-5">
+                <h3 className="text-lg font-semibold text-brand-ink shrink-0">
+                  {category}
+                </h3>
+                <span className="h-px flex-1 bg-brand-sand" />
+                <span className="text-xs text-brand-ink/50 shrink-0">
+                  {catImages.length} photo{catImages.length > 1 ? "s" : ""}
+                </span>
+              </div>
+              {/* First photo leads at double width; the rest tile beside
+                  and below it in a two-up grid. */}
+              <div className="grid grid-cols-2 gap-3">
                 {catImages.map((src, i) => (
                   <img
                     key={i}
                     src={src}
                     alt={`${label} — ${category} ${i + 1}`}
-                    className="w-full rounded-2xl object-cover"
+                    className={`w-full rounded-2xl object-cover ${
+                      i === 0
+                        ? "col-span-2 aspect-[2/1]"
+                        : "aspect-[4/3]"
+                    }`}
                     loading="lazy"
                   />
                 ))}
@@ -71,13 +83,15 @@ function AllPhotosOverlay({ images, categories, label, onClose }) {
             </div>
           ))
         ) : (
-          <div className="grid gap-4">
+          <div className="grid grid-cols-2 gap-3">
             {images.map((src, i) => (
               <img
                 key={i}
                 src={src}
                 alt={`${label} photo ${i + 1}`}
-                className="w-full rounded-2xl object-cover"
+                className={`w-full rounded-2xl object-cover ${
+                  i === 0 ? "col-span-2 aspect-[2/1]" : "aspect-[4/3]"
+                }`}
                 loading="lazy"
               />
             ))}
