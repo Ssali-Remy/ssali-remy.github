@@ -129,10 +129,20 @@ const AMENITIES = [
     ),
   },
   {
-    label: "24-hour security & CCTV",
+    label: "24-hour security",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    label: "Outdoor CCTV cameras",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <rect x="2" y="8" width="13" height="8" rx="2" />
+        <path d="M15 10l6-3v10l-6-3" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M6 16v2a2 2 0 002 2h2" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -202,6 +212,42 @@ const AMENITIES = [
       </svg>
     ),
   },
+  {
+    label: "Fire extinguisher in the kitchen",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <path d="M10 2h4M12 2v3" strokeLinecap="round" />
+        <path d="M8 8a4 4 0 118 0v2h1a2 2 0 012 2v8a2 2 0 01-2 2H9a2 2 0 01-2-2v-8a2 2 0 012-2h-1z" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M9 13l6 6M15 13l-6 6" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    label: "Bed linen & towels provided",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <path d="M3 18v-6a2 2 0 012-2h14a2 2 0 012 2v6" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3 18h18M5 10V7a2 2 0 012-2h10a2 2 0 012 2v3" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    label: "Full cookware & crockery",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <path d="M4 3v7a3 3 0 003 3v8M4 3v4M7 3v4" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M15 3s-2 2-2 5 2 5 2 5v8" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    label: "Dining area",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
+        <path d="M3 21h18M6 21V10M18 21V10M4 10h16l-2-6H6z" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
 ];
 
 const AMENITIES_PREVIEW_COUNT = 8;
@@ -240,7 +286,7 @@ export default function Home() {
 
       {/* Welcome statement — Meet your host */}
       <section style={{ backgroundColor: "#fff3f0" }} className="py-20">
-        <div ref={welcomeRef} className="container-x max-w-3xl mx-auto text-right">
+        <div ref={welcomeRef} className="container-x max-w-3xl mx-auto text-left">
           <h1 className={`text-4xl sm:text-5xl font-bold text-brand-ink leading-tight reveal-up stagger-1${welcomeInView ? " in-view" : ""}`}>
             Meet your host
           </h1>
