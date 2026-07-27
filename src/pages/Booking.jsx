@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Section from "../components/Section";
 import ClickSlider from "../components/ClickSlider";
 import AvailabilityCalendar from "../components/AvailabilityCalendar";
@@ -39,9 +39,19 @@ function WhatsAppIcon(props) {
 }
 
 export default function Booking() {
-  // Default: every unit selected
+  const [params] = useSearchParams();
+  const requestedUnit = params.get("unit");
+  const hasRequestedUnit = UNIT_REELS.some((u) => u.id === requestedUnit);
+
+  // If arriving with ?unit=<id> from an apartment page, pre-select just
+  // that one; otherwise default to every unit selected.
   const [picks, setPicks] = useState(
-    Object.fromEntries(UNIT_REELS.map((u) => [u.id, true])),
+    Object.fromEntries(
+      UNIT_REELS.map((u) => [
+        u.id,
+        hasRequestedUnit ? u.id === requestedUnit : true,
+      ]),
+    ),
   );
   const togglePick = (id) =>
     setPicks((p) => ({ ...p, [id]: !p[id] }));
