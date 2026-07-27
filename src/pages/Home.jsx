@@ -1,10 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import PhotoMosaic from "../components/PhotoMosaic";
 import Partners from "../components/Partners";
-import { k1Cover, k1Img1, k1Img2, k1Img3, k1Img4 } from "../data/images-k1";
-import { k2Cover, k2Img1, k2Img2, k2Img3, k2Img4 } from "../data/images-k2";
-import { m3Cover, m3Img1, m3Img2, m3Img3, m3Img4 } from "../data/images-m3";
+import { units } from "../data/units";
 import { site } from "../data/site";
 
 /* ── Intersection Observer hook (fires once, with sync visible-check fallback) ── */
@@ -112,13 +109,9 @@ const AMENITIES = [
   },
 ];
 
-// Ordered with shared/common areas (living, bar, kitchen) first,
-// bedrooms and private rooms last.
-const KANSANGA_REEL = [
-  k1Cover, k1Img1, k1Img2, k2Cover, k2Img1, k2Img2,
-  k1Img3, k1Img4, k2Img3, k2Img4,
-];
-const MUNYONYO_REEL = [m3Cover, m3Img2, m3Img3, m3Img1, m3Img4];
+function bedroomLabel(u) {
+  return `${u.bedrooms} Bedroom${u.bedrooms > 1 ? "s" : ""}`;
+}
 
 function SectionFade({ from, to }) {
   return (
@@ -169,29 +162,41 @@ export default function Home() {
       <section style={{ backgroundColor: "#f3eed9" }} className="py-16">
         <div ref={mosaicRef} className="container-x">
           <h2 className={`text-3xl sm:text-4xl font-bold text-brand-ink leading-tight text-center max-w-3xl mx-auto reveal-up stagger-1${mosaicInView ? " in-view" : ""}`}>
-            Our apartments are in close and convenient proximity to everything
+            Our apartments
           </h2>
         </div>
 
-        <div className="mt-12">
-          <div className="container-x">
-            <h3 className={`text-2xl font-bold text-brand-maroon tracking-[0.3em] reveal-up stagger-2${mosaicInView ? " in-view" : ""}`}>
-              KANSANGA
-            </h3>
-          </div>
-          <div className={`container-x mt-5 reveal-up stagger-3${mosaicInView ? " in-view" : ""}`}>
-            <PhotoMosaic images={KANSANGA_REEL} label="Kansanga" />
-          </div>
-        </div>
-
-        <div className="mt-12">
-          <div className="container-x">
-            <h3 className={`text-2xl font-bold text-brand-maroon tracking-[0.3em] reveal-up stagger-4${mosaicInView ? " in-view" : ""}`}>
-              MUNYONYO
-            </h3>
-          </div>
-          <div className={`container-x mt-5 reveal-up stagger-5${mosaicInView ? " in-view" : ""}`}>
-            <PhotoMosaic images={MUNYONYO_REEL} label="Munyonyo" />
+        <div className={`container-x mt-10 reveal-up stagger-3${mosaicInView ? " in-view" : ""}`}>
+          <div className="overflow-hidden rounded-3xl bg-white shadow-soft">
+            <div className="hidden sm:grid grid-cols-[96px_1fr_1fr_1fr] gap-4 px-6 py-3 text-xs font-semibold uppercase tracking-wide text-brand-ink/50 border-b border-brand-beige">
+              <span>Apartment</span>
+              <span>Name</span>
+              <span>Type</span>
+              <span>Location</span>
+            </div>
+            {units.map((u) => (
+              <Link
+                key={u.id}
+                to={`/apartments/${u.id}`}
+                className="grid grid-cols-[72px_1fr] sm:grid-cols-[96px_1fr_1fr_1fr] items-center gap-4 px-6 py-4 border-b border-brand-beige last:border-b-0 transition hover:bg-brand-beige/30"
+              >
+                <img
+                  src={u.cover}
+                  alt={u.name}
+                  className="h-16 w-16 sm:h-20 sm:w-20 rounded-xl object-cover"
+                  loading="lazy"
+                />
+                <div className="sm:hidden">
+                  <p className="font-semibold text-brand-ink">{u.name}</p>
+                  <p className="text-sm text-brand-ink/60">
+                    {bedroomLabel(u)} · {u.location}
+                  </p>
+                </div>
+                <span className="hidden sm:block font-semibold text-brand-ink">{u.name}</span>
+                <span className="hidden sm:block text-brand-ink/75">{bedroomLabel(u)}</span>
+                <span className="hidden sm:block text-brand-ink/75">{u.location}</span>
+              </Link>
+            ))}
           </div>
         </div>
 
