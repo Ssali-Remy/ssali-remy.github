@@ -45,8 +45,26 @@ export default function Footer() {
         <div>
           <h4 className="text-base font-semibold" style={{ color: "#fff3f0" }}>Locations</h4>
           <ul className="mt-3 space-y-3 text-sm" style={{ color: "rgba(255,243,240,0.75)" }}>
-            <li>📍 {site.addresses.kansanga}</li>
-            <li>📍 {site.addresses.munyonyo}</li>
+            <li>
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(site.addresses.kansanga)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-brand-burgundy transition-colors"
+              >
+                📍 {site.addresses.kansanga}
+              </a>
+            </li>
+            <li>
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(site.addresses.munyonyo)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-brand-burgundy transition-colors"
+              >
+                📍 {site.addresses.munyonyo}
+              </a>
+            </li>
           </ul>
           <div className="mt-4 flex gap-3">
             <Social href={site.contact.facebook} label="Facebook">
