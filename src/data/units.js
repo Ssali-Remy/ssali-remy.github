@@ -20,6 +20,13 @@ export const units = [
     pricing: { day: 90, week: 425, month: 1500 },
     cover: k1Cover,
     gallery: [k1Img1, k1Img2, k1Img3, k1Img4],
+    // Grouped for the "show all photos" gallery — verified against the
+    // actual photos, not guessed from filenames.
+    photoCategories: [
+      { category: "Living Room", images: [k1Cover, k1Img1] },
+      { category: "Kitchen", images: [k1Img2, k1Img4] },
+      { category: "Dining Area", images: [k1Img3] },
+    ],
     highlights: [
       "Air conditioning in every room",
       "Smart TV with Netflix & DStv",
@@ -40,6 +47,12 @@ export const units = [
     pricing: { day: 80, week: 400, month: 1400 },
     cover: k2Cover,
     gallery: [k2Img1, k2Img2, k2Img3, k2Img4],
+    // These 5 are all compound/exterior shots — no interior photos have
+    // been uploaded for this unit yet.
+    photoCategories: [
+      { category: "Entrance", images: [k2Img1, k2Img4] },
+      { category: "Compound & Garden", images: [k2Cover, k2Img2, k2Img3] },
+    ],
     highlights: [
       "Air conditioning in every room",
       "Garden you're free to enjoy",
@@ -60,6 +73,11 @@ export const units = [
     pricing: { day: 70, week: 350, month: 1200 },
     cover: m3Cover,
     gallery: [m3Img1, m3Img2, m3Img3, m3Img4],
+    // All 5 photos on file for the Munyonyo units are bedroom shots —
+    // shared across M1/M2/M3 until distinct photos exist for each.
+    photoCategories: [
+      { category: "Bedroom", images: [m3Cover, m3Img1, m3Img2, m3Img3, m3Img4] },
+    ],
     highlights: [
       "Quiet lakeside neighbourhood",
       "Air conditioning, Smart TV with Netflix & DStv",
@@ -79,7 +97,10 @@ export const units = [
     sleeps: 4,
     pricing: { day: 95, week: 460, month: 1600 },
     cover: m3Cover,
-    gallery: [m3Img2, m3Img3, m3Img4, m3Cover],
+    gallery: [m3Img1, m3Img2, m3Img3, m3Img4],
+    photoCategories: [
+      { category: "Bedroom", images: [m3Cover, m3Img1, m3Img2, m3Img3, m3Img4] },
+    ],
     highlights: [
       "Two bedrooms, ensuite bathrooms",
       "Air conditioning in every room",
@@ -100,6 +121,9 @@ export const units = [
     pricing: { day: 100, week: 480, month: 1700 },
     cover: m3Cover,
     gallery: [m3Img1, m3Img2, m3Img3, m3Img4],
+    photoCategories: [
+      { category: "Bedroom", images: [m3Cover, m3Img1, m3Img2, m3Img3, m3Img4] },
+    ],
     highlights: [
       "Air conditioning, Smart TV with Netflix & DStv",
       "Fully equipped kitchen",
