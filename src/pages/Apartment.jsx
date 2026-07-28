@@ -1,6 +1,6 @@
 import { useParams, Navigate, Link } from "react-router-dom";
 import PhotoMosaic from "../components/PhotoMosaic";
-import { unitsById, locationsById } from "../data/units";
+import { unitsById, locationsById, nearbyMapUrl } from "../data/units";
 
 export default function Apartment() {
   const { id } = useParams();
@@ -37,12 +37,22 @@ export default function Apartment() {
         </h2>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {loc.nearby.map(([place, where]) => (
-            <li key={place} className="card p-5">
-              <p className="font-semibold text-brand-ink flex items-center gap-2">
-                <span className="text-brand-maroon">📍</span>
-                {place}
-              </p>
-              <p className="mt-1 text-sm text-brand-ink/65">{where}</p>
+            <li key={place}>
+              <a
+                href={nearbyMapUrl(place, where)}
+                target="_blank"
+                rel="noreferrer"
+                className="card p-5 block transition hover:ring-2 hover:ring-brand-maroon/20 hover:shadow-md"
+              >
+                <p className="font-semibold text-brand-ink flex items-center gap-2">
+                  <span className="text-brand-maroon">📍</span>
+                  {place}
+                </p>
+                <p className="mt-1 text-sm text-brand-ink/65">{where}</p>
+                <span className="mt-2 inline-block text-xs font-medium text-brand-maroon">
+                  View on Google Maps →
+                </span>
+              </a>
             </li>
           ))}
         </ul>
