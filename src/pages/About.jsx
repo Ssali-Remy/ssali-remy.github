@@ -72,7 +72,7 @@ export default function About() {
         </div>
       </Section>
 
-      <Section eyebrow="House rules" title="Simple, so everyone's comfortable">
+      <Section eyebrow="House guide" title="Simple, so everyone's comfortable">
         <div className="grid gap-10 lg:grid-cols-2 items-center">
           <ul className="grid gap-3">
             {[
