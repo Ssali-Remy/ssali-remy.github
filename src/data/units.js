@@ -252,3 +252,10 @@ export const locations = [
 export const locationsById = Object.fromEntries(
   locations.map((l) => [l.id, l]),
 );
+
+// Build a Google Maps search link for a nearby place. Kept in the data
+// layer so pages just render <a href={nearbyMapUrl(place, where)}>.
+export const nearbyMapUrl = (place, where) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    `${place} ${where} Kampala`,
+  )}`;
