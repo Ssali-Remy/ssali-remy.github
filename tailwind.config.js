@@ -5,13 +5,15 @@ export default {
     extend: {
       colors: {
         brand: {
-          maroon: "#5B1A1A",
-          burgundy: "#ed6560",
-          sienna: "#8B5A3C",
-          beige: "#f3eed9",
-          sand: "#e2d9c9",
-          cream: "#fff3f0",
-          ink: "#2A1A14",
+          // Carbon-black + granite-grey palette. Token names kept for
+          // compatibility with existing utility classes across the app.
+          maroon: "#22262B",   // primary — carbon / graphite (buttons, headings)
+          burgundy: "#3A414A",  // primary hover / accent — slate granite
+          sienna: "#5C6470",    // secondary accent — granite
+          beige: "#ECEEF1",     // soft section background — light granite
+          sand: "#D3D7DC",      // borders — pale granite
+          cream: "#F7F8FA",     // page background — near-white granite
+          ink: "#191C20",       // main text — carbon black
         },
       },
       fontFamily: {
@@ -20,8 +22,8 @@ export default {
         sketch: ["'Roboto'", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        soft: "0 10px 30px -12px rgba(91,26,26,0.12)",
-        ring: "0 0 0 6px rgba(237,101,96,0.12)",
+        soft: "0 10px 30px -12px rgba(25,28,32,0.14)",
+        ring: "0 0 0 6px rgba(58,65,74,0.14)",
       },
       keyframes: {
         fadeUp: {
