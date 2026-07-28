@@ -2,7 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Partners from "../components/Partners";
 import { units, heroBackgrounds } from "../data/units";
-import { HOUSE_RULES } from "../data/houseRules";
+import { HOUSE_GUIDE } from "../data/houseRules";
+import { AMENITY_GROUPS } from "../data/amenities";
+import FeedbackForm from "../components/FeedbackForm";
 import { site } from "../data/site";
 
 /* ── Intersection Observer hook (fires once, with sync visible-check fallback) ── */
@@ -73,184 +75,6 @@ function SlimCarousel({ images, interval = 5000 }) {
 }
 
 /* ── Amenities — Airbnb-style icon + label rows, with a "show all" expander ── */
-const AMENITIES = [
-  {
-    label: "Wifi",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Air conditioning in every room",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <rect x="2" y="7" width="20" height="9" rx="3" />
-        <path d="M8 16v3M12 16v3M16 16v3M8 7V4M12 7V4M16 7V4" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Smart TV with Netflix & DStv",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <rect x="2" y="4" width="20" height="13" rx="2" />
-        <path d="M8 21h8M12 17v4" strokeLinecap="round" />
-        <path d="M10 8.5l5 3-5 3v-6z" fill="currentColor" stroke="none" />
-      </svg>
-    ),
-  },
-  {
-    label: "Kitchen",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Free parking on premises",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <path d="M5 11l1.5-4.5A2 2 0 018.4 5h7.2a2 2 0 011.9 1.5L19 11" strokeLinecap="round" strokeLinejoin="round" />
-        <rect x="3" y="11" width="18" height="6" rx="2" />
-        <circle cx="7.5" cy="17" r="1.5" />
-        <circle cx="16.5" cy="17" r="1.5" />
-      </svg>
-    ),
-  },
-  {
-    label: "Power back-up",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <path d="M13 2L4 14h7l-2 8 9-12h-7l2-8z" strokeLinejoin="round" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "24-hour security",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Outdoor CCTV cameras",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <rect x="2" y="8" width="13" height="8" rx="2" />
-        <path d="M15 10l6-3v10l-6-3" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M6 16v2a2 2 0 002 2h2" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Housekeeping up to six days",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" />
-        <path d="M12 12h.01M8 12h.01M16 12h.01" strokeLinecap="round" />
-        <path d="M6 7V5a2 2 0 012-2h8a2 2 0 012 2v2" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Garden you're free to enjoy",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M9 22V12h6v10" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Laundry service",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <rect x="3" y="3" width="18" height="18" rx="2" />
-        <circle cx="12" cy="13" r="5" />
-        <path d="M8 6h.01" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Keyless entry",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <circle cx="8" cy="15" r="4" />
-        <path d="M11 12l9-9M17 6l3 3M14 9l2 2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Smoke & carbon monoxide detectors",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "First aid kit on site",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <rect x="3" y="7" width="18" height="13" rx="2" />
-        <path d="M12 11v6M9 14h6" strokeLinecap="round" />
-        <path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Emergency panic siren",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <path d="M12 3a7 7 0 00-7 7v4l-2 3h18l-2-3v-4a7 7 0 00-7-7z" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M10 20a2 2 0 004 0" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Fire extinguisher in the kitchen",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <path d="M10 2h4M12 2v3" strokeLinecap="round" />
-        <path d="M8 8a4 4 0 118 0v2h1a2 2 0 012 2v8a2 2 0 01-2 2H9a2 2 0 01-2-2v-8a2 2 0 012-2h-1z" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M9 13l6 6M15 13l-6 6" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Bed linen & towels provided",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <path d="M3 18v-6a2 2 0 012-2h14a2 2 0 012 2v6" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M3 18h18M5 10V7a2 2 0 012-2h10a2 2 0 012 2v3" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Full cookware & crockery",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <path d="M4 3v7a3 3 0 003 3v8M4 3v4M7 3v4" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M15 3s-2 2-2 5 2 5 2 5v8" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Dining area",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-6 h-6">
-        <path d="M3 21h18M6 21V10M18 21V10M4 10h16l-2-6H6z" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-];
-
-const AMENITIES_PREVIEW_COUNT = 8;
 
 function bedroomLabel(u) {
   return `${u.bedrooms} Bedroom${u.bedrooms > 1 ? "s" : ""}`;
@@ -270,22 +94,18 @@ export default function Home() {
   const [mosaicRef,  mosaicInView]  = useInView();
   const [amenRef,    amenInView]    = useInView();
   const [rulesRef,   rulesInView]   = useInView();
+  const [reviewRef,  reviewInView]  = useInView();
   const [partRef,    partInView]    = useInView();
-  const [showAllAmenities, setShowAllAmenities] = useState(false);
-
-  const visibleAmenities = showAllAmenities
-    ? AMENITIES
-    : AMENITIES.slice(0, AMENITIES_PREVIEW_COUNT);
 
   return (
     <>
       {/* Hero — rotating exterior / compound shots */}
-      <div style={{ backgroundColor: "#fff3f0" }} className="pt-10">
+      <div style={{ backgroundColor: "#F7F8FA" }} className="pt-10">
         <SlimCarousel images={heroBackgrounds} />
       </div>
 
       {/* Welcome statement — Meet your host */}
-      <section style={{ backgroundColor: "#fff3f0" }} className="py-20">
+      <section style={{ backgroundColor: "#F7F8FA" }} className="py-20">
         <div ref={welcomeRef} className="container-x max-w-3xl mx-auto text-left">
           <h1 className={`text-4xl sm:text-5xl font-bold text-brand-ink leading-tight reveal-up stagger-1${welcomeInView ? " in-view" : ""}`}>
             Meet your host
@@ -310,10 +130,10 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionFade from="#fff3f0" to="#f3eed9" />
+      <SectionFade from="#F7F8FA" to="#ECEEF1" />
 
       {/* Apartments list */}
-      <section style={{ backgroundColor: "#f3eed9" }} className="py-16">
+      <section style={{ backgroundColor: "#ECEEF1" }} className="py-16">
         <div ref={mosaicRef} className="container-x">
           <h2 className={`text-3xl sm:text-4xl font-bold text-brand-ink leading-tight text-center max-w-3xl mx-auto reveal-up stagger-1${mosaicInView ? " in-view" : ""}`}>
             Our apartments
@@ -372,51 +192,54 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionFade from="#f3eed9" to="#fff3f0" />
+      <SectionFade from="#ECEEF1" to="#F7F8FA" />
 
-      {/* Amenities — Airbnb-style */}
-      <section style={{ backgroundColor: "#fff3f0" }} className="py-20">
-        <div ref={amenRef} className="container-x max-w-3xl">
-          <h2 className={`text-2xl sm:text-3xl font-bold text-brand-ink mb-8 reveal-up stagger-1${amenInView ? " in-view" : ""}`}>
+      {/* Amenities — grouped by category, each item with an icon */}
+      <section style={{ backgroundColor: "#F7F8FA" }} className="py-20">
+        <div ref={amenRef} className="container-x max-w-5xl">
+          <h2 className={`text-2xl sm:text-3xl font-bold text-brand-ink mb-10 reveal-up stagger-1${amenInView ? " in-view" : ""}`}>
             What this place offers
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
-            {visibleAmenities.map((a, i) => (
+          <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {AMENITY_GROUPS.map((group, gi) => (
               <div
-                key={a.label}
-                className={`flex items-center gap-4 reveal-up stagger-${Math.min(i + 1, 6)}${amenInView ? " in-view" : ""}`}
+                key={group.category}
+                className={`reveal-up stagger-${Math.min(gi + 1, 6)}${amenInView ? " in-view" : ""}`}
               >
-                <span className="text-brand-ink/80 shrink-0">{a.icon}</span>
-                <span className="text-brand-ink/90">{a.label}</span>
+                <div className="flex items-center gap-2.5 mb-4">
+                  <span className="text-brand-maroon shrink-0">{group.categoryIcon}</span>
+                  <h3 className="text-sm font-bold uppercase tracking-wide text-brand-ink">
+                    {group.category}
+                  </h3>
+                </div>
+                <ul className="space-y-3">
+                  {group.items.map((item) => (
+                    <li key={item.label} className="flex items-center gap-3">
+                      <span className="text-brand-ink/70 shrink-0">{item.icon}</span>
+                      <span className="text-brand-ink/90">{item.label}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
-          {!showAllAmenities && AMENITIES.length > AMENITIES_PREVIEW_COUNT && (
-            <button
-              type="button"
-              onClick={() => setShowAllAmenities(true)}
-              className="mt-8 rounded-xl bg-brand-beige px-5 py-3 text-sm font-semibold text-brand-ink transition hover:bg-brand-sand"
-            >
-              Show all {AMENITIES.length} amenities
-            </button>
-          )}
         </div>
       </section>
 
-      <SectionFade from="#fff3f0" to="#f3eed9" />
+      <SectionFade from="#F7F8FA" to="#ECEEF1" />
 
-      {/* House rules + check-in */}
-      <section style={{ backgroundColor: "#f3eed9" }} className="py-16">
+      {/* House guide + arrival times */}
+      <section style={{ backgroundColor: "#ECEEF1" }} className="py-16">
         <div ref={rulesRef} className="container-x">
           <h2 className={`text-2xl sm:text-3xl font-bold text-brand-ink mb-4 reveal-up stagger-1${rulesInView ? " in-view" : ""}`}>
-            House rules
+            House guide
           </h2>
           <p className={`text-brand-ink/70 mb-6 max-w-2xl reveal-up stagger-2${rulesInView ? " in-view" : ""}`}>
             We're so happy to host you! To ensure a comfortable stay for
-            everyone, please follow these simple house rules:
+            everyone, please keep these simple guidelines in mind:
           </p>
           <ol className="grid gap-4 sm:grid-cols-2 list-none">
-            {HOUSE_RULES.map(([title, desc], i) => (
+            {HOUSE_GUIDE.map(([title, desc], i) => (
               <li
                 key={title}
                 className={`card p-5 flex gap-4 reveal-up stagger-${Math.min(i + 1, 6)}${rulesInView ? " in-view" : ""}`}
@@ -433,7 +256,7 @@ export default function Home() {
           </ol>
 
           <h2 className={`mt-14 text-2xl sm:text-3xl font-bold text-brand-ink mb-4 reveal-up stagger-6${rulesInView ? " in-view" : ""}`}>
-            Check-in
+            Arrival
           </h2>
           <div className={`grid gap-5 sm:grid-cols-2 max-w-xl reveal-up stagger-6${rulesInView ? " in-view" : ""}`}>
             <div className="card p-5">
@@ -452,10 +275,27 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionFade from="#f3eed9" to="#fff3f0" />
+      <SectionFade from="#ECEEF1" to="#F7F8FA" />
+
+      {/* Feedback & reviews */}
+      <section style={{ backgroundColor: "#F7F8FA" }} className="py-20">
+        <div ref={reviewRef} className="container-x max-w-3xl">
+          <h2 className={`text-2xl sm:text-3xl font-bold text-brand-ink mb-2 reveal-up stagger-1${reviewInView ? " in-view" : ""}`}>
+            Feedback & reviews
+          </h2>
+          <p className={`text-brand-ink/70 mb-8 reveal-up stagger-2${reviewInView ? " in-view" : ""}`}>
+            Stayed with us? We'd love to hear how it went.
+          </p>
+          <div className={`reveal-up stagger-3${reviewInView ? " in-view" : ""}`}>
+            <FeedbackForm />
+          </div>
+        </div>
+      </section>
+
+      <SectionFade from="#F7F8FA" to="#ECEEF1" />
 
       {/* Partners */}
-      <section style={{ backgroundColor: "#fff3f0" }} className="py-16">
+      <section style={{ backgroundColor: "#ECEEF1" }} className="py-16">
         <div ref={partRef} />
         <div className={`container-x reveal-up stagger-2${partInView ? " in-view" : ""}`}>
           <Partners />
