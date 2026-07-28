@@ -4,20 +4,20 @@ import Logo from "./Logo";
 
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: "#2A1A14", color: "#fff3f0" }}>
+    <footer style={{ backgroundColor: "#191C20", color: "#F7F8FA" }}>
       <div className="container-x grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-1">
           <div className="bg-brand-cream rounded-2xl p-4 inline-flex">
             <Logo />
           </div>
-          <p className="mt-4 text-xl font-light italic" style={{ color: "#f3eed9" }}>{site.slogan}</p>
-          <p className="mt-2 text-sm" style={{ color: "rgba(255,243,240,0.65)" }}>
+          <p className="mt-4 text-xl font-light italic" style={{ color: "#ECEEF1" }}>{site.slogan}</p>
+          <p className="mt-2 text-sm" style={{ color: "rgba(247,248,250,0.65)" }}>
             Boutique self-catering apartments in Kampala — Kansanga &amp; Munyonyo.
           </p>
         </div>
         <div>
-          <h4 className="text-base font-semibold" style={{ color: "#fff3f0" }}>Visit</h4>
-          <ul className="mt-3 space-y-2 text-sm" style={{ color: "rgba(255,243,240,0.75)" }}>
+          <h4 className="text-base font-semibold" style={{ color: "#F7F8FA" }}>Visit</h4>
+          <ul className="mt-3 space-y-2 text-sm" style={{ color: "rgba(247,248,250,0.75)" }}>
             <li><Link to="/" className="hover:text-brand-burgundy transition-colors">Home</Link></li>
             <li><Link to="/locations/kansanga" className="hover:text-brand-burgundy transition-colors">Kansanga</Link></li>
             <li><Link to="/locations/munyonyo" className="hover:text-brand-burgundy transition-colors">Munyonyo</Link></li>
@@ -27,8 +27,8 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <h4 className="text-base font-semibold" style={{ color: "#fff3f0" }}>Contact</h4>
-          <ul className="mt-3 space-y-2 text-sm" style={{ color: "rgba(255,243,240,0.75)" }}>
+          <h4 className="text-base font-semibold" style={{ color: "#F7F8FA" }}>Contact</h4>
+          <ul className="mt-3 space-y-2 text-sm" style={{ color: "rgba(247,248,250,0.75)" }}>
             <li>
               <a href={`tel:${site.contact.phoneE164}`} className="hover:text-brand-burgundy transition-colors">
                 {site.contact.phone}
@@ -43,8 +43,8 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <h4 className="text-base font-semibold" style={{ color: "#fff3f0" }}>Locations</h4>
-          <ul className="mt-3 space-y-3 text-sm" style={{ color: "rgba(255,243,240,0.75)" }}>
+          <h4 className="text-base font-semibold" style={{ color: "#F7F8FA" }}>Locations</h4>
+          <ul className="mt-3 space-y-3 text-sm" style={{ color: "rgba(247,248,250,0.75)" }}>
             <li>
               <a
                 href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(site.addresses.kansanga)}`}
@@ -76,8 +76,8 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div style={{ borderTop: "1px solid rgba(255,243,240,0.1)" }}>
-        <div className="container-x flex flex-col md:flex-row items-center justify-between gap-3 py-5 text-xs" style={{ color: "rgba(255,243,240,0.45)" }}>
+      <div style={{ borderTop: "1px solid rgba(247,248,250,0.1)" }}>
+        <div className="container-x flex flex-col md:flex-row items-center justify-between gap-3 py-5 text-xs" style={{ color: "rgba(247,248,250,0.45)" }}>
           <p>© {new Date().getFullYear()} Elyon Nest. All rights reserved.</p>
           <p>Built with care in Kampala, Uganda.</p>
         </div>
@@ -94,9 +94,9 @@ function Social({ href, label, children }) {
       rel="noreferrer"
       aria-label={label}
       className="inline-flex h-10 w-10 items-center justify-center rounded-full transition"
-      style={{ background: "rgba(255,243,240,0.08)", color: "rgba(255,243,240,0.75)" }}
-      onMouseEnter={(e) => { e.currentTarget.style.background = "#ed6560"; e.currentTarget.style.color = "#fff"; }}
-      onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,243,240,0.08)"; e.currentTarget.style.color = "rgba(255,243,240,0.75)"; }}
+      style={{ background: "rgba(247,248,250,0.08)", color: "rgba(247,248,250,0.75)" }}
+      onMouseEnter={(e) => { e.currentTarget.style.background = "#3A414A"; e.currentTarget.style.color = "#fff"; }}
+      onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(247,248,250,0.08)"; e.currentTarget.style.color = "rgba(247,248,250,0.75)"; }}
     >
       <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
         {children}
