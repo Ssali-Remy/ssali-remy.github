@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 const PALETTES = [
-  ["#5B1A1A", "#8B5A3C"],
-  ["#8B5A3C", "#D4C5B0"],
-  ["#7A2424", "#E8DDD0"],
-  ["#5B1A1A", "#D4C5B0"],
-  ["#8B5A3C", "#5B1A1A"],
+  ["#22262B", "#5C6470"],
+  ["#5C6470", "#D3D7DC"],
+  ["#3A414A", "#ECEEF1"],
+  ["#22262B", "#D3D7DC"],
+  ["#5C6470", "#22262B"],
 ];
 
 function hash(s) {
