@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-import Section from "../components/Section";
 import { site } from "../data/site";
 
 function CallIcon(props) {
@@ -18,29 +16,42 @@ function WhatsAppIcon(props) {
   );
 }
 
-// Map that shows both Kansanga and Munyonyo with a zoom that fits both.
-// Centered roughly between Kansanga (0.286, 32.618) and Munyonyo (0.247, 32.636).
-const MAP_EMBED =
-  "https://www.google.com/maps?q=Kansanga+Munyonyo+Kampala&z=13&output=embed";
+function MailIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M4 7l8 6 8-6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
 export default function Contact() {
-  const waHref = `https://wa.me/${site.contact.whatsappE164}?text=${encodeURIComponent(
+  const c = site.contact;
+  const waHref = `https://wa.me/${c.whatsappE164}?text=${encodeURIComponent(
     "Hi Suubi, I'd like to enquire about Elyon Nest.",
+  )}`;
+  const supportMail = `mailto:${c.supportEmail}?subject=${encodeURIComponent(
+    "Elyon Nest — Support enquiry",
   )}`;
 
   return (
-    <Section
-      eyebrow="Contact & Inquiries"
-      title="We're just a message away"
-      subtitle="WhatsApp us anytime — we usually reply within a few hours."
-    >
-      <div className="grid gap-8 lg:grid-cols-2">
-        {/* Left column — Call, WhatsApp + email + emergency + socials */}
-        <div className="space-y-5">
+    <section className="py-16 sm:py-20">
+      <div className="container-x max-w-3xl">
+        <p className="text-xs uppercase tracking-[0.2em] text-brand-sienna font-semibold">
+          Contact & Inquiries
+        </p>
+        <h1 className="mt-3 text-2xl sm:text-3xl font-semibold text-brand-ink">
+          We're just a message away
+        </h1>
+        <p className="mt-3 text-brand-ink/70">
+          Call or WhatsApp us anytime — we usually reply within a few hours.
+        </p>
+
+        <div className="mt-8 space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <a
-              href={`tel:${site.contact.phoneE164}`}
-              className="inline-flex items-center justify-center gap-3 rounded-2xl bg-brand-maroon text-brand-cream px-6 py-5 font-semibold text-lg transition hover:bg-brand-burgundy shadow-soft"
+              href={`tel:${c.phoneE164}`}
+              className="inline-flex items-center justify-center gap-3 rounded-2xl bg-brand-maroon text-brand-cream px-6 py-4 font-semibold transition hover:bg-brand-burgundy shadow-soft"
             >
               <CallIcon className="h-6 w-6" />
               Call us
@@ -49,27 +60,36 @@ export default function Contact() {
               href={waHref}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center gap-3 rounded-2xl bg-[#25D366] text-white px-6 py-5 font-semibold text-lg transition hover:bg-[#1ebd5d] shadow-soft"
+              className="inline-flex items-center justify-center gap-3 rounded-2xl bg-[#25D366] text-white px-6 py-4 font-semibold transition hover:bg-[#1ebd5d] shadow-soft"
             >
               <WhatsAppIcon className="h-6 w-6" />
               WhatsApp us
             </a>
           </div>
 
+          {/* Email — sends to client-service / support inbox */}
           <a
-            href={`mailto:${site.contact.email}`}
-            className="card p-5 block transition hover:ring-2 hover:ring-brand-maroon/20"
+            href={supportMail}
+            className="card p-5 flex items-center gap-4 transition hover:ring-2 hover:ring-brand-maroon/20"
           >
-            <span className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">
-              Email
+            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-brand-beige text-brand-maroon shrink-0">
+              <MailIcon className="h-5 w-5" />
             </span>
-            <p className="mt-1 font-display text-xl text-brand-maroon">
-              {site.contact.email}
-            </p>
+            <span>
+              <span className="block text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">
+                Email support
+              </span>
+              <span className="mt-0.5 block font-medium text-brand-maroon">
+                {c.supportEmail}
+              </span>
+              <span className="mt-0.5 block text-sm text-brand-ink/60">
+                Opens your email app to write to our client-service team.
+              </span>
+            </span>
           </a>
 
           <div className="card p-6 bg-brand-maroon text-brand-cream">
-            <p className="font-display text-xl">In case of emergency</p>
+            <p className="font-semibold text-lg">In case of emergency</p>
             <ul className="mt-3 space-y-2 text-sm text-brand-cream/85">
               <li>Medical / Ambulance — +256 393 404 404 (Alexandra Medical Centre)</li>
               <li>Fire department — 999</li>
@@ -83,48 +103,19 @@ export default function Contact() {
               Follow
             </p>
             <div className="mt-3 flex flex-wrap gap-2 text-sm">
-              <a
-                href={site.contact.instagram}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full bg-brand-beige px-4 py-2 text-brand-maroon"
-              >
-                Instagram @elyonnest_ug
+              <a href={c.instagram} target="_blank" rel="noreferrer" className="rounded-full bg-brand-beige px-4 py-2 text-brand-maroon">
+                Instagram
               </a>
-              <a
-                href={site.contact.facebook}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full bg-brand-beige px-4 py-2 text-brand-maroon"
-              >
+              <a href={c.facebook} target="_blank" rel="noreferrer" className="rounded-full bg-brand-beige px-4 py-2 text-brand-maroon">
                 Facebook
+              </a>
+              <a href={c.twitter} target="_blank" rel="noreferrer" className="rounded-full bg-brand-beige px-4 py-2 text-brand-maroon">
+                X (Twitter)
               </a>
             </div>
           </div>
-
-          <div>
-            <Link to="/booking" className="btn-primary">
-              Check availability
-            </Link>
-          </div>
-        </div>
-
-        {/* Right column — map */}
-        <div className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.18em] text-brand-sienna font-semibold">
-            Find us in Kampala
-          </p>
-          <div className="overflow-hidden rounded-3xl border border-brand-beige shadow-soft">
-            <iframe
-              title="Elyon Nest — Kansanga & Munyonyo"
-              src={MAP_EMBED}
-              className="h-[480px] lg:h-[600px] w-full"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }
