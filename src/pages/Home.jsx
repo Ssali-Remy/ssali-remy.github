@@ -105,7 +105,8 @@ export default function Home() {
 
       {/* Welcome statement — Meet your host */}
       <section style={{ backgroundColor: "#E4E7EA" }} className="py-20">
-        <div ref={welcomeRef} className="container-x max-w-3xl text-left">
+        <div ref={welcomeRef} className="container-x">
+          <div className="max-w-3xl text-left">
           <h1 className={`text-2xl sm:text-3xl font-semibold text-brand-ink leading-tight reveal-up stagger-1${welcomeInView ? " in-view" : ""}`}>
             Meet your host
           </h1>
@@ -126,6 +127,7 @@ export default function Home() {
           <p className={`mt-4 text-brand-ink/85 leading-relaxed reveal-up stagger-5${welcomeInView ? " in-view" : ""}`}>
             Enjoy your time here — and make yourself at home! <span aria-hidden="true">💛</span>
           </p>
+          </div>
         </div>
       </section>
 
