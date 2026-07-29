@@ -94,24 +94,25 @@ export default function Home() {
   const [mosaicRef,  mosaicInView]  = useInView();
   const [amenRef,    amenInView]    = useInView();
   const [rulesRef,   rulesInView]   = useInView();
+  const [openAmenity, setOpenAmenity] = useState(null);
   const [reviewRef,  reviewInView]  = useInView();
   const [partRef,    partInView]    = useInView();
 
   return (
     <>
       {/* Hero — rotating exterior / compound shots */}
-      <div style={{ backgroundColor: "#F7F8FA" }} className="pt-10">
+      <div style={{ backgroundColor: "#E4E7EA" }} className="pt-10">
         <SlimCarousel images={heroBackgrounds} />
       </div>
 
       {/* Welcome statement — Meet your host */}
-      <section style={{ backgroundColor: "#F7F8FA" }} className="py-20">
-        <div ref={welcomeRef} className="container-x max-w-3xl mx-auto text-left">
-          <h1 className={`text-4xl sm:text-5xl font-bold text-brand-ink leading-tight reveal-up stagger-1${welcomeInView ? " in-view" : ""}`}>
+      <section style={{ backgroundColor: "#E4E7EA" }} className="py-20">
+        <div ref={welcomeRef} className="container-x max-w-3xl text-left">
+          <h1 className={`text-2xl sm:text-3xl font-semibold text-brand-ink leading-tight reveal-up stagger-1${welcomeInView ? " in-view" : ""}`}>
             Meet your host
           </h1>
           <p className={`mt-8 text-lg text-brand-ink/85 leading-relaxed reveal-up stagger-2${welcomeInView ? " in-view" : ""}`}>
-            Hi there and welcome to Elyon Nest!
+            Welcome to Elyon Nest!
           </p>
           <p className={`mt-4 text-brand-ink/75 leading-relaxed reveal-up stagger-3${welcomeInView ? " in-view" : ""}`}>
             It is a pleasure and privilege to be your host, at Elyon Nest, we
@@ -130,12 +131,12 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionFade from="#F7F8FA" to="#ECEEF1" />
+      <SectionFade from="#E4E7EA" to="#D7DBDF" />
 
       {/* Apartments list */}
-      <section style={{ backgroundColor: "#ECEEF1" }} className="py-16">
+      <section style={{ backgroundColor: "#D7DBDF" }} className="py-16">
         <div ref={mosaicRef} className="container-x">
-          <h2 className={`text-3xl sm:text-4xl font-bold text-brand-ink leading-tight text-center max-w-3xl mx-auto reveal-up stagger-1${mosaicInView ? " in-view" : ""}`}>
+          <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink leading-tight reveal-up stagger-1${mosaicInView ? " in-view" : ""}`}>
             Our apartments
           </h2>
         </div>
@@ -174,88 +175,85 @@ export default function Home() {
           </div>
         </div>
 
-        <div className={`container-x mt-12 flex justify-center gap-4 flex-wrap reveal-up stagger-6${mosaicInView ? " in-view" : ""}`}>
-          <Link to="/booking" className="btn-primary">
-            Check availability
-          </Link>
-          <a
-            href={`https://wa.me/${site.contact.whatsappE164}`}
-            target="_blank"
-            rel="noreferrer"
-            className="btn-ghost inline-flex items-center gap-2"
-          >
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.97L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.78 14.06c-.24.68-1.4 1.3-1.97 1.38-.5.07-1.13.1-1.83-.12-.42-.13-.96-.31-1.66-.61-2.92-1.26-4.83-4.2-4.97-4.4-.15-.2-1.19-1.59-1.19-3.03 0-1.43.75-2.13 1.02-2.43.27-.3.6-.37.8-.37.2 0 .4 0 .58.01.19.01.44-.07.69.52.24.6.83 2.07.9 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.18-.32.4-.45.53-.15.15-.31.31-.13.61.18.3.8 1.31 1.72 2.13 1.18 1.05 2.18 1.38 2.48 1.53.3.15.48.13.66-.08.18-.2.76-.89.97-1.2.2-.3.4-.25.68-.15.27.1 1.74.82 2.03.97.3.15.5.22.58.35.07.13.07.77-.17 1.45z" />
-            </svg>
-            WhatsApp us
-          </a>
-        </div>
       </section>
 
-      <SectionFade from="#ECEEF1" to="#F7F8FA" />
+      <SectionFade from="#D7DBDF" to="#E4E7EA" />
 
-      {/* Amenities — grouped by category, each item with an icon */}
-      <section style={{ backgroundColor: "#F7F8FA" }} className="py-20">
-        <div ref={amenRef} className="container-x max-w-5xl">
-          <h2 className={`text-2xl sm:text-3xl font-bold text-brand-ink mb-10 reveal-up stagger-1${amenInView ? " in-view" : ""}`}>
-            What this place offers
+      {/* What we offer — accordion of amenity categories */}
+      <section style={{ backgroundColor: "#E4E7EA" }} className="py-20">
+        <div ref={amenRef} className="container-x max-w-3xl">
+          <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink mb-8 reveal-up stagger-1${amenInView ? " in-view" : ""}`}>
+            What we offer
           </h2>
-          <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {AMENITY_GROUPS.map((group, gi) => (
-              <div
-                key={group.category}
-                className={`reveal-up stagger-${Math.min(gi + 1, 6)}${amenInView ? " in-view" : ""}`}
-              >
-                <div className="flex items-center gap-2.5 mb-4">
-                  <span className="text-brand-maroon shrink-0">{group.categoryIcon}</span>
-                  <h3 className="text-sm font-bold uppercase tracking-wide text-brand-ink">
-                    {group.category}
-                  </h3>
-                </div>
-                <ul className="space-y-3">
-                  {group.items.map((item) => (
-                    <li key={item.label} className="flex items-center gap-3">
-                      <span className="text-brand-ink/70 shrink-0">{item.icon}</span>
-                      <span className="text-brand-ink/90">{item.label}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          <ul className={`divide-y divide-brand-sand rounded-2xl bg-white shadow-soft overflow-hidden reveal-up stagger-2${amenInView ? " in-view" : ""}`}>
+            {AMENITY_GROUPS.map((group) => {
+              const isOpen = openAmenity === group.category;
+              return (
+                <li key={group.category}>
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    onClick={() =>
+                      setOpenAmenity(isOpen ? null : group.category)
+                    }
+                    className="flex w-full items-center gap-3 px-5 py-4 text-left transition hover:bg-brand-beige/40"
+                  >
+                    <span className="text-brand-maroon shrink-0">{group.categoryIcon}</span>
+                    <span className="flex-1 font-semibold uppercase tracking-wide text-brand-ink text-sm">
+                      {group.category}
+                    </span>
+                    <svg
+                      viewBox="0 0 24 24"
+                      className={`h-5 w-5 text-brand-ink/60 shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                  {isOpen && (
+                    <ul className="px-5 pb-5 pt-1 space-y-3">
+                      {group.items.map((item) => (
+                        <li key={item.label} className="flex items-center gap-3 pl-9">
+                          <span className="text-brand-ink/60 shrink-0">{item.icon}</span>
+                          <span className="text-brand-ink/90">{item.label}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </section>
 
-      <SectionFade from="#F7F8FA" to="#ECEEF1" />
+      <SectionFade from="#E4E7EA" to="#D7DBDF" />
 
       {/* House guide + arrival times */}
-      <section style={{ backgroundColor: "#ECEEF1" }} className="py-16">
+      <section style={{ backgroundColor: "#D7DBDF" }} className="py-16">
         <div ref={rulesRef} className="container-x">
-          <h2 className={`text-2xl sm:text-3xl font-bold text-brand-ink mb-4 reveal-up stagger-1${rulesInView ? " in-view" : ""}`}>
+          <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink mb-4 reveal-up stagger-1${rulesInView ? " in-view" : ""}`}>
             House guide
           </h2>
           <p className={`text-brand-ink/70 mb-6 max-w-2xl reveal-up stagger-2${rulesInView ? " in-view" : ""}`}>
             We're so happy to host you! To ensure a comfortable stay for
             everyone, please keep these simple guidelines in mind:
           </p>
-          <ol className="grid gap-4 sm:grid-cols-2 list-none">
+          <ul className="grid gap-4 sm:grid-cols-2 list-none">
             {HOUSE_GUIDE.map(([title, desc], i) => (
               <li
                 key={title}
-                className={`card p-5 flex gap-4 reveal-up stagger-${Math.min(i + 1, 6)}${rulesInView ? " in-view" : ""}`}
+                className={`card p-5 reveal-up stagger-${Math.min(i + 1, 6)}${rulesInView ? " in-view" : ""}`}
               >
-                <span className="font-display text-3xl text-brand-maroon shrink-0 leading-none">
-                  {i + 1}
-                </span>
-                <div>
-                  <p className="font-semibold text-brand-ink">{title}</p>
-                  <p className="mt-1 text-sm text-brand-ink/65 leading-relaxed">{desc}</p>
-                </div>
+                <p className="font-semibold text-brand-ink">{title}</p>
+                <p className="mt-1 text-sm text-brand-ink/65 leading-relaxed">{desc}</p>
               </li>
             ))}
-          </ol>
+          </ul>
 
-          <h2 className={`mt-14 text-2xl sm:text-3xl font-bold text-brand-ink mb-4 reveal-up stagger-6${rulesInView ? " in-view" : ""}`}>
+          <h2 className={`mt-14 text-2xl sm:text-3xl font-semibold text-brand-ink mb-4 reveal-up stagger-6${rulesInView ? " in-view" : ""}`}>
             Arrival
           </h2>
           <div className={`grid gap-5 sm:grid-cols-2 max-w-xl reveal-up stagger-6${rulesInView ? " in-view" : ""}`}>
@@ -275,12 +273,12 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionFade from="#ECEEF1" to="#F7F8FA" />
+      <SectionFade from="#D7DBDF" to="#E4E7EA" />
 
       {/* Feedback & reviews */}
-      <section style={{ backgroundColor: "#F7F8FA" }} className="py-20">
+      <section style={{ backgroundColor: "#E4E7EA" }} className="py-20">
         <div ref={reviewRef} className="container-x max-w-3xl">
-          <h2 className={`text-2xl sm:text-3xl font-bold text-brand-ink mb-2 reveal-up stagger-1${reviewInView ? " in-view" : ""}`}>
+          <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink mb-2 reveal-up stagger-1${reviewInView ? " in-view" : ""}`}>
             Feedback & reviews
           </h2>
           <p className={`text-brand-ink/70 mb-8 reveal-up stagger-2${reviewInView ? " in-view" : ""}`}>
@@ -292,10 +290,10 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionFade from="#F7F8FA" to="#ECEEF1" />
+      <SectionFade from="#E4E7EA" to="#D7DBDF" />
 
       {/* Partners */}
-      <section style={{ backgroundColor: "#ECEEF1" }} className="py-16">
+      <section style={{ backgroundColor: "#D7DBDF" }} className="py-16">
         <div ref={partRef} />
         <div className={`container-x reveal-up stagger-2${partInView ? " in-view" : ""}`}>
           <Partners />
