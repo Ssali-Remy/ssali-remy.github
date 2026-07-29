@@ -39,7 +39,7 @@ function AmenityGrid() {
 
 function H2({ children, className = "" }) {
   return (
-    <h2 className={`text-2xl sm:text-3xl font-bold text-brand-ink mb-4 ${className}`}>
+    <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink mb-4 ${className}`}>
       {children}
     </h2>
   );
@@ -176,7 +176,7 @@ function KansangaPage() {
       {/* Title */}
       <header>
         <span className="pill">Kansanga, Kampala</span>
-        <h1 className="mt-3 text-4xl sm:text-5xl font-bold text-brand-ink">Kansanga</h1>
+        <h1 className="mt-3 text-2xl sm:text-3xl font-semibold text-brand-ink">Kansanga</h1>
       </header>
 
       {/* Narrative */}
@@ -191,7 +191,7 @@ function KansangaPage() {
 
       {/* E1 — right-flowing reel */}
       <section>
-        <h2 className="text-3xl font-bold text-brand-maroon tracking-[0.3em]">E1</h2>
+        <h2 className="text-2xl font-semibold text-brand-maroon tracking-[0.2em]">E1</h2>
         <p className="mt-1 text-sm text-brand-ink/60">Wing One of the duplex</p>
         <div className="mt-5">
           <ClickSlider images={E1_REEL} />
@@ -200,7 +200,7 @@ function KansangaPage() {
 
       {/* E2 — left-flowing reel */}
       <section>
-        <h2 className="text-3xl font-bold text-brand-maroon tracking-[0.3em]">E2</h2>
+        <h2 className="text-2xl font-semibold text-brand-maroon tracking-[0.2em]">E2</h2>
         <p className="mt-1 text-sm text-brand-ink/60">Wing Two of the duplex</p>
         <div className="mt-5">
           <ClickSlider images={E2_REEL} />
@@ -270,19 +270,14 @@ function KansangaPage() {
           We're so happy to host you! To ensure a comfortable stay for everyone,
           please follow these simple house rules:
         </p>
-        <ol className="grid gap-4 sm:grid-cols-2 list-none counter-reset:rule">
-          {HOUSE_GUIDE.map(([title, desc], i) => (
-            <li key={title} className="card p-5 flex gap-4">
-              <span className="font-display text-3xl text-brand-maroon shrink-0 leading-none">
-                {i + 1}
-              </span>
-              <div>
-                <p className="font-semibold text-brand-ink">{title}</p>
-                <p className="mt-1 text-sm text-brand-ink/65 leading-relaxed">{desc}</p>
-              </div>
+        <ul className="grid gap-4 sm:grid-cols-2 list-none">
+          {HOUSE_GUIDE.map(([title, desc]) => (
+            <li key={title} className="card p-5">
+              <p className="font-semibold text-brand-ink">{title}</p>
+              <p className="mt-1 text-sm text-brand-ink/65 leading-relaxed">{desc}</p>
             </li>
           ))}
-        </ol>
+        </ul>
         <p className="mt-6 text-sm text-brand-ink/65 text-center italic">
           Thank you for understanding and helping us keep the space comfortable for all our guests!
         </p>
@@ -400,7 +395,7 @@ function MunyonyoPage({ loc }) {
 
       {/* Title */}
       <header>
-        <h1 className="text-4xl sm:text-5xl font-bold text-brand-ink">Munyonyo</h1>
+        <h1 className="text-2xl sm:text-3xl font-semibold text-brand-ink">Munyonyo</h1>
       </header>
 
       {/* Narrative — same as Kansanga */}
@@ -416,7 +411,7 @@ function MunyonyoPage({ loc }) {
       {/* M1, M2, M3 reels — alternating directions */}
       {MUNYONYO_UNITS.map((u) => (
         <section key={u.id}>
-          <h2 className="text-3xl font-bold text-brand-maroon tracking-[0.3em]">
+          <h2 className="text-2xl font-semibold text-brand-maroon tracking-[0.2em]">
             {u.label.replace("Unit ", "")}
           </h2>
           <p className="mt-1 text-sm text-brand-ink/60">{u.desc}</p>
@@ -489,19 +484,14 @@ function MunyonyoPage({ loc }) {
           We're so happy to host you! To ensure a comfortable stay for everyone,
           please follow these simple house rules:
         </p>
-        <ol className="grid gap-4 sm:grid-cols-2 list-none counter-reset:rule">
-          {HOUSE_GUIDE.map(([title, desc], i) => (
-            <li key={title} className="card p-5 flex gap-4">
-              <span className="font-display text-3xl text-brand-maroon shrink-0 leading-none">
-                {i + 1}
-              </span>
-              <div>
-                <p className="font-semibold text-brand-ink">{title}</p>
-                <p className="mt-1 text-sm text-brand-ink/65 leading-relaxed">{desc}</p>
-              </div>
+        <ul className="grid gap-4 sm:grid-cols-2 list-none">
+          {HOUSE_GUIDE.map(([title, desc]) => (
+            <li key={title} className="card p-5">
+              <p className="font-semibold text-brand-ink">{title}</p>
+              <p className="mt-1 text-sm text-brand-ink/65 leading-relaxed">{desc}</p>
             </li>
           ))}
-        </ol>
+        </ul>
         <p className="mt-6 text-sm text-brand-ink/65 text-center italic">
           Thank you for understanding and helping us keep the space comfortable for all our guests!
         </p>
