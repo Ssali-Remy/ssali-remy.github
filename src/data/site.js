@@ -25,6 +25,7 @@ export const site = {
     caretakerPhone: "+256 775 253 734",
     caretakerPhoneE164: "+256775253734",
     email: "elyon@elyonnestug.com",
+    supportEmail: "support@elyonnestug.com",
     instagram: "https://instagram.com/elyonnest_ug",
     facebook: "https://facebook.com/elyonnestug",
     twitter: "https://twitter.com/elyonnestug",
