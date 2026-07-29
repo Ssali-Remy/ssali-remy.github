@@ -17,6 +17,8 @@ function Star({ filled, ...props }) {
 
 export default function FeedbackForm() {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [stayed, setStayed] = useState(false);
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [message, setMessage] = useState("");
@@ -25,8 +27,12 @@ export default function FeedbackForm() {
 
   const submit = (e) => {
     e.preventDefault();
-    if (!name.trim() || !message.trim() || rating === 0) {
-      setError("Please add your name, a rating and a short message.");
+    if (!stayed) {
+      setError("Please confirm you have stayed at Elyon Nest — reviews are for past guests only.");
+      return;
+    }
+    if (!name.trim() || !email.trim() || !message.trim() || rating === 0) {
+      setError("Please add your name, email, a rating and a short message.");
       return;
     }
     setError("");
@@ -34,10 +40,11 @@ export default function FeedbackForm() {
     const subject = `Elyon Nest review — ${rating}★ from ${name.trim()}`;
     const body =
       `Rating: ${rating}/5\n` +
-      `Name: ${name.trim()}\n\n` +
+      `Name: ${name.trim()}\n` +
+      `Email: ${email.trim()}\n\n` +
       `${message.trim()}\n`;
     window.location.href =
-      `mailto:${site.contact.email}` +
+      `mailto:${site.contact.supportEmail}` +
       `?subject=${encodeURIComponent(subject)}` +
       `&body=${encodeURIComponent(body)}`;
     setSent(true);
@@ -61,8 +68,10 @@ export default function FeedbackForm() {
           onClick={() => {
             setSent(false);
             setName("");
+            setEmail("");
             setRating(0);
             setMessage("");
+            setStayed(false);
           }}
           className="btn-ghost mt-6"
         >
@@ -85,6 +94,20 @@ export default function FeedbackForm() {
           onChange={(e) => setName(e.target.value)}
           className="w-full rounded-xl border border-brand-sand bg-white px-4 py-3 text-brand-ink placeholder-brand-ink/40 focus:border-brand-maroon focus:outline-none focus:ring-2 focus:ring-brand-maroon/20"
           placeholder="Jane Doe"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-brand-ink mb-1.5" htmlFor="fb-email">
+          Your email
+        </label>
+        <input
+          id="fb-email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full rounded-xl border border-brand-sand bg-white px-4 py-3 text-brand-ink placeholder-brand-ink/40 focus:border-brand-maroon focus:outline-none focus:ring-2 focus:ring-brand-maroon/20"
+          placeholder="you@example.com"
         />
       </div>
 
@@ -122,6 +145,17 @@ export default function FeedbackForm() {
           placeholder="Tell us about your stay…"
         />
       </div>
+
+      <label className="flex items-start gap-3 text-sm text-brand-ink/80">
+        <input
+          type="checkbox"
+          checked={stayed}
+          onChange={(e) => setStayed(e.target.checked)}
+          className="mt-0.5 h-4 w-4 rounded border-brand-sand text-brand-maroon focus:ring-brand-maroon/30"
+        />
+        <span>I confirm I have stayed at Elyon Nest. Reviews are read and
+          verified by our team before being published.</span>
+      </label>
 
       {error && <p className="text-sm text-red-600">{error}</p>}
 
