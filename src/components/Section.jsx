@@ -20,12 +20,12 @@ export default function Section({
               </p>
             )}
             {title && (
-              <h2 className="mt-3 font-display text-4xl sm:text-5xl leading-tight">
+              <h2 className="mt-3 font-display text-2xl sm:text-3xl font-semibold leading-tight">
                 {title}
               </h2>
             )}
             {subtitle && (
-              <p className="mt-4 text-lg text-brand-ink/70">{subtitle}</p>
+              <p className="mt-3 text-brand-ink/70">{subtitle}</p>
             )}
           </div>
         )}
