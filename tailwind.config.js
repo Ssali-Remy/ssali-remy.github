@@ -5,15 +5,15 @@ export default {
     extend: {
       colors: {
         brand: {
-          // Carbon-black + granite-grey palette. Token names kept for
-          // compatibility with existing utility classes across the app.
-          maroon: "#22262B",   // primary — carbon / graphite (buttons, headings)
-          burgundy: "#3A414A",  // primary hover / accent — slate granite
-          sienna: "#5C6470",    // secondary accent — granite
-          beige: "#ECEEF1",     // soft section background — light granite
-          sand: "#D3D7DC",      // borders — pale granite
-          cream: "#F7F8FA",     // page background — near-white granite
-          ink: "#191C20",       // main text — carbon black
+          // Granite-grey surfaces with carbon-black text/accents. Token
+          // names kept for compatibility with existing utility classes.
+          maroon: "#26292E",   // primary dark — carbon / graphite (buttons, headings)
+          burgundy: "#3B4048",  // primary hover / accent — slate granite
+          sienna: "#5A616B",    // secondary accent — mid granite
+          beige: "#D7DBDF",     // alternating section — mid-light granite
+          sand: "#BFC4CB",      // borders — granite
+          cream: "#E4E7EA",     // page background — light granite (clearly grey)
+          ink: "#1B1E22",       // main text — carbon black
         },
       },
       fontFamily: {
