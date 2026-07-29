@@ -4,6 +4,10 @@ import Partners from "../components/Partners";
 import { units, heroBackgrounds } from "../data/units";
 import { HOUSE_GUIDE } from "../data/houseRules";
 import { AMENITY_GROUPS } from "../data/amenities";
+
+// Flat list for the Airbnb-style two-column amenities preview.
+const AMENITIES = AMENITY_GROUPS.flatMap((g) => g.items);
+const AMENITIES_PREVIEW = 8;
 import FeedbackForm from "../components/FeedbackForm";
 import { site } from "../data/site";
 
@@ -85,7 +89,10 @@ export default function Home() {
   const [mosaicRef,  mosaicInView]  = useInView();
   const [amenRef,    amenInView]    = useInView();
   const [rulesRef,   rulesInView]   = useInView();
-  const [openAmenity, setOpenAmenity] = useState(null);
+  const [showAllAmenities, setShowAllAmenities] = useState(false);
+  const visibleAmenities = showAllAmenities
+    ? AMENITIES
+    : AMENITIES.slice(0, AMENITIES_PREVIEW);
   const [reviewRef,  reviewInView]  = useInView();
   const [partRef,    partInView]    = useInView();
 
@@ -166,53 +173,31 @@ export default function Home() {
 
       </section>
 
-      {/* What we offer — accordion of amenity categories */}
+      {/* What we offer — flat two-column amenity list with show-all */}
       <section style={{ background: "linear-gradient(to bottom, #D7DBDF 0px, #E4E7EA 140px)" }} className="py-20">
         <div ref={amenRef} className="container-x max-w-3xl">
           <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink mb-8 reveal-up stagger-1${amenInView ? " in-view" : ""}`}>
             What we offer
           </h2>
-          <ul className={`divide-y divide-brand-sand rounded-2xl bg-white shadow-soft overflow-hidden reveal-up stagger-2${amenInView ? " in-view" : ""}`}>
-            {AMENITY_GROUPS.map((group) => {
-              const isOpen = openAmenity === group.category;
-              return (
-                <li key={group.category}>
-                  <button
-                    type="button"
-                    aria-expanded={isOpen}
-                    onClick={() =>
-                      setOpenAmenity(isOpen ? null : group.category)
-                    }
-                    className="flex w-full items-center gap-3 px-5 py-4 text-left transition hover:bg-brand-beige/40"
-                  >
-                    <span className="text-brand-maroon shrink-0">{group.categoryIcon}</span>
-                    <span className="flex-1 font-semibold uppercase tracking-wide text-brand-ink text-sm">
-                      {group.category}
-                    </span>
-                    <svg
-                      viewBox="0 0 24 24"
-                      className={`h-5 w-5 text-brand-ink/60 shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </button>
-                  {isOpen && (
-                    <ul className="px-5 pb-5 pt-1 space-y-3">
-                      {group.items.map((item) => (
-                        <li key={item.label} className="flex items-center gap-3 pl-9">
-                          <span className="text-brand-ink/60 shrink-0">{item.icon}</span>
-                          <span className="text-brand-ink/90">{item.label}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              );
-            })}
+          <ul className={`grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5 reveal-up stagger-2${amenInView ? " in-view" : ""}`}>
+            {visibleAmenities.map((item) => (
+              <li key={item.label} className="flex items-center gap-4 py-1">
+                <span className="text-brand-ink/80 shrink-0">{item.icon}</span>
+                <span className="text-brand-ink/90">{item.label}</span>
+              </li>
+            ))}
           </ul>
+          {AMENITIES.length > AMENITIES_PREVIEW && (
+            <button
+              type="button"
+              onClick={() => setShowAllAmenities((v) => !v)}
+              className="mt-8 rounded-xl border border-brand-ink/30 bg-brand-beige/60 px-6 py-3 text-sm font-semibold text-brand-ink transition hover:border-brand-maroon hover:bg-brand-beige"
+            >
+              {showAllAmenities
+                ? "Show less"
+                : `Show all ${AMENITIES.length} amenities`}
+            </button>
+          )}
         </div>
       </section>
 
