@@ -80,15 +80,6 @@ function bedroomLabel(u) {
   return `${u.bedrooms} Bedroom${u.bedrooms > 1 ? "s" : ""}`;
 }
 
-function SectionFade({ from, to }) {
-  return (
-    <div
-      aria-hidden="true"
-      style={{ height: 140, background: `linear-gradient(to bottom, ${from}, ${to})` }}
-    />
-  );
-}
-
 export default function Home() {
   const [welcomeRef, welcomeInView] = useInView();
   const [mosaicRef,  mosaicInView]  = useInView();
@@ -131,10 +122,8 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionFade from="#E4E7EA" to="#D7DBDF" />
-
       {/* Apartments list */}
-      <section style={{ backgroundColor: "#D7DBDF" }} className="py-16">
+      <section style={{ background: "linear-gradient(to bottom, #E4E7EA 0px, #D7DBDF 140px)" }} className="py-16">
         <div ref={mosaicRef} className="container-x">
           <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink leading-tight reveal-up stagger-1${mosaicInView ? " in-view" : ""}`}>
             Our apartments
@@ -177,10 +166,8 @@ export default function Home() {
 
       </section>
 
-      <SectionFade from="#D7DBDF" to="#E4E7EA" />
-
       {/* What we offer — accordion of amenity categories */}
-      <section style={{ backgroundColor: "#E4E7EA" }} className="py-20">
+      <section style={{ background: "linear-gradient(to bottom, #D7DBDF 0px, #E4E7EA 140px)" }} className="py-20">
         <div ref={amenRef} className="container-x max-w-3xl">
           <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink mb-8 reveal-up stagger-1${amenInView ? " in-view" : ""}`}>
             What we offer
@@ -229,10 +216,8 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionFade from="#E4E7EA" to="#D7DBDF" />
-
       {/* House guide + arrival times */}
-      <section style={{ backgroundColor: "#D7DBDF" }} className="py-16">
+      <section style={{ background: "linear-gradient(to bottom, #E4E7EA 0px, #D7DBDF 140px)" }} className="py-16">
         <div ref={rulesRef} className="container-x">
           <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink mb-4 reveal-up stagger-1${rulesInView ? " in-view" : ""}`}>
             House guide
@@ -273,10 +258,8 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionFade from="#D7DBDF" to="#E4E7EA" />
-
       {/* Feedback & reviews */}
-      <section style={{ backgroundColor: "#E4E7EA" }} className="py-20">
+      <section style={{ background: "linear-gradient(to bottom, #D7DBDF 0px, #E4E7EA 140px)" }} className="py-20">
         <div ref={reviewRef} className="container-x max-w-3xl">
           <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink mb-2 reveal-up stagger-1${reviewInView ? " in-view" : ""}`}>
             Feedback & reviews
@@ -290,10 +273,8 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionFade from="#E4E7EA" to="#D7DBDF" />
-
       {/* Partners */}
-      <section style={{ backgroundColor: "#D7DBDF" }} className="py-16">
+      <section style={{ background: "linear-gradient(to bottom, #E4E7EA 0px, #D7DBDF 140px)" }} className="py-16">
         <div ref={partRef} />
         <div className={`container-x reveal-up stagger-2${partInView ? " in-view" : ""}`}>
           <Partners />
