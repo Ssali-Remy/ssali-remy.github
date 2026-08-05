@@ -12,7 +12,7 @@ export default function Gallery() {
     <>
       <Section
         eyebrow="Gallery"
-        title="A peek inside"
+        title="A Peek Inside"
         subtitle="Spaces, gardens and details from our properties — segmented by location."
       >
         <div className="flex flex-wrap items-center gap-2 mb-8">
