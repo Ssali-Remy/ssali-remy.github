@@ -41,7 +41,7 @@ export default function Contact() {
           Contact & Inquiries
         </p>
         <h1 className="mt-3 text-2xl sm:text-3xl font-semibold text-brand-ink">
-          We're just a message away
+          We're Just A Message Away
         </h1>
         <p className="mt-3 text-brand-ink/70">
           Call or WhatsApp us anytime — we usually reply within a few hours.
