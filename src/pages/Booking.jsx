@@ -92,7 +92,7 @@ export default function Booking() {
     <>
       <Section
         eyebrow="Book your stay"
-        title="All five units, one calendar"
+        title="All Five Units, One Calendar"
         subtitle="Browse every apartment across Kansanga and Munyonyo, then check availability across whichever combination you're considering."
       />
 
@@ -114,7 +114,7 @@ export default function Booking() {
       </div>
 
       {/* Single calendar covering all units */}
-      <Section eyebrow="Availability" title="All units, one calendar">
+      <Section eyebrow="Availability" title="All Units, One Calendar">
         <p className="text-sm text-brand-ink/65 mb-5">
           Toggle the units you're interested in — the calendar shows dates when
           every selected unit is free.
