@@ -215,7 +215,7 @@ function KansangaPage() {
 
       {/* Nearby places */}
       <section>
-        <H2>Nearby places</H2>
+        <H2>Nearby Places</H2>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {KANSANGA_NEARBY.map(([place, where]) => (
             <li key={place}>
@@ -241,7 +241,7 @@ function KansangaPage() {
 
       {/* House Guide */}
       <section>
-        <H2>Using the home</H2>
+        <H2>Using The Home</H2>
         <p className="text-brand-ink/70 mb-6">
           To help you settle in quickly, here's a quick overview of how things
           work in the house:
@@ -265,7 +265,7 @@ function KansangaPage() {
 
       {/* House Rules */}
       <section>
-        <H2>House guide</H2>
+        <H2>House Guide</H2>
         <p className="text-brand-ink/70 mb-6">
           We're so happy to host you! To ensure a comfortable stay for everyone,
           please follow these simple house rules:
@@ -285,7 +285,7 @@ function KansangaPage() {
 
       {/* Check-in & arrival */}
       <section>
-        <H2>Check-in &amp; arrival</H2>
+        <H2>Check-in &amp; Arrival</H2>
         <div className="grid gap-5 md:grid-cols-2">
           <div className="card p-5">
             <h3 className="font-semibold text-brand-maroon">Check-in / Check-out</h3>
@@ -429,7 +429,7 @@ function MunyonyoPage({ loc }) {
 
       {/* Nearby places — Munyonyo-specific */}
       <section>
-        <H2>Nearby places</H2>
+        <H2>Nearby Places</H2>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {loc.nearby.map(([place, where]) => (
             <li key={place}>
@@ -455,7 +455,7 @@ function MunyonyoPage({ loc }) {
 
       {/* House Guide — same as Kansanga */}
       <section>
-        <H2>Using the home</H2>
+        <H2>Using The Home</H2>
         <p className="text-brand-ink/70 mb-6">
           To help you settle in quickly, here's a quick overview of how things
           work in the house:
@@ -479,7 +479,7 @@ function MunyonyoPage({ loc }) {
 
       {/* House Rules — same as Kansanga */}
       <section>
-        <H2>House guide</H2>
+        <H2>House Guide</H2>
         <p className="text-brand-ink/70 mb-6">
           We're so happy to host you! To ensure a comfortable stay for everyone,
           please follow these simple house rules:
@@ -499,7 +499,7 @@ function MunyonyoPage({ loc }) {
 
       {/* Check-in & arrival — same as Kansanga */}
       <section>
-        <H2>Check-in &amp; arrival</H2>
+        <H2>Check-in &amp; Arrival</H2>
         <div className="grid gap-5 md:grid-cols-2">
           <div className="card p-5">
             <h3 className="font-semibold text-brand-maroon">Check-in / Check-out</h3>
