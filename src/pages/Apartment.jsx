@@ -33,7 +33,7 @@ export default function Apartment() {
       {/* Nearby places */}
       <section>
         <h2 className="text-2xl sm:text-3xl font-semibold text-brand-ink mb-4">
-          Nearby places
+          Nearby Places
         </h2>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {loc.nearby.map(([place, where]) => (
@@ -68,7 +68,7 @@ export default function Apartment() {
       {/* Map — at the bottom of every unit page */}
       <section>
         <h2 className="text-2xl sm:text-3xl font-semibold text-brand-ink mb-4">
-          Where you&apos;ll be
+          Where You&apos;ll Be
         </h2>
         <p className="text-sm text-brand-ink/60 mb-4">{loc.address}</p>
         <div className="overflow-hidden rounded-3xl border border-brand-beige shadow-soft">
