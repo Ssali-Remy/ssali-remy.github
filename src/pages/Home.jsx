@@ -108,7 +108,7 @@ export default function Home() {
         <div ref={welcomeRef} className="container-x">
           <div className="max-w-3xl text-left">
           <h1 className={`text-2xl sm:text-3xl font-semibold text-brand-ink leading-tight reveal-up stagger-1${welcomeInView ? " in-view" : ""}`}>
-            Meet your host
+            Meet Your Host
           </h1>
           <p className={`mt-8 text-lg text-brand-ink/85 leading-relaxed reveal-up stagger-2${welcomeInView ? " in-view" : ""}`}>
             Welcome to Elyon Nest!
@@ -135,7 +135,7 @@ export default function Home() {
       <section style={{ background: "linear-gradient(to bottom, #E4E7EA 0px, #D7DBDF 140px)" }} className="py-16">
         <div ref={mosaicRef} className="container-x">
           <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink leading-tight reveal-up stagger-1${mosaicInView ? " in-view" : ""}`}>
-            Our apartments
+            Our Apartments
           </h2>
         </div>
 
@@ -179,7 +179,7 @@ export default function Home() {
       <section style={{ background: "linear-gradient(to bottom, #D7DBDF 0px, #E4E7EA 140px)" }} className="py-20">
         <div ref={amenRef} className="container-x max-w-3xl">
           <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink mb-8 reveal-up stagger-1${amenInView ? " in-view" : ""}`}>
-            What we offer
+            What We Offer
           </h2>
           <ul className={`grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5 reveal-up stagger-2${amenInView ? " in-view" : ""}`}>
             {visibleAmenities.map((item) => (
@@ -207,7 +207,7 @@ export default function Home() {
       <section style={{ background: "linear-gradient(to bottom, #E4E7EA 0px, #D7DBDF 140px)" }} className="py-16">
         <div ref={rulesRef} className="container-x">
           <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink mb-4 reveal-up stagger-1${rulesInView ? " in-view" : ""}`}>
-            House guide
+            House Guide
           </h2>
           <p className={`text-brand-ink/70 mb-6 max-w-2xl reveal-up stagger-2${rulesInView ? " in-view" : ""}`}>
             We're so happy to host you! To ensure a comfortable stay for
@@ -226,7 +226,7 @@ export default function Home() {
           </ul>
 
           <h2 className={`mt-14 text-2xl sm:text-3xl font-semibold text-brand-ink mb-4 reveal-up stagger-6${rulesInView ? " in-view" : ""}`}>
-            Arrival
+            Check-in
           </h2>
           <div className={`grid gap-5 sm:grid-cols-2 max-w-xl reveal-up stagger-6${rulesInView ? " in-view" : ""}`}>
             <div className="card p-5">
@@ -249,7 +249,7 @@ export default function Home() {
       <section style={{ background: "linear-gradient(to bottom, #D7DBDF 0px, #E4E7EA 140px)" }} className="py-20">
         <div ref={reviewRef} className="container-x max-w-3xl">
           <h2 className={`text-2xl sm:text-3xl font-semibold text-brand-ink mb-2 reveal-up stagger-1${reviewInView ? " in-view" : ""}`}>
-            Feedback & reviews
+            Feedback & Reviews
           </h2>
           <p className={`text-brand-ink/70 mb-8 reveal-up stagger-2${reviewInView ? " in-view" : ""}`}>
             Stayed with us? We'd love to hear how it went.
