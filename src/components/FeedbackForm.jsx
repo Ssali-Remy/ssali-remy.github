@@ -58,7 +58,7 @@ export default function FeedbackForm() {
             <Star key={i} filled />
           ))}
         </div>
-        <h3 className="text-xl font-bold text-brand-ink">Thank you, {name.trim()}!</h3>
+        <h3 className="text-xl font-bold text-brand-ink">Thank You, {name.trim()}!</h3>
         <p className="mt-2 text-brand-ink/70">
           Your review has been prepared in your email app — just hit send. We
           truly appreciate you taking the time.
