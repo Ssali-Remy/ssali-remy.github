@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KJA Website — Template Drafts (Internal Review)</title>
+<style>
+  :root{
+    --bg:#f7f2e7;
+    --surface:#ffffff;
+    --surface-2:#fbf7ee;
+    --ink:#1c2230;
+    --ink-soft:#5c6472;
+    --ink-faint:#8b93a1;
+    --primary:#163a5c;
+    --primary-strong:#0e2740;
+    --primary-ink:#f5f8fb;
+    --accent:#c2872e;
+    --accent-strong:#a06c1e;
+    --accent-ink:#2a1a03;
+    --line:#e4dcc7;
+    --line-strong:#cfc4a6;
+    --shadow:0 18px 40px -22px rgba(20,26,40,.35);
+    --ph-a:#d8cdb2;
+    --ph-b:#eee6d2;
+    --focus:#1c6fd6;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e131b;
+      --surface:#161d28;
+      --surface-2:#131a24;
+      --primary:#3f7cad;
+      --primary-strong:#2c5c85;
+      --primary-ink:#eef3f8;
+      --accent:#e3a94c;
+      --accent-strong:#c98a2e;
+      --accent-ink:#241705;
+      --ink:#e9ecf2;
+      --ink-soft:#a7b0bf;
+      --ink-faint:#727c8c;
+      --line:#2a3341;
+      --line-strong:#3a4557;
+      --shadow:0 18px 40px -20px rgba(0,0,0,.6);
+      --ph-a:#26303f;
+      --ph-b:#1c2531;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e131b;
+    --surface:#161d28;
+    --surface-2:#131a24;
+    --primary:#3f7cad;
+    --primary-strong:#2c5c85;
+    --primary-ink:#eef3f8;
+    --accent:#e3a94c;
+    --accent-strong:#c98a2e;
+    --accent-ink:#241705;
+    --ink:#e9ecf2;
+    --ink-soft:#a7b0bf;
+    --ink-faint:#727c8c;
+    --line:#2a3341;
+    --line-strong:#3a4557;
+    --shadow:0 18px 40px -20px rgba(0,0,0,.6);
+    --ph-a:#26303f;
+    --ph-b:#1c2531;
+    color-scheme:dark;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:Georgia,"Iowan Old Style","Palatino Linotype","Book Antiqua",serif;
+    font-weight:600;
+    color:var(--ink);
+    text-wrap:balance;
+    margin:0;
+  }
+  p{margin:0;color:var(--ink-soft);line-height:1.6;}
+  a{color:inherit;}
+  button{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
+  }
+
+  .eyebrow{
+    display:inline-block;
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.11em;
+    text-transform:uppercase;
+    color:var(--accent-strong);
+  }
+
+  /* ---------- Meta chrome (the review tool, not the site) ---------- */
+  .review-shell{
+    max-width:1180px;
+    margin:0 auto;
+    padding:28px 20px 80px;
+  }
+  .review-head{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:18px;
+  }
+  .review-title{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .review-title h1{font-size:1.5rem;}
+  .review-title p{font-size:.92rem;max-width:56ch;}
+  .draft-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--accent);
+    color:var(--accent-ink);
+    font-size:.68rem;
+    font-weight:800;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:999px;
+    width:fit-content;
+  }
+  .review-note{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px 16px;
+    font-size:.86rem;
+    color:var(--ink-soft);
+    margin-bottom:22px;
+  }
+  .review-note strong{color:var(--ink);}
+
+  .control-bar{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    margin-bottom:16px;
+  }
+  .tabs{
+    display:flex;
+    gap:6px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    padding:4px;
+    border-radius:11px;
+  }
+  .tab-btn{
+    border:0;
+    background:transparent;
+    color:var(--ink-soft);
+    font-size:.86rem;
+    font-weight:600;
+    padding:8px 16px;
+    border-radius:8px;
+    cursor:pointer;
+  }
+  .tab-btn[aria-selected="true"]{
+    background:var(--primary);
+    color:var(--primary-ink);
+  }
+  .device-toggle{
+    display:flex;
+    gap:6px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    padding:4px;
+    border-radius:11px;
+  }
+  .device-btn{
+    border:0;
+    background:transparent;
+    color:var(--ink-soft);
+    font-size:.8rem;
+    font-weight:600;
+    padding:7px 13px;
+    border-radius:8px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .device-btn[aria-pressed="true"]{
+    background:var(--surface);
+    color:var(--ink);
+    box-shadow:0 0 0 1px var(--line-strong) inset;
+  }
+
+  /* ---------- Fake browser frame ---------- */
+  .browser-wrap{
+    display:flex;
+    justify-content:center;
+  }
+  .browser{
+    width:100%;
+    max-width:1180px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    transition:max-width .35s ease;
+  }
+  .browser.is-mobile{max-width:400px;}
+  .browser-bar{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 14px;
+    background:var(--surface-2);
+    border-bottom:1px solid var(--line);
+  }
+  .dots{display:flex;gap:6px;flex-shrink:0;}
+  .dots span{width:9px;height:9px;border-radius:50%;background:var(--line-strong);}
+  .url-pill{
+    flex:1;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:5px 14px;
+    font-size:.76rem;
+    color:var(--ink-faint);
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .stage{
+    max-height:78vh;
+    overflow-y:auto;
+    overflow-x:hidden;
+    background:var(--surface);
+    container-type:inline-size;
+    container-name:site;
+  }
+  .page{display:none;}
+  .page.is-active{display:block;}
+
+  /* ================= MOCK SITE STYLES ================= */
+  .site header.site-header{
+    position:sticky;
+    top:0;
+    z-index:5;
+    background:var(--surface);
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 32px;
+    gap:20px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .brand-mark{
+    width:38px;height:38px;border-radius:9px;
+    background:var(--primary);
+    color:var(--primary-ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:Georgia,serif;font-weight:700;font-size:1rem;
+    flex-shrink:0;
+  }
+  .brand-word{font-family:Georgia,serif;font-weight:700;font-size:1rem;color:var(--ink);line-height:1.1;}
+  .brand-word small{display:block;font-family:-apple-system,sans-serif;font-weight:600;font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint);}
+  nav.site-nav{display:flex;align-items:center;gap:26px;}
+  nav.site-nav a{font-size:.87rem;font-weight:600;color:var(--ink-soft);text-decoration:none;}
+  nav.site-nav a.current{color:var(--primary);}
+  .header-actions{display:flex;align-items:center;gap:10px;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border-radius:9px;
+    padding:10px 18px;
+    font-size:.85rem;
+    font-weight:700;
+    text-decoration:none;
+    border:1px solid transparent;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .btn-primary{background:var(--accent);color:var(--accent-ink);}
+  .btn-outline{background:transparent;border-color:var(--line-strong);color:var(--ink);}
+  .btn-ghost-portal{background:var(--surface-2);color:var(--primary);border-color:var(--line);font-size:.78rem;padding:8px 14px;}
+  .hamburger{display:none;background:transparent;border:1px solid var(--line-strong);border-radius:8px;width:38px;height:36px;align-items:center;justify-content:center;cursor:pointer;}
+  .hamburger span,.hamburger::before,.hamburger::after{display:none;}
+  .hamburger svg{width:18px;height:18px;stroke:var(--ink);}
+
+  .breadcrumb{font-size:.78rem;color:var(--ink-faint);padding:18px 32px 0;}
+  .breadcrumb a{color:var(--ink-faint);text-decoration:none;}
+  .breadcrumb .sep{margin:0 6px;}
+
+  section.block{padding:56px 32px;border-bottom:1px solid var(--line);}
+  section.block:last-of-type{border-bottom:0;}
+  .block-inner{max-width:1040px;margin:0 auto;}
+  .block-alt{background:var(--surface-2);}
+  .kicker{margin-bottom:10px;display:block;}
+  .block-head{max-width:62ch;margin-bottom:32px;}
+  .block-head h2{font-size:1.6rem;margin-bottom:10px;}
+  .block-head p{font-size:.98rem;}
+
+  .placeholder-img{
+    background:repeating-linear-gradient(135deg,var(--ph-a) 0 14px,var(--ph-b) 14px 28px);
+    border:1px solid var(--line-strong);
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:.74rem;
+    font-weight:700;
+    letter-spacing:.03em;
+    padding:10px;
+    min-height:120px;
+  }
+  .placeholder-img span{
+    background:var(--surface);
+    border:1px solid var(--line-strong);
+    border-radius:7px;
+    padding:5px 10px;
+    box-shadow:var(--shadow);
+  }
+
+  /* HOME hero */
+  .hero{
+    display:grid;
+    grid-template-columns:1.05fr 1fr;
+    gap:40px;
+    align-items:center;
+    padding:52px 32px;
+  }
+  .hero h1{font-size:2.35rem;line-height:1.12;margin:12px 0 16px;}
+  .hero p.lead{font-size:1.03rem;margin-bottom:26px;}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;}
+  .hero .placeholder-img{aspect-ratio:4/3.1;min-height:0;}
+
+  .strip{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .strip-item{background:var(--surface);padding:22px 26px;}
+  .strip-item .big{font-family:Georgia,serif;font-size:1.15rem;color:var(--primary);margin-bottom:2px;}
+  .strip-item .small{font-size:.82rem;color:var(--ink-soft);}
+
+  .card-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .card-grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:13px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .card .placeholder-img{border-radius:0;border:0;border-bottom:1px solid var(--line);aspect-ratio:4/3;min-height:0;}
+  .card-body{padding:16px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1;}
+  .card-body h3{font-size:1rem;}
+  .card-body p{font-size:.85rem;}
+  .card-tag{font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--accent-strong);}
+  .card-link{font-size:.82rem;font-weight:700;color:var(--primary);text-decoration:none;margin-top:auto;}
+
+  .photo-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+  .photo-row .placeholder-img{aspect-ratio:1;min-height:0;font-size:.66rem;}
+
+  footer.site-footer{
+    background:var(--primary-strong);
+    color:#e7edf3;
+    padding:44px 32px 26px;
+  }
+  .footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1.1fr;gap:32px;max-width:1040px;margin:0 auto;}
+  .footer-grid h4{color:#fff;font-size:.86rem;letter-spacing:.03em;margin-bottom:12px;font-family:-apple-system,sans-serif;}
+  .footer-grid p, .footer-grid a{color:#c3d1de;font-size:.82rem;text-decoration:none;line-height:1.9;}
+  .footer-grid a:hover{color:#fff;}
+  .foot-links{list-style:none;padding:0;margin:0;}
+  .newsletter-row{display:flex;gap:8px;margin-top:10px;}
+  .newsletter-row input{
+    flex:1;border-radius:8px;border:1px solid rgba(255,255,255,.25);
+    background:rgba(255,255,255,.07);color:#fff;padding:9px 12px;font-size:.82rem;
+  }
+  .newsletter-row input::placeholder{color:#9fb0c0;}
+  .foot-bottom{max-width:1040px;margin:30px auto 0;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);font-size:.76rem;color:#9fb0c0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+
+  /* ADMISSIONS */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:22px 18px;}
+  .step-num{
+    width:32px;height:32px;border-radius:50%;background:var(--primary);color:var(--primary-ink);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;margin-bottom:14px;
+  }
+  .step h3{font-size:.96rem;margin-bottom:6px;}
+  .step p{font-size:.83rem;}
+
+  .req-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+  .req-tab{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:.82rem;font-weight:600;padding:8px 16px;border-radius:9px;cursor:pointer;}
+  .req-tab[aria-selected="true"]{background:var(--primary);border-color:var(--primary);color:var(--primary-ink);}
+  .req-panel{display:none;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:24px 26px;}
+  .req-panel.is-active{display:block;}
+  .req-panel ul{margin:0;padding-left:20px;color:var(--ink-soft);font-size:.9rem;line-height:2;}
+
+  .admissions-layout{display:grid;grid-template-columns:1.5fr 1fr;gap:28px;align-items:start;}
+  .fee-table{width:100%;border-collapse:collapse;font-size:.87rem;margin-top:14px;}
+  .fee-table th,.fee-table td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);}
+  .fee-table th{color:var(--ink-faint);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;}
+  .fee-note{font-size:.76rem;color:var(--ink-faint);margin-top:8px;font-style:italic;}
+
+  .form-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+  .form-field{display:flex;flex-direction:column;gap:6px;}
+  .form-field.full{grid-column:1 / -1;}
+  .form-field label{font-size:.78rem;font-weight:700;color:var(--ink);}
+  .form-field input,.form-field select,.form-field textarea{
+    border:1px solid var(--line-strong);
+    border-radius:8px;
+    padding:9px 11px;
+    font-size:.87rem;
+    background:var(--surface);
+    color:var(--ink);
+    font-family:inherit;
+  }
+  .form-field textarea{resize:vertical;min-height:80px;}
+  .recaptcha-note{font-size:.72rem;color:var(--ink-faint);margin:6px 0 14px;}
+  .side-card{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:16px;}
+  .side-card h4{font-size:.92rem;margin-bottom:10px;}
+  .side-card p{font-size:.85rem;margin-bottom:4px;}
+
+  /* ABOUT */
+  .history-grid{display:grid;grid-template-columns:1fr 0.85fr;gap:36px;align-items:center;}
+  blockquote{
+    margin:18px 0 0;
+    padding:14px 0 14px 18px;
+    border-left:3px solid var(--accent);
+    font-family:Georgia,serif;
+    font-style:italic;
+    font-size:1.02rem;
+    color:var(--ink);
+  }
+  .value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .value-card{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:24px;}
+  .value-card .eyebrow{margin-bottom:8px;}
+  .value-card h3{font-size:1.05rem;margin-bottom:8px;}
+  .value-card p{font-size:.87rem;}
+
+  .team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;}
+  .team-card{text-align:center;}
+  .team-card .placeholder-img{aspect-ratio:1;border-radius:50%;min-height:0;margin-bottom:12px;font-size:.62rem;}
+  .team-card h4{font-size:.88rem;margin-bottom:2px;}
+  .team-card .role{font-size:.72rem;color:var(--accent-strong);font-weight:700;margin-bottom:6px;}
+  .team-card p.bio{font-size:.78rem;line-height:1.5;}
+
+  .accred-row{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+  .accred-chip{
+    flex:1;min-width:140px;
+    border:1px dashed var(--line-strong);
+    border-radius:10px;
+    padding:18px 12px;
+    text-align:center;
+    font-size:.74rem;
+    color:var(--ink-faint);
+    font-weight:600;
+  }
+
+  .cta-banner{
+    background:var(--primary);
+    color:var(--primary-ink);
+    border-radius:0;
+    padding:46px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .cta-banner h2{color:#fff;font-size:1.5rem;}
+  .cta-banner p{color:#cfe0ee;margin-top:6px;}
+
+  /* sticky mobile admissions bar */
+  .mobile-cta-bar{
+    display:none;
+    position:sticky;
+    bottom:0;
+    background:var(--surface);
+    border-top:1px solid var(--line);
+    padding:10px 16px;
+    z-index:6;
+  }
+  .mobile-cta-bar .btn{width:100%;}
+
+  /* ---------------- Container-query responsive rules (drives the Mobile toggle) ---------------- */
+  @container site (max-width: 480px){
+    .site header.site-header{padding:12px 16px;}
+    nav.site-nav{
+      position:fixed;inset:0 0 0 auto;width:78%;max-width:300px;height:100%;
+      background:var(--surface);flex-direction:column;align-items:flex-start;
+      padding:80px 24px 24px;gap:22px;box-shadow:var(--shadow);
+      transform:translateX(100%);transition:transform .25s ease;
+    }
+    nav.site-nav.open{transform:translateX(0);}
+    .header-actions .btn-outline{display:none;}
+    .btn-ghost-portal{display:none;}
+    .hamburger{display:flex;}
+    .hamburger svg{display:block;}
+
+    .breadcrumb{padding:14px 16px 0;}
+    section.block{padding:34px 16px;}
+    .block-head h2{font-size:1.28rem;}
+    .hero{grid-template-columns:1fr;padding:28px 16px;gap:24px;}
+    .hero h1{font-size:1.7rem;}
+    .strip{grid-template-columns:1fr;}
+    .card-grid,.card-grid.cols-3{grid-template-columns:1fr;}
+    .photo-row{grid-template-columns:repeat(3,1fr);}
+    .footer-grid{grid-template-columns:1fr;gap:24px;}
+    .steps{grid-template-columns:1fr 1fr;}
+    .admissions-layout{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .history-grid{grid-template-columns:1fr;}
+    .value-grid{grid-template-columns:1fr;}
+    .team-grid{grid-template-columns:1fr 1fr;}
+    .cta-banner{flex-direction:column;align-items:flex-start;text-align:left;}
+    .mobile-cta-bar.on-mobile{display:block;}
+  }
+
+  @media (max-width:760px){
+    .review-shell{padding:20px 14px 60px;}
+    .control-bar{flex-direction:column;align-items:stretch;}
+    .tabs,.device-toggle{justify-content:center;}
+  }
+</style>
+</head>
+<body>
+
+<div class="review-shell">
+
+  <div class="review-head">
+    <div class="review-title">
+      <span class="draft-badge">Draft · Internal Review</span>
+      <h1>KJA Website — Page Template Drafts</h1>
+      <p>Three page templates built from the site brief — layout and component design only. All copy, photos, names, and figures below are placeholder/sample content and will be replaced with material supplied by the school.</p>
+    </div>
+  </div>
+
+  <div class="review-note">
+    <strong>How to read this:</strong> hatched blocks mark image placeholders (sized for their slot). Body text is illustrative sample copy, not final. Use the tabs to switch templates and the Desktop/Mobile toggle to preview the responsive layout.
+  </div>
+
+  <div class="control-bar">
+    <div class="tabs" role="tablist" aria-label="Page template">
+      <button class="tab-btn" role="tab" aria-selected="true" data-page="home">Home</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-page="admissions">Admissions</button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-page="about">About</button>
+    </div>
+    <div class="device-toggle">
+      <button class="device-btn" aria-pressed="true" data-device="desktop">Desktop</button>
+      <button class="device-btn" aria-pressed="false" data-device="mobile">Mobile</button>
+    </div>
+  </div>
+
+  <div class="browser-wrap">
+    <div class="browser" id="browserFrame">
+      <div class="browser-bar">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="url-pill" id="urlPill">kja.ug</div>
+      </div>
+
+      <div class="stage">
+        <div class="site">
+
+          <!-- ===================== HOME ===================== -->
+          <div class="page is-active" data-page="home">
+            <header class="site-header">
+              <a class="brand" href="#">
+                <span class="brand-mark">KJA</span>
+                <span class="brand-word">Kampala Junior<br>Academy</span>
+              </a>
+              <nav class="site-nav" id="navHome">
+                <a class="current" href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Academics</a>
+                <a href="#">Admissions</a>
+                <a href="#">Gallery</a>
+                <a href="#">Contact</a>
+              </nav>
+              <div class="header-actions">
+                <a class="btn btn-ghost-portal" href="#">Parent Portal Login ↗</a>
+                <a class="btn btn-primary" href="#">Apply Now</a>
+                <button class="hamburger" data-nav-toggle="navHome" aria-label="Open menu">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+              </div>
+            </header>
+
+            <section class="hero">
+              <div>
+                <span class="eyebrow">Kampala Junior Academy · Ages 3–18</span>
+                <h1>Where every learner finds their way forward.</h1>
+                <p class="lead">A K–12 school in Kampala built on strong academics, character formation, and a community that knows every child by name. Now welcoming applications for the 2026/2027 school year.</p>
+                <div class="hero-ctas">
+                  <a class="btn btn-primary" href="#">Book a Campus Tour</a>
+                  <a class="btn btn-outline" href="#">Start an Application</a>
+                </div>
+              </div>
+              <div class="placeholder-img"><span>Photo placeholder — students in the science lab · 1600×1200</span></div>
+            </section>
+
+            <div class="strip">
+              <div class="strip-item"><div class="big">Ages 3–18</div><div class="small">Early Years through Senior Six</div></div>
+              <div class="strip-item"><div class="big">Open Mornings</div><div class="small">Every Saturday, 9–11am</div></div>
+              <div class="strip-item"><div class="big">Apply Online</div><div class="small">Takes about 10 minutes</div></div>
+            </div>
+
+            <section class="block">
+              <div class="block-inner">
+                <div class="block-head">
+                  <span class="eyebrow kicker">Why Families Choose KJA</span>
+                  <h2>An education built around your child</h2>
+                  <p>Four things every KJA family can count on, from Early Years through graduation.</p>
+                </div>
+                <div class="card-grid">
+                  <div class="card">
+                    <div class="placeholder-img"><span>Classroom photo · 800×600</span></div>
+                    <div class="card-body">
+                      <span class="card-tag">Academics</span>
+                      <h3>Rigorous, well-taught curriculum</h3>
+                      <p>A Cambridge-aligned curriculum delivered by qualified, caring teachers, with small class sizes that let every learner be known.</p>
+                      <a class="card-link" href="#">Explore Academics →</a>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="placeholder-img"><span>Sports field photo · 800×600</span></div>
+                    <div class="card-body">
+                      <span class="card-tag">Co-curricular</span>
+                      <h3>Life beyond the classroom</h3>
+                      <p>Music, sport, debate, and clubs that build confidence — over 20 activities for learners to choose from.</p>
+                      <a class="card-link" href="#">See Campus Life →</a>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="placeholder-img"><span>Boarding house photo · 800×600</span></div>
+                    <div class="card-body">
+                      <span class="card-tag">Options</span>
+                      <h3>Day and boarding places</h3>
+                      <p>Flexible day and boarding arrangements for families across Kampala and beyond.</p>
+                      <a class="card-link" href="#">Compare Options →</a>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="placeholder-img"><span>Counsellor and student photo · 800×600</span></div>
+                    <div class="card-body">
+                      <span class="card-tag">Pastoral Care</span>
+                      <h3>A team that knows your child</h3>
+                      <p>A dedicated counselling and wellbeing team walks alongside every learner, every year.</p>
+                      <a class="card-link" href="#">Meet the Team →</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="block block-alt">
+              <div class="block-inner">
+                <div class="block-head">
+                  <span class="eyebrow kicker">From the School</span>
+                  <h2>Latest news</h2>
+                </div>
+                <div class="card-grid cols-3">
+                  <div class="card">
+                    <div class="placeholder-img"><span>News photo · 700×420</span></div>
+                    <div class="card-body">
+                      <span class="card-tag">Jul 2026</span>
+                      <h3>KJA wins regional debate championship</h3>
+                      <p>Our senior debate team brought home the trophy for the second year running, beating twelve schools from across the region.</p>
+                      <a class="card-link" href="#">Read more →</a>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="placeholder-img"><span>News photo · 700×420</span></div>
+                    <div class="card-body">
+                      <span class="card-tag">Jun 2026</span>
+                      <h3>New science block opens for Term 3</h3>
+                      <p>State-of-the-art labs are now open for Biology, Chemistry, and Physics classes across Secondary.</p>
+                      <a class="card-link" href="#">Read more →</a>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="placeholder-img"><span>News photo · 700×420</span></div>
+                    <div class="card-body">
+                      <span class="card-tag">May 2026</span>
+                      <h3>Applications open for 2026/2027</h3>
+                      <p>Places are limited across all grade levels — here's what you need to know before you apply.</p>
+                      <a class="card-link" href="#">Read more →</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="block">
+              <div class="block-inner">
+                <div class="block-head">
+                  <span class="eyebrow kicker">Campus Life</span>
+                  <h2>A look around campus</h2>
+                </div>
+                <div class="photo-row">
+                  <div class="placeholder-img"><span>Photo 1</span></div>
+                  <div class="placeholder-img"><span>Photo 2</span></div>
+                  <div class="placeholder-img"><span>Photo 3</span></div>
+                  <div class="placeholder-img"><span>Photo 4</span></div>
+                  <div class="placeholder-img"><span>Photo 5</span></div>
+                </div>
+              </div>
+            </section>
+
+            <footer class="site-footer">
+              <div class="footer-grid">
+                <div>
+                  <h4>Kampala Junior Academy</h4>
+                  <p>Plot 14, Muyenga Road<br>Kampala, Uganda</p>
+                  <p>+256 700 000 000<br>info@kja.ug</p>
+                </div>
+                <div>
+                  <h4>Explore</h4>
+                  <ul class="foot-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Academics</a></li>
+                    <li><a href="#">Admissions</a></li>
+                    <li><a href="#">News &amp; Events</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Families</h4>
+                  <ul class="foot-links">
+                    <li><a href="#">Parent Portal Login</a></li>
+                    <li><a href="#">Fees &amp; Payments</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Stay Updated</h4>
+                  <p>Get school news in your inbox.</p>
+                  <div class="newsletter-row">
+                    <input type="email" placeholder="you@example.com" disabled>
+                    <a class="btn btn-primary" href="#" style="padding:9px 16px;">Subscribe</a>
+                  </div>
+                </div>
+              </div>
+              <div class="foot-bottom">
+                <span>© 2026 Kampala Junior Academy. All rights reserved.</span>
+                <span>Facebook · Instagram · YouTube (icon placeholders)</span>
+              </div>
+            </footer>
+          </div>
+
+          <!-- ===================== ADMISSIONS ===================== -->
+          <div class="page" data-page="admissions">
+            <header class="site-header">
+              <a class="brand" href="#">
+                <span class="brand-mark">KJA</span>
+                <span class="brand-word">Kampala Junior<br>Academy</span>
+              </a>
+              <nav class="site-nav" id="navAdmissions">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Academics</a>
+                <a class="current" href="#">Admissions</a>
+                <a href="#">Gallery</a>
+                <a href="#">Contact</a>
+              </nav>
+              <div class="header-actions">
+                <a class="btn btn-ghost-portal" href="#">Parent Portal Login ↗</a>
+                <a class="btn btn-primary" href="#">Apply Now</a>
+                <button class="hamburger" data-nav-toggle="navAdmissions" aria-label="Open menu">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+              </div>
+            </header>
+
+            <div class="breadcrumb"><a href="#">Home</a><span class="sep">/</span>Admissions</div>
+
+            <section class="block" style="padding-bottom:20px;">
+              <div class="block-inner">
+                <span class="eyebrow kicker">Admissions</span>
+                <h1 style="font-size:1.9rem;margin:10px 0 10px;">Join the KJA family</h1>
+                <p style="max-width:62ch;font-size:.98rem;">Our admissions process is designed to be simple and personal — from your first inquiry to your child's first day.</p>
+              </div>
+            </section>
+
+            <section class="block block-alt">
+              <div class="block-inner">
+                <div class="block-head">
+                  <span class="eyebrow kicker">How It Works</span>
+                  <h2>Four steps to enrollment</h2>
+                </div>
+                <div class="steps">
+                  <div class="step"><div class="step-num">1</div><h3>Inquire</h3><p>Tell us about your child using the form below, or call our admissions office.</p></div>
+                  <div class="step"><div class="step-num">2</div><h3>Tour &amp; assessment</h3><p>Visit campus and your child completes a short, age-appropriate placement assessment.</p></div>
+                  <div class="step"><div class="step-num">3</div><h3>Submit documents</h3><p>Share past school reports, a birth certificate, and passport photos.</p></div>
+                  <div class="step"><div class="step-num">4</div><h3>Offer &amp; enrollment</h3><p>Receive your offer letter and secure your child's place with the enrollment deposit.</p></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="block">
+              <div class="block-inner">
+                <div class="block-head">
+                  <span class="eyebrow kicker">Requirements</span>
+                  <h2>What you'll need, by level</h2>
+                </div>
+                <div class="req-tabs" role="tablist">
+                  <button class="req-tab" role="tab" aria-selected="true" data-req="ey">Early Years (3–5)</button>
+                  <button class="req-tab" role="tab" aria-selected="false" data-req="pri">Primary (P1–P7)</button>
+                  <button class="req-tab" role="tab" aria-selected="false" data-req="sec">Secondary (S1–S6)</button>
+                </div>
+                <div class="req-panel is-active" data-req-panel="ey">
+                  <ul>
+                    <li>Copy of birth certificate</li>
+                    <li>Up-to-date immunization record</li>
+                    <li>Two recent passport photos</li>
+                    <li>Non-refundable registration fee</li>
+                  </ul>
+                </div>
+                <div class="req-panel" data-req-panel="pri">
+                  <ul>
+                    <li>Previous school report (last two terms)</li>
+                    <li>Transfer letter, if changing schools</li>
+                    <li>Copy of birth certificate</li>
+                    <li>Placement assessment in English and Mathematics</li>
+                  </ul>
+                </div>
+                <div class="req-panel" data-req-panel="sec">
+                  <ul>
+                    <li>Previous two years of school reports</li>
+                    <li>Recommendation letter from current school</li>
+                    <li>UNEB results, for entry into Senior 5</li>
+                    <li>Placement assessment in English and Mathematics</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <section class="block block-alt">
+              <div class="block-inner admissions-layout">
+                <div>
+                  <div class="block-head" style="margin-bottom:20px;">
+                    <span class="eyebrow kicker">Fees</span>
+                    <h2>Tuition &amp; fees</h2>
+                    <p>Tuition varies by grade level and includes tuition, activity, and materials fees. A detailed schedule is shared with every applicant family.</p>
+                  </div>
+                  <table class="fee-table">
+                    <thead><tr><th>Level</th><th>Per Term</th></tr></thead>
+                    <tbody>
+                      <tr><td>Early Years</td><td>UGX 1,200,000</td></tr>
+                      <tr><td>Primary</td><td>UGX 1,650,000</td></tr>
+                      <tr><td>Secondary</td><td>UGX 2,100,000</td></tr>
+                    </tbody>
+                  </table>
+                  <p class="fee-note">Sample figures shown for layout only — final fee schedule to be supplied by the school.</p>
+
+                  <div class="form-card" style="margin-top:28px;">
+                    <h3 style="font-size:1.05rem;margin-bottom:16px;">Send an admissions inquiry</h3>
+                    <div class="form-row">
+                      <div class="form-field"><label>Parent / Guardian Name</label><input type="text" placeholder="e.g. Sarah Nakimuli" disabled></div>
+                      <div class="form-field"><label>Phone Number</label><input type="text" placeholder="+256 7xx xxx xxx" disabled></div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-field"><label>Email Address</label><input type="email" placeholder="you@example.com" disabled></div>
+                      <div class="form-field"><label>Child's Age / Grade Applying For</label><input type="text" placeholder="e.g. 7 years old, entering P3" disabled></div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-field full"><label>Preferred Start Term</label>
+                        <select disabled><option>Term 1 — 2027</option></select>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-field full"><label>Message</label><textarea placeholder="Tell us a little about your child..." disabled></textarea></div>
+                    </div>
+                    <p class="recaptcha-note">Protected by reCAPTCHA. Privacy Policy and Terms of Service apply.</p>
+                    <a class="btn btn-primary" href="#">Send Inquiry</a>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="side-card">
+                    <h4>Speak with Admissions</h4>
+                    <p><strong>Mrs. Grace Nakato</strong></p>
+                    <p>Admissions Officer</p>
+                    <p>+256 700 000 001</p>
+                    <p>admissions@kja.ug</p>
+                    <p>Mon–Fri, 8am–4pm</p>
+                  </div>
+                  <a class="btn btn-outline" href="#" style="width:100%;">Download Prospectus (PDF)</a>
+                </div>
+              </div>
+            </section>
+
+            <div class="mobile-cta-bar on-mobile">
+              <a class="btn btn-primary" href="#">Start Your Application</a>
+            </div>
+          </div>
+
+          <!-- ===================== ABOUT ===================== -->
+          <div class="page" data-page="about">
+            <header class="site-header">
+              <a class="brand" href="#">
+                <span class="brand-mark">KJA</span>
+                <span class="brand-word">Kampala Junior<br>Academy</span>
+              </a>
+              <nav class="site-nav" id="navAbout">
+                <a href="#">Home</a>
+                <a class="current" href="#">About</a>
+                <a href="#">Academics</a>
+                <a href="#">Admissions</a>
+                <a href="#">Gallery</a>
+                <a href="#">Contact</a>
+              </nav>
+              <div class="header-actions">
+                <a class="btn btn-ghost-portal" href="#">Parent Portal Login ↗</a>
+                <a class="btn btn-primary" href="#">Apply Now</a>
+                <button class="hamburger" data-nav-toggle="navAbout" aria-label="Open menu">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+              </div>
+            </header>
+
+            <div class="breadcrumb"><a href="#">Home</a><span class="sep">/</span>About</div>
+
+            <section class="block" style="padding-bottom:20px;">
+              <div class="block-inner">
+                <span class="eyebrow kicker">About KJA</span>
+                <h1 style="font-size:1.9rem;margin:10px 0 10px;">Our story</h1>
+                <p style="max-width:62ch;font-size:.98rem;">Founded to give Kampala's children an education that is rigorous, caring, and rooted in community.</p>
+              </div>
+            </section>
+
+            <section class="block block-alt">
+              <div class="block-inner history-grid">
+                <div>
+                  <span class="eyebrow kicker">Since 2005</span>
+                  <h2 style="font-size:1.5rem;">Two decades of growing with our students</h2>
+                  <p style="margin-top:12px;font-size:.94rem;">Kampala Junior Academy opened its doors with a single classroom and a simple belief: every child deserves teachers who know their name and a curriculum that stretches them. Two decades on, that belief still shapes everything we do — from our class sizes to our staffroom culture.</p>
+                  <blockquote>"We're not just preparing students for exams. We're preparing them for life."<br><span style="font-style:normal;font-size:.82rem;color:var(--ink-soft);">— Head Teacher, Kampala Junior Academy</span></blockquote>
+                </div>
+                <div class="placeholder-img" style="aspect-ratio:4/3.4;min-height:0;"><span>Campus / founding photo · 900×760</span></div>
+              </div>
+            </section>
+
+            <section class="block">
+              <div class="block-inner">
+                <div class="block-head">
+                  <span class="eyebrow kicker">What Guides Us</span>
+                  <h2>Mission, vision &amp; values</h2>
+                </div>
+                <div class="value-grid">
+                  <div class="value-card">
+                    <span class="eyebrow">Mission</span>
+                    <h3>Educating the whole child</h3>
+                    <p>To provide a rigorous, well-rounded education that equips every learner with the knowledge, character, and confidence to thrive.</p>
+                  </div>
+                  <div class="value-card">
+                    <span class="eyebrow">Vision</span>
+                    <h3>Leaders for tomorrow</h3>
+                    <p>A generation of Ugandan learners who lead with integrity, think critically, and serve their communities.</p>
+                  </div>
+                  <div class="value-card">
+                    <span class="eyebrow">Values</span>
+                    <h3>What we stand for</h3>
+                    <p>Excellence · Integrity · Community · Curiosity — the four values that shape every classroom decision.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="block block-alt">
+              <div class="block-inner">
+                <div class="block-head">
+                  <span class="eyebrow kicker">Leadership</span>
+                  <h2>Meet the people behind KJA</h2>
+                </div>
+                <div class="team-grid">
+                  <div class="team-card">
+                    <div class="placeholder-img"><span>Headshot</span></div>
+                    <h4>[Name]</h4>
+                    <div class="role">Head Teacher</div>
+                    <p class="bio">Over 15 years in Ugandan and international K–12 education.</p>
+                  </div>
+                  <div class="team-card">
+                    <div class="placeholder-img"><span>Headshot</span></div>
+                    <h4>[Name]</h4>
+                    <div class="role">Deputy Head, Academics</div>
+                    <p class="bio">Leads curriculum design and teacher development across all levels.</p>
+                  </div>
+                  <div class="team-card">
+                    <div class="placeholder-img"><span>Headshot</span></div>
+                    <h4>[Name]</h4>
+                    <div class="role">Deputy Head, Pastoral</div>
+                    <p class="bio">Oversees student wellbeing, counselling, and boarding life.</p>
+                  </div>
+                  <div class="team-card">
+                    <div class="placeholder-img"><span>Headshot</span></div>
+                    <h4>[Name]</h4>
+                    <div class="role">Director of Admissions</div>
+                    <p class="bio">Guides every family from first inquiry through enrollment.</p>
+                  </div>
+                  <div class="team-card">
+                    <div class="placeholder-img"><span>Headshot</span></div>
+                    <h4>[Name]</h4>
+                    <div class="role">Head of Early Years</div>
+                    <p class="bio">Sets the foundation for learning from age three.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="block">
+              <div class="block-inner">
+                <div class="block-head">
+                  <span class="eyebrow kicker">Recognition</span>
+                  <h2>Affiliated &amp; accredited</h2>
+                </div>
+                <div class="accred-row">
+                  <div class="accred-chip">Ministry of Education &amp; Sports — logo placeholder</div>
+                  <div class="accred-chip">Cambridge International — logo placeholder</div>
+                  <div class="accred-chip">Uganda National Examinations Board — logo placeholder</div>
+                  <div class="accred-chip">Association of International Schools — logo placeholder</div>
+                </div>
+              </div>
+            </section>
+
+            <div class="cta-banner">
+              <div>
+                <h2>Come see it for yourself</h2>
+                <p>Schedule a campus tour and meet our teachers.</p>
+              </div>
+              <a class="btn btn-primary" href="#">Book a Tour</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var urls = { home: 'kja.ug', admissions: 'kja.ug/admissions', about: 'kja.ug/about' };
+
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.setAttribute('aria-selected','false'); });
+      btn.setAttribute('aria-selected','true');
+      var target = btn.getAttribute('data-page');
+      document.querySelectorAll('.page').forEach(function(p){
+        p.classList.toggle('is-active', p.getAttribute('data-page') === target);
+      });
+      document.getElementById('urlPill').textContent = urls[target];
+      document.querySelector('.stage').scrollTop = 0;
+    });
+  });
+
+  document.querySelectorAll('.device-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.device-btn').forEach(function(b){ b.setAttribute('aria-pressed','false'); });
+      btn.setAttribute('aria-pressed','true');
+      var mobile = btn.getAttribute('data-device') === 'mobile';
+      document.getElementById('browserFrame').classList.toggle('is-mobile', mobile);
+    });
+  });
+
+  document.querySelectorAll('.hamburger').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var nav = document.getElementById(btn.getAttribute('data-nav-toggle'));
+      if (nav) nav.classList.toggle('open');
+    });
+  });
+
+  document.querySelectorAll('.req-tab').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.req-tab').forEach(function(b){ b.setAttribute('aria-selected','false'); });
+      btn.setAttribute('aria-selected','true');
+      var target = btn.getAttribute('data-req');
+      document.querySelectorAll('.req-panel').forEach(function(p){
+        p.classList.toggle('is-active', p.getAttribute('data-req-panel') === target);
+      });
+    });
+  });
+</script>
+</body>
+</html>
